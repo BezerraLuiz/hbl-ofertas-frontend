@@ -13,6 +13,14 @@ O admin terá acesso ao cadastro dos produtos, edição e exclusão deles em uma
 - Typescript
 - Styled-Components
 
+## Dependências para instalar
+
+### Pasta Backend
+
+- npm i
+- npm i fastify
+- npm install @prisma/client
+
 ## Telas Usuário Cliente
 
 - Tela Principal ➡ 50 produtos, rede social, contato ao WhatsApp, acesso as redes sociais e acesso ao site de vendas

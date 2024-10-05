@@ -1,9 +1,15 @@
 import fastify from "fastify";
+import cors from "@fastify/cors";
+import fastifyJwt from "@fastify/jwt";
 
 const server = fastify({ logger: true });
 
-server.get("/", async (request, reply) => {
-  return { message: "SERVER IS ON!" };
+server.register(cors, {
+  origin: true,
+});
+
+server.register(fastifyJwt, {
+  secret: "n[a(PR3{Gh].9B[nYYX1G%*:#kkaGBey",
 });
 
 server
