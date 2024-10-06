@@ -33,7 +33,7 @@ export async function produtosRoutes(server: FastifyInstance) {
   });
 
   // pesquisar produto por nome
-  server.get("/produtos/:nome", async (request) => {
+  server.get("/produtos/searchclient/:nome", async (request) => {
     const paramsSchema = z.object({
       nome: z.string(),
     });
@@ -51,7 +51,7 @@ export async function produtosRoutes(server: FastifyInstance) {
 
   // pagina admin
   // pesquisar produto pelo id
-  server.get("/produtos/:id", async (request) => {
+  server.get("/produtos/searchadmin/:id", async (request) => {
     const paramsSchema = z.object({
       id: z.string(),
     });

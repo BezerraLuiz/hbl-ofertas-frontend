@@ -2,6 +2,7 @@ import fastify from "fastify";
 import cors from "@fastify/cors";
 import fastifyJwt from "@fastify/jwt";
 import { usuariosRoutes } from "./routes/usuarios";
+import { produtosRoutes } from "./routes/produtos";
 
 const server = fastify({ logger: true });
 
@@ -14,6 +15,7 @@ server.register(fastifyJwt, {
 });
 
 server.register(usuariosRoutes);
+server.register(produtosRoutes);
 
 server
   .listen({
