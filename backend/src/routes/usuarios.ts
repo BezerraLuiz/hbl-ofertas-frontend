@@ -2,8 +2,9 @@ import { FastifyInstance } from "fastify";
 import { prisma } from "../lib/prisma";
 import { z } from "zod";
 
-export async function usuariosRoutes(app: FastifyInstance) {
-  app.post("/usuarios", async (request, reply) => {
+export async function usuariosRoutes(server: FastifyInstance) {
+  // autenticar login
+  server.post("/usuarios", async (request, reply) => {
     const bodySchema = z.object({
       email: z.string().email(),
       senha: z.string(),
@@ -24,11 +25,11 @@ export async function usuariosRoutes(app: FastifyInstance) {
         return reply.status(401).send({ error: "Senha Incorreta" });
       };
 
-      return reply.send({ message: "Login bem-sucedido", usuario})
+      return reply.status(200).send({ message: "Login bem-sucedido"})
 
     } catch (error) {
       console.log(error)
-      return reply.status(404).send({ error: "Usuário não encontrado "});
+      return reply.status(404).send({ error: "Usuário não encontrado"});
     }
   });
 }

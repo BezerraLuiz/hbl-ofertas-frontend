@@ -1,6 +1,7 @@
 import fastify from "fastify";
 import cors from "@fastify/cors";
 import fastifyJwt from "@fastify/jwt";
+import { usuariosRoutes } from "./routes/usuarios";
 
 const server = fastify({ logger: true });
 
@@ -11,6 +12,8 @@ server.register(cors, {
 server.register(fastifyJwt, {
   secret: "n[a(PR3{Gh].9B[nYYX1G%*:#kkaGBey",
 });
+
+server.register(usuariosRoutes);
 
 server
   .listen({
