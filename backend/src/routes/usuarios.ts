@@ -1,6 +1,14 @@
 import { FastifyInstance } from "fastify";
 import { prisma } from "../lib/prisma";
 import { z } from "zod";
+import { FastifyRequest } from "fastify/types/request";
+import { FastifyReply } from "fastify/types/reply";
+
+declare module 'fastify' {
+  interface FastifyInstance {
+    authenticate: (request: FastifyRequest, reply: FastifyReply) => Promise<void>;
+  }
+};
 
 export async function usuariosRoutes(server: FastifyInstance) {
   // autenticar login
@@ -25,11 +33,27 @@ export async function usuariosRoutes(server: FastifyInstance) {
         return reply.status(401).send({ error: "Senha Incorreta" });
       };
 
-      return reply.status(200).send({ message: "Login bem-sucedido"})
+      const token = server.jwt.sign({ id: usuario.id, email: usuario.email });
+
+      return reply.status(200).send({ token });
 
     } catch (error) {
       console.log(error)
       return reply.status(404).send({ error: "Usuário não encontrado"});
+    }
+  });
+
+  // rota protegida
+  server.get('/protected', {preValidation: [server.authenticate] }, async (request, reply) => {
+    return reply.status(200).send({ message: "Você acessou uma rota protegida" });
+  });
+
+  // middleware para autenticar usando jwt
+  server.decorate('authenticate', async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+      await request.jwtVerify();
+    } catch (error) {
+      reply.status(500).send({ message: error });
     }
   });
 }
