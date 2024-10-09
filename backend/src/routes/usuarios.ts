@@ -3,6 +3,7 @@ import { prisma } from "../lib/prisma";
 import { z } from "zod";
 import { FastifyRequest } from "fastify/types/request";
 import { FastifyReply } from "fastify/types/reply";
+import bcrypt from 'bcryptjs';
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -26,8 +27,8 @@ export async function usuariosRoutes(server: FastifyInstance) {
           email,
         },
       });
-
-      const senhaCorreta = senha == usuario.senha
+      
+      const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
 
       if (!senhaCorreta) {
         return reply.status(401).send({ error: "Senha Incorreta" });
@@ -43,11 +44,6 @@ export async function usuariosRoutes(server: FastifyInstance) {
     }
   });
 
-  // rota protegida
-  server.get('/protected', {preValidation: [server.authenticate] }, async (request, reply) => {
-    return reply.status(200).send({ message: "Você acessou uma rota protegida" });
-  });
-
   // middleware para autenticar usando jwt
   server.decorate('authenticate', async (request: FastifyRequest, reply: FastifyReply) => {
     try {
@@ -55,5 +51,10 @@ export async function usuariosRoutes(server: FastifyInstance) {
     } catch (error) {
       reply.status(500).send({ message: error });
     }
+  });
+
+  // rota protegida
+  server.get('/protected', {preValidation: [server.authenticate] }, async (request, reply) => {
+    return reply.status(200).send({ message: "Você acessou uma rota protegida" });
   });
 }

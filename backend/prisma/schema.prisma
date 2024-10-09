@@ -25,4 +25,5 @@ model Produtos {
   nome      String  @unique
   valor     Decimal
   descricao String
+  imagem    String
 }

@@ -3,6 +3,7 @@ import cors from "@fastify/cors";
 import fastifyJwt from "@fastify/jwt";
 import { usuariosRoutes } from "./routes/usuarios";
 import { produtosRoutes } from "./routes/produtos";
+import fastifyMultipart from "fastify-multipart";
 
 const server = fastify({ logger: true });
 
@@ -13,6 +14,8 @@ server.register(cors, {
 server.register(fastifyJwt, {
   secret: "n[a(PR3{Gh].9B[nYYX1G%*:#kkaGBey",
 });
+
+server.register(fastifyMultipart);
 
 server.register(usuariosRoutes);
 server.register(produtosRoutes);
