@@ -19,7 +19,9 @@ O admin terá acesso ao cadastro dos produtos, edição e exclusão deles em uma
 
 - npm i
 - npm i fastify
-- npm install @prisma/client
+- npx prisma generate
+- npm i zod
+- npm i tsx
 
 ## Telas Usuário Cliente
 

@@ -77,25 +77,24 @@ export async function produtosRoutes(server: FastifyInstance) {
       valor: z.number(),
       descricao: z.string(),
     });
-
+  
     const { id, nome, valor, descricao } = bodySchema.parse(request.body);
-    
+  
     const data = await request.file();
+    
     if (!data) {
-        return reply.status(400).send({ error: "Nenhum arquivo enviado." });
+      return reply.status(400).send({ error: "Nenhum arquivo enviado." });
     }
-
-    // definindo path da imagem
+  
     const uploadPath = path.join("uploads", data.filename);
-
-    // verifica se a rota uploads existe
+  
     if (!fs.existsSync('uploads')) {
-      fs.mkdirSync('uploads'); // criar rota se não existir
+      fs.mkdirSync('uploads');
     }
-
+  
     const writeStream = fs.createWriteStream(uploadPath);
     data.file.pipe(writeStream);
-
+  
     writeStream.on("finish", async () => {
       try {
         const produto = await prisma.produtos.create({
@@ -107,17 +106,21 @@ export async function produtosRoutes(server: FastifyInstance) {
             imagem: uploadPath,
           },
         });
-
+  
         return produto;
       } catch (error) {
-        console.log(error);
+        console.error(error);
         return reply.status(500).send({ error: "Erro ao criar produto" });
       }
-
-      writeStream.on("error", (error) => {
-        console.error(error);
-        return reply.status(500).send({ message: "Erro no writeStream" });
-      });
     });
+  
+    writeStream.on("error", (error) => {
+      console.error(error);
+      return reply.status(500).send({ error: "Erro no writeStream" });
+    });
+  });
+
+  server.put("/produtos", async (request, reply) => {
+    
   });
 }
