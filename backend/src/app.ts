@@ -1,8 +1,8 @@
 import fastify from "fastify";
 import cors from "@fastify/cors";
 import fastifyJwt from "@fastify/jwt";
-import { usuariosRoutes } from "./routes/usuarios";
-import { produtosRoutes } from "./routes/produtos";
+import { usuariosRoutes } from "./usuarios";
+import { produtosRoutes } from "./produtos";
 import fastifyMultipart from "@fastify/multipart";
 
 const server = fastify({ logger: true });
