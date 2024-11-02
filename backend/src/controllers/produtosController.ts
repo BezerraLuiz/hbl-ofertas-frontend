@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { getAllProducts, createProduct} from "../services/produtosService";
+import { getAllProducts} from "../services/produtosService";
 import { paramsSchema, bodySchema } from "../schemas/produtosSchema";
 import {getProductById, getProductByName} from "../services/produtosService";
 
@@ -16,7 +16,4 @@ export async function getProductByNameHandler(req: FastifyRequest) {
 export async function getProductByIdHandler(req: FastifyRequest) {
   const { id } = paramsSchema.parse(req.params);
   return getProductById(id);
-}
-
-export async function createProductHandler() {
 }
