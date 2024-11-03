@@ -18,7 +18,7 @@ server.register(fastifyJwt, {
 
 authenticate(server).then(e => console.log(e));
 
-server.register(fastifyMultipart);
+// server.register(fastifyMultipart);
 server.register(productsRoutes);
 server.register(usuariosRoutes);
 

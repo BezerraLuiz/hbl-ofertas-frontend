@@ -133,7 +133,7 @@ export async function updateProductHandler(
 ) {
   try {
     const { id } = paramsSchema.parse(request.params);
-    const { sku, nome, valor, descricao, imagePath } = bodySchema.parse(
+    const { sku, nome, valor, descricao } = bodySchema.parse(
       request.body
     );
 
@@ -142,8 +142,7 @@ export async function updateProductHandler(
       sku,
       nome,
       valor,
-      descricao,
-      imagePath,
+      descricao
     });
 
     return reply.status(200).send(updatedProduct);
@@ -156,6 +155,8 @@ export async function updateProductHandler(
 }
 
 export async function createProductHandler(request: FastifyRequest, reply: FastifyReply) {
+  console.log("REQUEST BODY: " + request.body)
+  
   try {
     const { sku, nome, valor, descricao } = bodySchema.parse(request.body);
     

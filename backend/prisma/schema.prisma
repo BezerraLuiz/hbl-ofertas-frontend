@@ -24,7 +24,7 @@ model Produtos {
   id        Int      @id @default(autoincrement())
   sku       String
   nome      String   @unique
-  valor     Decimal
+  valor     Float
   descricao String
   imagePath String
   createdAt DateTime @default(now())

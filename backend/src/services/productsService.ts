@@ -38,11 +38,10 @@ export async function updateProduct({
   valor,
   descricao,
   sku,
-  imagePath,
 }: updateProductRequestDto) {
   return prisma.produtos.update({
     where: { id },
-    data: { sku, nome, valor, descricao, imagePath }
+    data: { sku, nome, valor, descricao }
   });
 }
 
