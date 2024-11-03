@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { prisma } from '../src/lib/prisma';
+import { prisma } from '../lib/prisma';
 
 // encriptografar senhas de usuarios existentes
 async function encryptPasswords() {

@@ -6,4 +6,6 @@ export interface productInterface {
     nome: string;
     valor: Decimal;
     descricao: string;
+    imagePath: string;
+    createdAt: Date;
 }

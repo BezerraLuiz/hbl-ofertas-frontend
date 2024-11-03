@@ -21,9 +21,11 @@ model Usuarios {
 }
 
 model Produtos {
-  id        Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   sku       String
-  nome      String  @unique
+  nome      String   @unique
   valor     Decimal
   descricao String
+  imagePath String
+  createdAt DateTime @default(now())
 }
