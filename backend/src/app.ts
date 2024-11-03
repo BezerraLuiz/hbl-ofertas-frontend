@@ -1,8 +1,8 @@
 import fastify from "fastify";
 import cors from "@fastify/cors";
 import fastifyJwt from "@fastify/jwt";
-import { usuariosRoutes } from "./routes/usuarioRoutes";
-import { produtosRoutes } from "./routes/produtosRoutes";
+import { usuariosRoutes } from "./routes/userRoutes";
+import { productsRoutes } from "./routes/productsRoutes";
 import fastifyMultipart from "@fastify/multipart";
 import { authenticate } from "./middlewares/authenticateMiddleware";
 
@@ -21,7 +21,7 @@ authenticate(server).then(e => console.log(e));
 server.register(fastifyMultipart);
 
 server.register(usuariosRoutes);
-server.register(produtosRoutes);
+server.register(productsRoutes);
 
 server
   .listen({

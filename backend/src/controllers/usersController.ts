@@ -1,6 +1,6 @@
 import {FastifyReply, FastifyRequest} from "fastify";
 import {z} from "zod";
-import {findUserByEmail, verifyPassword} from "../services/usuariosService";
+import {findUserByEmail, verifyPassword} from "../services/userService";
 import {generateToken} from "../utils/jwtUtils";
 
 export async function loginHandler(request: FastifyRequest, reply: FastifyReply) {

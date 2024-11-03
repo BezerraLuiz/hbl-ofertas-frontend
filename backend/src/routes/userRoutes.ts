@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { loginHandler } from "../controllers/usuariosController";
+import { loginHandler } from "../controllers/usersController";
 
 export async function usuariosRoutes(server: FastifyInstance) {
     server.post("/usuarios", loginHandler);

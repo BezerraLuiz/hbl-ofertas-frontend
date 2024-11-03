@@ -3,9 +3,9 @@ import {
     getAllProductsHandler,
     getProductByNameHandler,
     getProductByIdHandler,
-} from "../controllers/produtosController";
+} from "../controllers/productsController";
 
-export async function produtosRoutes(server: FastifyInstance) {
+export async function productsRoutes(server: FastifyInstance) {
     server.get("/products", getAllProductsHandler);
     server.get("/products/searchclient/:nome", getProductByNameHandler);
     server.get("/products/searchadmin/:id", getProductByIdHandler);
