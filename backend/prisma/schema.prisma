@@ -21,7 +21,8 @@ model Usuarios {
 }
 
 model Produtos {
-  id        String  @id
+  id        Int     @id @default(autoincrement())
+  sku       String
   nome      String  @unique
   valor     Decimal
   descricao String
