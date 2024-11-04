@@ -5,6 +5,10 @@ import { usuariosRoutes } from "./routes/userRoutes";
 import { productsRoutes } from "./routes/productsRoutes";
 import fastifyMultipart from "@fastify/multipart";
 import { authenticate } from "./middlewares/authenticateMiddleware";
+import imageRoutes from "./routes/imageRoutes";
+import dotenv from 'dotenv';
+
+dotenv.config();  
 
 const server = fastify({ logger: true });
 
@@ -12,15 +16,17 @@ server.register(cors, {
   origin: true,
 });
 
+server.register(fastifyMultipart);
+
 server.register(fastifyJwt, {
-  secret: "n[a(PR3{Gh].9B[nYYX1G%*:#kkaGBey",
+  secret: process.env.JWT_SECRET as string,
 });
 
 authenticate(server).then(e => console.log(e));
 
-// server.register(fastifyMultipart);
-server.register(productsRoutes);
 server.register(usuariosRoutes);
+server.register(imageRoutes);
+server.register(productsRoutes);
 
 server
   .listen({

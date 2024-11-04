@@ -8,10 +8,7 @@ import {
 import { paramsSchema, bodySchema } from "../schemas/productsSchema";
 import { getProductBySku, getProductByName } from "../services/productsService";
 import { productInterface } from "../interfaces/productInterface";
-import path from "path";
-import fs from "fs";
-import { pump } from "../lib/pump";
-import { MultipartFile } from "fastify-multipart";
+import { uploadImageHandler } from "./imageController";
 
 export async function getAllProductsHandler(
   request: FastifyRequest,
@@ -26,19 +23,15 @@ export async function getAllProductsHandler(
         .send({ message: "Não há produtos cadastrados!" });
     }
 
-    return reply
-      .status(200)
-      .send(
-        products.map(
-          ({ id, sku, nome, valor, descricao }: productInterface) => ({
-            id,
-            sku,
-            nome,
-            valor,
-            descricao,
-          })
-        )
-      );
+    return reply.status(200).send(
+      products.map(({ id, sku, nome, valor, descricao }: productInterface) => ({
+        id,
+        sku,
+        nome,
+        valor,
+        descricao,
+      }))
+    );
   } catch (e) {
     console.log(e);
     return reply.status(500).send({ message: "Erro ao buscar os produtos!" });
@@ -133,16 +126,14 @@ export async function updateProductHandler(
 ) {
   try {
     const { id } = paramsSchema.parse(request.params);
-    const { sku, nome, valor, descricao } = bodySchema.parse(
-      request.body
-    );
+    const { sku, nome, valor, descricao } = bodySchema.parse(request.body);
 
     const updatedProduct = await updateProduct({
       id,
       sku,
       nome,
       valor,
-      descricao
+      descricao,
     });
 
     return reply.status(200).send(updatedProduct);
@@ -154,43 +145,78 @@ export async function updateProductHandler(
   }
 }
 
-export async function createProductHandler(request: FastifyRequest, reply: FastifyReply) {
-  console.log("REQUEST BODY: " + request.body)
-  
+export async function createProductHandler(
+  request: FastifyRequest,
+  reply: FastifyReply
+) {
   try {
-    const { sku, nome, valor, descricao } = bodySchema.parse(request.body);
-    
-    let data: MultipartFile | undefined;
-    for await (const file of request.files()) {
-      if (file.fieldname === 'image') {
-        data = file;
-        break;
+    let sku, nome, valor, descricao, imagePath; // Declare as variáveis para armazenar os valores
+
+    for await (const part of request.parts()) {
+      if (!part.file) {
+        // Verifica se a parte não é um arquivo
+        switch (part.fieldname) {
+          case "nome":
+            nome = part.value; // Salva o valor do Nome na variável nome
+            console.log("Nome recebido:", nome);
+            break;
+          case "sku":
+            sku = part.value; // Salva o valor do SKU na variável sku
+            console.log("SKU recebido:", sku);
+            break;
+          case "valor":
+            valor = Number(part.value); // Salva o valor convertido para número na variável valor
+            console.log("Valor recebido:", valor);
+            break;
+          case "descricao":
+            descricao = part.value; // Salva o valor da Descrição na variável descricao
+            console.log("Descrição recebida:", descricao);
+            break;
+          case "imagePath":
+            imagePath = part.value; // Salva o valor do Image Path na variável imagePath
+            console.log("Image Path recebido:", imagePath);
+            break;
+          default:
+            console.log("Campo desconhecido:", part.fieldname);
+            break; // Adicionando break aqui também
+        }
+      } else {
+        // Aqui você pode tratar o upload de arquivos, se necessário
+        console.log("Arquivo recebido:", part);
       }
+      break;
     }
 
-    if (!data || !sku || !nome || !valor || !descricao) {
-      return reply.status(400).send({ message: "Falta preencher informações do produto!" });
-    }
+    // Após o loop, você pode usar as variáveis conforme necessário
+    console.log("Valores armazenados:", {
+      sku,
+      nome,
+      valor,
+      descricao,
+      imagePath,
+    });
 
-    const timestamp = Date.now();
-    const imagePath = `assets/${nome}_${timestamp}${path.extname(data.filename)}`;
-    const imagePathDb = path.join(__dirname, '../frontend/assets', imagePath);
+    // const existingProduct = (await getAllProducts()).find((p) => p.sku === productData.sku);
+    // if (existingProduct) {
+    //   return reply.status(401).send({ message: "Produto já cadastrado!" });
+    // }
 
-    if (!data.file) {
-      return reply.status(400).send({ message: "Arquivo não encontrado!" });
-    }
+    const imageResponse = await uploadImageHandler(nome, request, reply);
+    console.log("IMAGE RESPONSE = ", imageResponse);
 
-    await pump(data.file, fs.createWriteStream(imagePathDb));
+    // const product = await createProduct({
+    //   sku: productData.sku,
+    //   nome: productData.nome,
+    //   valor: productData.valor,
+    //   descricao: productData.descricao,
+    //   imagePath: imageResponse.imagePath,
+    // });
 
-    const existingProduct = (await getAllProducts()).find((p) => p.sku === sku);
-    if (existingProduct) {
-      return reply.status(401).send({ message: "Produto já cadastrado!" });
-    }
-
-    const product = await createProduct({ sku, nome, valor, descricao, imagePath });
-    return reply.status(201).send(product);
+    return reply.status(201);
   } catch (e) {
     console.error(e);
-    return reply.status(500).send({ message: "Não foi possível criar o produto!" });
+    return reply
+      .status(500)
+      .send({ message: "Não foi possível criar o produto!" });
   }
 }
