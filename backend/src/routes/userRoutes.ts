@@ -6,6 +6,6 @@ export async function usuariosRoutes(server: FastifyInstance) {
 
     // rota protegida
     server.get('/protected', { preValidation: [server.authenticate] }, async (request, reply) => {
-        return reply.status(200).send({ message: "Você acessou uma rota protegida" });
+        return reply.status(200);
     });
 }

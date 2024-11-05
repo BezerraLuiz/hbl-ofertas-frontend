@@ -18,8 +18,9 @@ export async function loginHandler(request: FastifyRequest, reply: FastifyReply)
             return reply.status(401).send({error: "Senha Incorreta"});
         }
 
+        console.log({id: usuario.id, email: usuario.email})
         const token = generateToken({id: usuario.id, email: usuario.email});
-        return reply.status(200).send({token});
+        return {token};
     } catch (error) {
         console.log(error);
         return reply.status(404).send({error: "Usuário não encontrado"});

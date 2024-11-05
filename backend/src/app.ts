@@ -10,7 +10,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();  
 
-const server = fastify({ logger: true });
+export const server = fastify({ logger: true });
 
 server.register(cors, {
   origin: true,
