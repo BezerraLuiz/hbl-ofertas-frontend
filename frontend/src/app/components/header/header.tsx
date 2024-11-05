@@ -6,6 +6,9 @@ import {
   ContainerButtonShop,
   ShopImage,
   ShopText,
+  ContainerSearchBar,
+  SearchImage,
+  SearchInput
 } from "./style";
 
 export default function Header() {
@@ -17,12 +20,15 @@ export default function Header() {
           <h2 style={{ color: "#fff" }}>OFERTAS</h2>
         </div>
 
-        <a style={{ textDecoration: "none" }} href="https://hblvendas.com.br/" target="blank">
-          <ContainerButtonShop>
-            <ShopText>VISITE NOSSA LOJA</ShopText>
-            <ShopImage src="/shop.svg" alt="shop" />
-          </ContainerButtonShop>
-        </a>
+        <ContainerSearchBar>
+          <SearchImage src="/search.svg" alt="search" />
+          <SearchInput type="text" placeholder="Insira o nome do produto..."/>
+        </ContainerSearchBar>
+
+        <ContainerButtonShop href="https://hblvendas.com.br/" target="blank">
+          <ShopText>VISITE NOSSA LOJA</ShopText>
+          <ShopImage src="/shop.svg" alt="shop" />
+        </ContainerButtonShop>
       </HeaderStyle>
     </>
   );
