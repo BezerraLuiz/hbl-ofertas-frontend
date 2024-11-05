@@ -4,9 +4,11 @@ import { pump } from '../lib/pump';
 import { generateImagePath } from '../utils/imagePath';
 import path from 'path';
 
-export async function uploadImageHandler(nome: string, request: FastifyRequest, reply: FastifyReply) {
+export async function uploadImageHandler(request: FastifyRequest, reply: FastifyReply) {
   const data = await request.file();
-  console.log("DATA: " + data)
+  console.log("DATA: ", data);
+
+  const { nome } = request.query as {nome: string}; // Desestruturação
 
   if (!data) {
     return reply.status(400).send({ message: "Imagem é necessária!" });

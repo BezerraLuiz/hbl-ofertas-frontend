@@ -150,73 +150,61 @@ export async function createProductHandler(
   reply: FastifyReply
 ) {
   try {
-    let sku, nome, valor, descricao, imagePath; // Declare as variáveis para armazenar os valores
+    let sku, nome, valor, descricao;
+    let i = 0;
 
     for await (const part of request.parts()) {
-      if (!part.file) {
-        // Verifica se a parte não é um arquivo
+      if (part) {
         switch (part.fieldname) {
           case "nome":
-            nome = part.value; // Salva o valor do Nome na variável nome
+            nome = part.value;
             console.log("Nome recebido:", nome);
             break;
           case "sku":
-            sku = part.value; // Salva o valor do SKU na variável sku
+            sku = part.value;
             console.log("SKU recebido:", sku);
             break;
           case "valor":
-            valor = Number(part.value); // Salva o valor convertido para número na variável valor
+            valor = Number(part.value);
             console.log("Valor recebido:", valor);
             break;
           case "descricao":
-            descricao = part.value; // Salva o valor da Descrição na variável descricao
+            descricao = part.value;
             console.log("Descrição recebida:", descricao);
             break;
-          case "imagePath":
-            imagePath = part.value; // Salva o valor do Image Path na variável imagePath
-            console.log("Image Path recebido:", imagePath);
-            break;
           default:
-            console.log("Campo desconhecido:", part.fieldname);
-            break; // Adicionando break aqui também
+            console.log("Break!")
+            break;
         }
-      } else {
-        // Aqui você pode tratar o upload de arquivos, se necessário
-        console.log("Arquivo recebido:", part);
       }
-      break;
+
+      i += 1;
+      if (i == 4) {
+        break;
+      }
     }
 
-    // Após o loop, você pode usar as variáveis conforme necessário
     console.log("Valores armazenados:", {
       sku,
       nome,
       valor,
       descricao,
-      imagePath,
     });
 
-    // const existingProduct = (await getAllProducts()).find((p) => p.sku === productData.sku);
-    // if (existingProduct) {
-    //   return reply.status(401).send({ message: "Produto já cadastrado!" });
-    // }
+    console.log("Passou os valores!");
+    console.log("Chamando função para upload da imagem!");
 
-    const imageResponse = await uploadImageHandler(nome, request, reply);
+    console.log("Antes de chamar uploadImageHandler");
+    const imageResponse = await uploadImageHandler(request, reply);
+    console.log("Depois de chamar uploadImageHandler");
     console.log("IMAGE RESPONSE = ", imageResponse);
-
-    // const product = await createProduct({
-    //   sku: productData.sku,
-    //   nome: productData.nome,
-    //   valor: productData.valor,
-    //   descricao: productData.descricao,
-    //   imagePath: imageResponse.imagePath,
-    // });
 
     return reply.status(201);
   } catch (e) {
-    console.error(e);
+    console.error("Erro ao criar produto:", e);
     return reply
       .status(500)
       .send({ message: "Não foi possível criar o produto!" });
   }
 }
+
