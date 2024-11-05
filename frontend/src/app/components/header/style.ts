@@ -19,3 +19,26 @@ export const Logo = styled.h1`
   letter-spacing: -5px;
   color: ${colors.white};
 `;
+
+export const ContainerButtonShop = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 210px;
+  height: 40px;
+  padding: 10px;
+
+  border-radius: 10px;
+  background-color: ${colors["green-100"]};
+`;
+
+export const ShopText = styled.p`
+  font-size: 16px;
+  font-weight: 600;
+  color: ${colors["text-200"]};
+`;
+
+export const ShopImage = styled.img`
+  width: 20px;
+  height: 20px;
+`;

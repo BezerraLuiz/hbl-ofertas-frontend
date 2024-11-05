@@ -1,6 +1,6 @@
 'use client'
 
-import { HeaderStyle, Logo } from "./style"
+import { HeaderStyle, Logo, ContainerButtonShop, ShopImage, ShopText } from "./style"
 
 export default function Header() {
   return (
@@ -10,6 +10,11 @@ export default function Header() {
           <Logo>HBL</Logo>
           <h2 style={{color: "#fff"}}>OFERTAS</h2>
         </div>
+
+        <ContainerButtonShop>
+          <ShopText>VISITE NOSSA LOJA</ShopText>
+          <ShopImage src="/shop.svg" alt="shop"/>
+        </ContainerButtonShop>
       </HeaderStyle>
     </>
   )
