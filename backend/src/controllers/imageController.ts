@@ -19,7 +19,7 @@ export async function uploadImageHandler(request: FastifyRequest, reply: Fastify
   }
 
   const imagePath = generateImagePath(nome, data.filename);
-  const fullImagePath = path.resolve(__dirname, '../../frontend', imagePath);
+  const fullImagePath = path.resolve(__dirname, '../../../frontend/public', imagePath);
 
   await pump(data.file, fs.createWriteStream(fullImagePath));
 
