@@ -50,8 +50,8 @@ export const SearchInput = styled.input`
 
 export const ContainerButtonShop = styled.a`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: end;
+  justify-content: space-around;
   width: 210px;
   height: 40px;
   padding: 10px;

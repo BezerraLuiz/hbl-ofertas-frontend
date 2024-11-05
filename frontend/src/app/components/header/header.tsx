@@ -8,10 +8,25 @@ import {
   ShopText,
   ContainerSearchBar,
   SearchImage,
-  SearchInput
+  SearchInput,
 } from "./style";
+import { useEffect, useState } from "react";
 
 export default function Header() {
+  const [label, setLabel] = useState("VISITE NOSSA LOJA");
+  const [isHome, setIsHome] = useState(true);
+  const [placeholder, setPlaceholder] = useState("Insira o nome do produto...");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (window.location.pathname !== "/") {
+        setIsHome(false);
+        setLabel("SAIR DA CONTA");
+        setPlaceholder("Insira o SKU do produto...");
+      }
+    }
+  }, []);
+
   return (
     <>
       <HeaderStyle>
@@ -22,12 +37,18 @@ export default function Header() {
 
         <ContainerSearchBar>
           <SearchImage src="/search.svg" alt="search" />
-          <SearchInput type="text" placeholder="Insira o nome do produto..."/>
+          <SearchInput
+            type="text"
+            placeholder={placeholder}
+          />
         </ContainerSearchBar>
 
-        <ContainerButtonShop href="https://hblvendas.com.br/" target="blank">
-          <ShopText>VISITE NOSSA LOJA</ShopText>
-          <ShopImage src="/shop.svg" alt="shop" />
+        <ContainerButtonShop
+          href={isHome ? "https://hblvendas.com.br/" : "/pages/login"}
+          target={isHome ? "_blank" : "_self"}
+        >
+          <ShopText>{label}</ShopText>
+          {isHome && <ShopImage src="/shop.svg" alt="shop" />}
         </ContainerButtonShop>
       </HeaderStyle>
     </>
