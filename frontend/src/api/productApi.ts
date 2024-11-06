@@ -13,7 +13,6 @@ export const searchByNome = async (nome: string) => {
       return { error: true, data: res || { message: 'Erro desconhecido' } };
     }
 
-    // Verifique se a resposta contém dados úteis
     if (!res || res.length === 0) {
       return { error: true, data: { message: 'Nenhum produto encontrado.' } };
     }
@@ -38,7 +37,6 @@ export const searchBySku = async (sku: string) => {
       return { error: true, data: res || { message: 'Erro desconhecido' } };
     }
 
-    // Verifique se a resposta contém dados úteis
     if (!res || res.length === 0) {
       return { error: true, data: { message: 'Nenhum produto encontrado.' } };
     }

@@ -35,11 +35,9 @@ export default function Header() {
 
     if (typeof window !== "undefined") {
       if (window.location.pathname !== "/") {
-        console.log("Page admin");
         response = await searchBySku(pesquisa);
         alert(JSON.stringify(response, null, 2));
       } else {
-        console.log("Page client");
         response = await searchByNome(pesquisa);
         alert(JSON.stringify(response, null, 2));
       }
