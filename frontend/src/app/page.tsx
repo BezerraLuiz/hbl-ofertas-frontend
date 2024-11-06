@@ -5,6 +5,7 @@ import Header from "./components/header/header";
 import ProductCard from "./components/product-card/product-card";
 import { getAllProducts } from "@/api/productApi";
 import WppContact from "@/app/components/wpp-contact/wpp-contatc";
+import Footer from "./components/footer/footer";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -44,6 +45,8 @@ export default function Home() {
           />
         ))}
       </div>
+
+      <Footer />
 
       <WppContact />
     </>
