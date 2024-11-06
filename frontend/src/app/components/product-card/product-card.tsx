@@ -1,17 +1,15 @@
-import { ContainerMain, Card, ProductImage, CardText } from "./style"  
+import { ContainerMain, Card, ProductImage, CardText } from "./style";
 
-export default function ProductCard() {
+export default function ProductCard({ image, nome, preco }) {
   return (
-    <>
-      <ContainerMain>
-        <Card>
-          <ProductImage src="/products/fone_de_ouvido_bluetooth_1730855184743.jpg"/>
-          <div style={{ display: "flex", flexDirection: "column", margin: "10% 5%", gap: "10px"}}>
-            <CardText>Fone De Ouvido Bluetooth</CardText>
-            <CardText>R$ 74.9</CardText>
-          </div>
-        </Card>
-      </ContainerMain>
-    </>
-  )
+    <ContainerMain>
+      <Card>
+        <ProductImage src={image} alt={nome} />
+        <div style={{ display: "flex", flexDirection: "column", margin: "10% 5%", gap: "10px" }}>
+          <CardText>{nome}</CardText>
+          <CardText>R$ {preco}</CardText>
+        </div>
+      </Card>
+    </ContainerMain>
+  );
 }

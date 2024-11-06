@@ -25,12 +25,13 @@ export async function getAllProductsHandler(
     }
 
     return reply.status(200).send(
-      products.map(({ id, sku, nome, valor, descricao }: productInterface) => ({
+      products.map(({ id, sku, nome, valor, descricao, imagePath }: productInterface) => ({
         id,
         sku,
         nome,
         valor,
         descricao,
+        imagePath
       }))
     );
   } catch (e) {
