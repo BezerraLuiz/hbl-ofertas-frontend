@@ -3,6 +3,11 @@ import fs from 'fs';
 import { pump } from '../lib/pump';
 import { generateImagePath } from '../utils/imagePath';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Defina __dirname para módulos ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export async function uploadImageHandler(request: FastifyRequest, reply: FastifyReply) {
   const data = await request.file();
@@ -20,6 +25,11 @@ export async function uploadImageHandler(request: FastifyRequest, reply: Fastify
 
   const imagePath = generateImagePath(nome, data.filename);
   const fullImagePath = path.resolve(__dirname, '../../../frontend/public', imagePath);
+
+  const dir = path.dirname(fullImagePath);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
 
   await pump(data.file, fs.createWriteStream(fullImagePath));
 

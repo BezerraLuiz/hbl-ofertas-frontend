@@ -9,6 +9,7 @@ import { paramsSchema, bodySchema } from "../schemas/productsSchema";
 import { getProductBySku, getProductByName } from "../services/productsService";
 import { productInterface } from "../interfaces/productInterface";
 import { uploadImageHandler } from "./imageController";
+import { formatProductName } from "../utils/formatProductNameForSearch";
 
 export async function getAllProductsHandler(
   request: FastifyRequest,
@@ -51,7 +52,10 @@ export async function getProductByNameHandler(
         .send({ message: "Não há produtos cadastrados!" });
     }
 
-    const { nome } = paramsSchema.parse(request.params);
+    let { nome } = request.query as {nome: string};
+    console.log(nome)
+
+    nome = formatProductName(nome);
 
     const product = await getProductByName(nome);
 
@@ -79,7 +83,7 @@ export async function getProductBySkuHandler(
         .send({ message: "Não há produtos cadastrados!" });
     }
 
-    const { sku } = paramsSchema.parse(request.params);
+    const { sku } = request.query as {sku: string};
 
     const product = await getProductBySku(sku);
     if (!product) {
@@ -173,7 +177,7 @@ export async function createProductHandler(
             console.log("Descrição recebida:", descricao);
             break;
           default:
-            console.log("Break!")
+            console.log("Break!");
             break;
         }
       }
@@ -191,6 +195,11 @@ export async function createProductHandler(
       descricao,
     });
 
+    // Garantir que 'valor' não seja undefined
+    if (valor === undefined) {
+      throw new Error("Valor é obrigatório!");
+    }
+
     console.log("Passou os valores!");
     console.log("Chamando função para upload da imagem!");
 
@@ -198,6 +207,10 @@ export async function createProductHandler(
     const imageResponse = await uploadImageHandler(request, reply);
     console.log("Depois de chamar uploadImageHandler");
     console.log("IMAGE RESPONSE = ", imageResponse);
+
+    const imagePath = imageResponse.path;
+
+    await createProduct({ sku, nome, valor, descricao, imagePath });
 
     return reply.status(201);
   } catch (e) {
@@ -207,4 +220,3 @@ export async function createProductHandler(
       .send({ message: "Não foi possível criar o produto!" });
   }
 }
-

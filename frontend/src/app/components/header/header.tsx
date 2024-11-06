@@ -11,11 +11,13 @@ import {
   SearchInput,
 } from "./style";
 import { useEffect, useState } from "react";
+import { searchByNome, searchBySku } from "@/api/productApi";
 
 export default function Header() {
   const [label, setLabel] = useState("VISITE NOSSA LOJA");
   const [isHome, setIsHome] = useState(true);
   const [placeholder, setPlaceholder] = useState("Insira o nome do produto...");
+  const [pesquisa, setPesquisa] = useState("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -27,6 +29,23 @@ export default function Header() {
     }
   }, []);
 
+  async function verificarPesquisa(e: React.FormEvent) {
+    e.preventDefault();
+    let response;
+
+    if (typeof window !== "undefined") {
+      if (window.location.pathname !== "/") {
+        console.log("Page admin");
+        response = await searchBySku(pesquisa);
+        alert(JSON.stringify(response, null, 2));
+      } else {
+        console.log("Page client");
+        response = await searchByNome(pesquisa);
+        alert(JSON.stringify(response, null, 2));
+      }
+    }
+  }
+
   return (
     <>
       <HeaderStyle>
@@ -37,10 +56,9 @@ export default function Header() {
 
         <ContainerSearchBar>
           <SearchImage src="/search.svg" alt="search" />
-          <SearchInput
-            type="text"
-            placeholder={placeholder}
-          />
+          <form onSubmit={verificarPesquisa}>
+            <SearchInput type="text" placeholder={placeholder} onChange={(e) => setPesquisa(e.target.value)}/>
+          </form>
         </ContainerSearchBar>
 
         <ContainerButtonShop

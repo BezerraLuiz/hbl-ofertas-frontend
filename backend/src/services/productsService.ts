@@ -19,7 +19,14 @@ export async function getAllProducts(): Promise<GetAllProductsResponseDtos> {
 export async function getProductByName(
   nome: getProductByNameRequestDto
 ): Promise<getProductByNameResponseDto> {
-  return prisma.produtos.findUniqueOrThrow({ where: { nome } });
+  return prisma.produtos.findMany({
+    where: {
+      nome: {
+        contains: nome,
+        mode: "insensitive",
+      },
+    },
+  });
 }
 
 export async function getProductBySku(
@@ -41,7 +48,7 @@ export async function updateProduct({
 }: updateProductRequestDto) {
   return prisma.produtos.update({
     where: { id },
-    data: { sku, nome, valor, descricao }
+    data: { sku, nome, valor, descricao },
   });
 }
 
@@ -58,7 +65,7 @@ export async function createProduct({
       nome,
       valor,
       descricao,
-      imagePath
+      imagePath,
     },
   });
 }
