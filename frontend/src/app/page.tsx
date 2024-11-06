@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Header from "./components/header/header";
 import ProductCard from "./components/product-card/product-card";
 import { getAllProducts } from "@/api/productApi";
+import WppContact from "@/app/components/wpp-contact/wpp-contatc";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -43,6 +44,8 @@ export default function Home() {
           />
         ))}
       </div>
+
+      <WppContact />
     </>
   );
 }
