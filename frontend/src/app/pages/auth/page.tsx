@@ -38,6 +38,7 @@ export default function Login() {
   
     if (res.error === false) {
       setIsLoading(true);
+      localStorage.setItem("user", "admin")
       setTimeout(() => {
         router.push("/pages/admin");
       }, 1500);
