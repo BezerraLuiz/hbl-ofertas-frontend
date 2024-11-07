@@ -1,10 +1,6 @@
 import { colors } from "@/app/styles/colors";
 import styled from "styled-components";
 
-export const Body = styled.body`
-  background-color: ${colors.white};
-`;
-
 export const ContainerMain = styled.div`
   display: flex;
   justify-content: center;
@@ -70,6 +66,7 @@ export const HeaderText = styled.p`
 export const HeaderDivisor = styled.div`
   width: 213px;
   height: 0px;
+  margin: 7px 0 7px;
 
   border: 1px solid #f5f5f5;
 `;

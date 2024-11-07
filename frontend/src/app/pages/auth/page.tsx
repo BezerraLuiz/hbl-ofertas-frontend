@@ -1,36 +1,63 @@
-'use client'
+"use client";
 
-import { Body, ContainerMain, Header, Logo, HeaderText, HeaderDivisor, Footer, Input, Label, Button } from "./style"
+import { useEffect } from "react";
+import {
+  ContainerMain,
+  Header,
+  Logo,
+  HeaderText,
+  HeaderDivisor,
+  Footer,
+  Input,
+  Label,
+  Button,
+} from "./style";
 
 export default function Login() {
+  useEffect(() => {
+    document.body.style.backgroundColor = "#fff";
+  }, []);
+
   return (
     <>
-      <Body>
-        <ContainerMain>
-          <Header>
-            <Logo>HBL</Logo>
-            <div>
-              <HeaderText>Olá, Hélio! Bem-vindo ao Admin Workspace</HeaderText>
-              <HeaderDivisor></HeaderDivisor>
-              <h2 style={{ color: "#fff" }}>OFERTAS</h2>
-            </div>
-          </Header>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "32px"}}>
-            <Label>E-mail</Label>
-            <Input type="email" placeholder="Digite o e-mail da conta..."/>
+      <ContainerMain>
+        <Header>
+          <Logo>HBL</Logo>
+          <div>
+            <HeaderText>Olá, Hélio! Bem-vindo ao Admin Workspace</HeaderText>
+            <HeaderDivisor></HeaderDivisor>
+            <h2 style={{ color: "#fff" }}>OFERTAS</h2>
           </div>
+        </Header>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "32px"}}>
-            <Label>Senha</Label>
-            <Input type="password"/>
-          </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+            marginTop: "32px",
+          }}
+        >
+          <Label>E-mail</Label>
+          <Input type="email" placeholder="Digite o e-mail da conta..." />
+        </div>
 
-          <Button>ENTRAR</Button>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+            marginTop: "32px",
+          }}
+        >
+          <Label>Senha</Label>
+          <Input type="password" />
+        </div>
 
-          <Footer>Desenvolvido por Bytezest ©</Footer>
-        </ContainerMain>
-      </Body>
+        <Button>ENTRAR</Button>
+
+        <Footer>Desenvolvido por Bytezest ©</Footer>
+      </ContainerMain>
     </>
-  )
+  );
 }
