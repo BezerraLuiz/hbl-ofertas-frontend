@@ -44,6 +44,10 @@ export default function Header() {
     }
   }
 
+  function logout() {
+    localStorage.clear()
+  }
+
   return (
     <>
       <HeaderStyle>
@@ -60,7 +64,8 @@ export default function Header() {
         </ContainerSearchBar>
 
         <ContainerButtonShop
-          href={isHome ? "https://hblvendas.com.br/" : "/pages/login"}
+          onClick={logout}
+          href={isHome ? "https://hblvendas.com.br/" : "/pages/auth"}
           target={isHome ? "_blank" : "_self"}
         >
           <ShopText>{label}</ShopText>

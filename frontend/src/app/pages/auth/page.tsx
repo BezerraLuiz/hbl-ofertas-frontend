@@ -26,8 +26,13 @@ export default function Login() {
   const [response, setResponse] = useState("")
 
   useEffect(() => {
-    document.body.style.backgroundColor = "#fff";
-  }, []);
+    if (router.pathname === "/pages/auth") {
+      document.body.style.backgroundColor = "#fff";
+    } else {
+      document.body.style.backgroundColor = "";
+    }
+  }, [router.pathname]);
+
 
   async function authenticate(e: React.FormEvent) {
     e.preventDefault();

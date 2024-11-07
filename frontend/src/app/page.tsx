@@ -6,9 +6,11 @@ import ProductCard from "./components/product-card/product-card";
 import { getAllProducts } from "@/api/productApi";
 import WppContact from "@/app/components/wpp-contact/wpp-contatc";
 import Footer from "./components/footer/footer";
+import Loading from "./components/loading/loading";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -20,6 +22,11 @@ export default function Home() {
         setProducts(response.data); // Armazenando os produtos no estado
         console.log(JSON.stringify(response, null, 2));
       }
+
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
     };
 
     fetchProducts();
@@ -27,6 +34,8 @@ export default function Home() {
 
   return (
     <>
+      {isLoading && <Loading />}
+
       <Header />
       <div style={{
         width: '100%',
