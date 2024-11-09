@@ -11,6 +11,7 @@ import Loading from "./components/loading/loading";
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -19,8 +20,7 @@ export default function Home() {
       if (response.error) {
         alert(JSON.stringify(response, null, 2));
       } else {
-        setProducts(response.data); // Armazenando os produtos no estado
-        console.log(JSON.stringify(response, null, 2));
+        setProducts(response.data);
       }
 
       setIsLoading(true);
@@ -36,7 +36,7 @@ export default function Home() {
     <>
       {isLoading && <Loading />}
 
-      <Header />
+      <Header setSearchQuery={setSearchQuery} />
       <div style={{
         width: '100%',
         height: 'auto',
@@ -45,18 +45,21 @@ export default function Home() {
         justifyContent: 'space-around',
         flexWrap: 'wrap',
       }}>
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            image={product.imagePath}
-            nome={product.nome}
-            preco={product.valor}
-          />
-        ))}
+        {products
+          .filter((product) =>
+            product.nome.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+          .map((product) => (
+            <ProductCard
+              key={product.id}
+              image={product.imagePath}
+              nome={product.nome}
+              preco={product.valor}
+            />
+          ))}
       </div>
 
       <Footer />
-
       <WppContact />
     </>
   );

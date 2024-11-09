@@ -13,7 +13,7 @@ export async function uploadImageHandler(request: FastifyRequest, reply: Fastify
   const data = await request.file();
   console.log("DATA: ", data);
 
-  const { nome } = request.query as {nome: string}; // Desestruturação
+  const { nome } = request.query as { nome: string };
 
   if (!data) {
     return reply.status(400).send({ message: "Imagem é necessária!" });
@@ -24,7 +24,8 @@ export async function uploadImageHandler(request: FastifyRequest, reply: Fastify
   }
 
   const imagePath = generateImagePath(nome, data.filename);
-  const fullImagePath = path.resolve(__dirname, '../../../frontend/public', imagePath);
+
+  const fullImagePath = path.join(__dirname, '../../../frontend/public', imagePath);
 
   const dir = path.dirname(fullImagePath);
   if (!fs.existsSync(dir)) {

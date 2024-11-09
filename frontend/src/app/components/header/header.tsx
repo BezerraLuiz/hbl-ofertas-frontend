@@ -1,3 +1,5 @@
+// Header.jsx
+
 "use client";
 
 import {
@@ -11,9 +13,8 @@ import {
   SearchInput,
 } from "./style";
 import { useEffect, useState } from "react";
-import { searchByNome, searchBySku } from "@/api/productApi";
 
-export default function Header() {
+export default function Header({ setSearchQuery }) {
   const [label, setLabel] = useState("VISITE NOSSA LOJA");
   const [isHome, setIsHome] = useState(true);
   const [placeholder, setPlaceholder] = useState("Insira o nome do produto...");
@@ -29,49 +30,45 @@ export default function Header() {
     }
   }, []);
 
-  async function verificarPesquisa(e: React.FormEvent) {
+  function verificarPesquisa(e: React.FormEvent) {
     e.preventDefault();
-    let response;
-
-    if (typeof window !== "undefined") {
-      if (window.location.pathname !== "/") {
-        response = await searchBySku(pesquisa);
-        alert(JSON.stringify(response, null, 2));
-      } else {
-        response = await searchByNome(pesquisa);
-        alert(JSON.stringify(response, null, 2));
-      }
-    }
+    setSearchQuery(pesquisa);
   }
 
   function logout() {
-    localStorage.clear()
+    localStorage.clear();
   }
 
   return (
-    <>
-      <HeaderStyle>
-        <div style={{ display: "flex", alignItems: "baseline", gap: "5%" }}>
-          <Logo>HBL</Logo>
-          <h2 style={{ color: "#fff" }}>OFERTAS</h2>
-        </div>
+    <HeaderStyle>
+      <div style={{ display: "flex", alignItems: "baseline", gap: "5%" }}>
+        <Logo>HBL</Logo>
+        <h2 style={{ color: "#fff" }}>OFERTAS</h2>
+      </div>
 
-        <ContainerSearchBar>
-          <SearchImage src="/search.svg" alt="search" />
-          <form onSubmit={verificarPesquisa}>
-            <SearchInput type="text" placeholder={placeholder} onChange={(e) => setPesquisa(e.target.value)}/>
-          </form>
-        </ContainerSearchBar>
+      <ContainerSearchBar>
+        <SearchImage src="/search.svg" alt="search" />
+        <form onSubmit={verificarPesquisa}>
+          <SearchInput
+            type="text"
+            placeholder={placeholder}
+            value={pesquisa}
+            onChange={(e) => {
+              setPesquisa(e.target.value);
+              setSearchQuery(e.target.value);
+            }}
+          />
+        </form>
+      </ContainerSearchBar>
 
-        <ContainerButtonShop
-          onClick={logout}
-          href={isHome ? "https://hblvendas.com.br/" : "/pages/auth"}
-          target={isHome ? "_blank" : "_self"}
-        >
-          <ShopText>{label}</ShopText>
-          {isHome && <ShopImage src="/shop.svg" alt="shop" />}
-        </ContainerButtonShop>
-      </HeaderStyle>
-    </>
+      <ContainerButtonShop
+        onClick={logout}
+        href={isHome ? "https://hblvendas.com.br/" : "/pages/auth"}
+        target={isHome ? "_blank" : "_self"}
+      >
+        <ShopText>{label}</ShopText>
+        {isHome && <ShopImage src="/shop.svg" alt="shop" />}
+      </ContainerButtonShop>
+    </HeaderStyle>
   );
 }
