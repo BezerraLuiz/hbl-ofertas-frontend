@@ -1,7 +1,6 @@
 import {FastifyInstance} from "fastify";
 import {
     getAllProductsHandler,
-    getProductByNameHandler,
     getProductBySkuHandler,
     deleteProductHandler,
     updateProductHandler,
@@ -10,7 +9,6 @@ import {
 
 export async function productsRoutes(server: FastifyInstance) {
     server.get("/products", getAllProductsHandler);
-    server.get("/products/searchclient", getProductByNameHandler);
     server.get("/products/searchadmin", getProductBySkuHandler);
     server.delete("/products/delete/:id", deleteProductHandler)
     server.put("/products/update/:id", updateProductHandler)

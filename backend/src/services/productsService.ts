@@ -1,10 +1,6 @@
 import { prisma } from "../lib/prisma";
 import { GetAllProductsResponseDtos } from "../dtos/produtosDto/getAllProductsDtos";
 import {
-  getProductByNameRequestDto,
-  getProductByNameResponseDto,
-} from "../dtos/produtosDto/getProductByNameDtos";
-import {
   GetProductBySkuRequestDto,
   GetProductBySkuResponseDto,
 } from "../dtos/produtosDto/getProductBySkuDtos";
@@ -14,19 +10,6 @@ import { createProductRequestDto } from "../dtos/produtosDto/createProductDtos";
 
 export async function getAllProducts(): Promise<GetAllProductsResponseDtos> {
   return prisma.produtos.findMany({ orderBy: { nome: "asc" } });
-}
-
-export async function getProductByName(
-  nome: getProductByNameRequestDto
-): Promise<getProductByNameResponseDto> {
-  return prisma.produtos.findMany({
-    where: {
-      nome: {
-        contains: nome,
-        mode: "insensitive",
-      },
-    },
-  });
 }
 
 export async function getProductBySku(

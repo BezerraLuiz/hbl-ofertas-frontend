@@ -6,10 +6,9 @@ import {
   updateProduct,
 } from "../services/productsService";
 import { paramsSchema, bodySchema } from "../schemas/productsSchema";
-import { getProductBySku, getProductByName } from "../services/productsService";
+import { getProductBySku } from "../services/productsService";
 import { productInterface } from "../interfaces/productInterface";
 import { uploadImageHandler } from "./imageController";
-import { formatProductName } from "../utils/formatProductNameForSearch";
 
 export async function getAllProductsHandler(
   request: FastifyRequest,
@@ -37,37 +36,6 @@ export async function getAllProductsHandler(
   } catch (e) {
     console.log(e);
     return reply.status(500).send({ message: "Erro ao buscar os produtos!" });
-  }
-}
-
-export async function getProductByNameHandler(
-  request: FastifyRequest,
-  reply: FastifyReply
-) {
-  try {
-    const products = await getAllProducts();
-
-    if (products.length === 0) {
-      return reply
-        .status(404)
-        .send({ message: "Não há produtos cadastrados!" });
-    }
-
-    let { nome } = request.query as {nome: string};
-    console.log(nome)
-
-    nome = formatProductName(nome);
-
-    const product = await getProductByName(nome);
-
-    if (!product) {
-      return reply.status(404).send({ message: "Produto não encontrado!" });
-    }
-
-    return reply.status(200).send(product);
-  } catch (e) {
-    console.log(e);
-    return reply.status(500).send({ message: "Erro ao procurar o produto!" });
   }
 }
 
