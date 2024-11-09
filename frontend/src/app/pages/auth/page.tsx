@@ -13,25 +13,28 @@ import {
   Button,
 } from "./style";
 import { authUser } from "@/api/userApi";
-import { useRouter } from "next/navigation";
 import Loading from "@/app/components/loading/loading";
 import ErrorComponent from "@/app/components/error/error";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const router = useRouter();
+  const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [response, setResponse] = useState("")
 
   useEffect(() => {
-    if (router.pathname === "/pages/auth") {
+    sessionStorage.clear();
+    
+    if (pathname == "/pages/auth") {
       document.body.style.backgroundColor = "#fff";
     } else {
       document.body.style.backgroundColor = "";
     }
-  }, [router.pathname]);
+  }, [pathname]);
 
 
   async function authenticate(e: React.FormEvent) {
@@ -43,7 +46,7 @@ export default function Login() {
   
     if (res.error === false) {
       setIsLoading(true);
-      localStorage.setItem("user", "admin")
+      sessionStorage.setItem("user", "admin")
       setTimeout(() => {
         router.push("/pages/admin");
       }, 1500);

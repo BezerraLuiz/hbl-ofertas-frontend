@@ -9,11 +9,11 @@ export default function Admin() {
   const router = useRouter();
 
   useEffect(() => {
-    const response = localStorage.getItem("user");
+    const response = sessionStorage.getItem("user");
     if (response != "admin") {
       router.push("/pages/auth");
     }
-  }, []);
+  }, [router]);
 
   return (
     <>
