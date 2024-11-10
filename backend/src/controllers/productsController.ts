@@ -8,7 +8,6 @@ import {
 import { paramsSchema, bodySchema } from "../schemas/productsSchema";
 import { getProductBySku } from "../services/productsService";
 import { productInterface } from "../interfaces/productInterface";
-import { uploadImageHandler } from "./imageController";
 
 export async function getAllProductsHandler(
   request: FastifyRequest,
@@ -124,68 +123,48 @@ export async function createProductHandler(
 ) {
   try {
     let sku, nome, valor, descricao;
-    let i = 0;
+    const imagePath = request.query.imagePath;
 
-    for await (const part of request.parts()) {
-      if (part) {
-        switch (part.fieldname) {
-          case "nome":
-            nome = part.value;
-            console.log("Nome recebido:", nome);
-            break;
-          case "sku":
-            sku = part.value;
-            console.log("SKU recebido:", sku);
-            break;
-          case "valor":
-            valor = Number(part.value);
-            console.log("Valor recebido:", valor);
-            break;
-          case "descricao":
-            descricao = part.value;
-            console.log("Descrição recebida:", descricao);
-            break;
-          default:
-            console.log("Break!");
-            break;
+    if (request.isMultipart()) {
+      let i = 0;
+      for await (const part of request.parts()) {
+        if (part) {
+          switch (part.fieldname) {
+            case "nome":
+              nome = part.value;
+              break;
+            case "sku":
+              sku = part.value;
+              break;
+            case "valor":
+              valor = Number(part.value);
+              break;
+            case "descricao":
+              descricao = part.value;
+              break;
+            default:
+              break;
+          }
+        }
+
+        i += 1;
+        if (i == 5) {
+          break;
         }
       }
-
-      i += 1;
-      if (i == 4) {
-        break;
-      }
     }
 
-    console.log("Valores armazenados:", {
-      sku,
-      nome,
-      valor,
-      descricao,
-    });
-
-    // Garantir que 'valor' não seja undefined
-    if (valor === undefined) {
-      throw new Error("Valor é obrigatório!");
+    if (!nome || !sku || valor === undefined || !descricao) {
+      throw new Error("Todos os campos são obrigatórios!");
     }
-
-    console.log("Passou os valores!");
-    console.log("Chamando função para upload da imagem!");
-
-    console.log("Antes de chamar uploadImageHandler");
-    const imageResponse = await uploadImageHandler(request, reply);
-    console.log("Depois de chamar uploadImageHandler");
-    console.log("IMAGE RESPONSE = ", imageResponse);
-
-    const imagePath = imageResponse.path;
 
     await createProduct({ sku, nome, valor, descricao, imagePath });
 
-    return reply.status(201);
+    return reply.status(201).send({ message: "Produto criado com sucesso!" });
   } catch (e) {
     console.error("Erro ao criar produto:", e);
     return reply
       .status(500)
-      .send({ message: "Não foi possível criar o produto!" });
+      .send({ message: "Não foi possível criar o produto! " + e });
   }
 }

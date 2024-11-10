@@ -76,3 +76,15 @@ export const ShopImage = styled.img`
   width: 20px;
   height: 20px;
 `;
+
+export const DesenvolvidoPor = styled.div`
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: 0.02rem;
+  text-transform: capitalize;
+
+  color: #F5F5F5;
+`;

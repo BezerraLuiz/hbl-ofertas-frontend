@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import Header from "../../components/header/header";
 import { useRouter } from "next/navigation";
-import { Button, ContainerMain, Divisor } from "./style";
+import { Button, ContainerMain, Divisor, TextWpp } from "./style";
 import ProductCard from "@/app/components/product-card/product-card";
+import WppContact from "@/app/components/wpp-contact/wpp-contatc";
 
 export default function Admin() {
   const router = useRouter();
@@ -36,6 +37,12 @@ export default function Admin() {
           />
         ))}
       </ContainerMain>
+
+      <TextWpp>
+        Algum problema? <br />
+        Entre em contato!
+      </TextWpp>
+      <WppContact />
     </>
   );
 }

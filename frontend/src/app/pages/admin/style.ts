@@ -42,3 +42,18 @@ export const Divisor = styled.div`
 
   border: 2.5px solid #000000;
 `;
+
+export const TextWpp = styled.p`
+  position: absolute;
+  bottom: 32.5px;
+  right: 100px;
+
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+
+  color: #4D4D4D;
+
+  text-transform: capitalize;
+`;
