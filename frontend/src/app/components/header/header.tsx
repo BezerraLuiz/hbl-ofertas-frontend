@@ -1,5 +1,3 @@
-// Header.jsx
-
 "use client";
 
 import {
@@ -13,26 +11,48 @@ import {
   SearchInput,
 } from "./style";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { searchBySku } from "@/api/productApi"; // Certifique-se de ter esta função
 
-export default function Header({ setSearchQuery }) {
+export default function Header({ setSearchQuery, setProducts }) {
   const [label, setLabel] = useState("VISITE NOSSA LOJA");
   const [isHome, setIsHome] = useState(true);
   const [placeholder, setPlaceholder] = useState("Insira o nome do produto...");
   const [pesquisa, setPesquisa] = useState("");
+  const pathname = usePathname();
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (window.location.pathname !== "/") {
-        setIsHome(false);
-        setLabel("SAIR DA CONTA");
-        setPlaceholder("Insira o SKU do produto...");
-      }
+    if (pathname !== "/") {
+      setIsHome(false);
+      setLabel("SAIR DA CONTA");
+      setPlaceholder("Insira o SKU do produto...");
     }
-  }, []);
+  }, [pathname]);
 
   function verificarPesquisa(e: React.FormEvent) {
     e.preventDefault();
-    setSearchQuery(pesquisa);
+    if (pathname !== "/") {
+      const pesquisaFormatada = pesquisa.toUpperCase().replace(" ", "%20");
+
+      searchBySku(pesquisaFormatada)
+        .then((result) => {
+          if (result && Array.isArray(result.data)) {
+            setProducts(result.data);
+          } else {
+            console.error(
+              "Esperado um array de produtos, mas recebido:",
+              result
+            );
+            setProducts([]);
+          }
+        })
+        .catch((error) => {
+          console.error("Erro ao buscar produtos:", error);
+          setProducts([]);
+        });
+    } else {
+      setSearchQuery(pesquisa);
+    }
   }
 
   function logout() {

@@ -2,7 +2,9 @@ import { BASE_URL, defaultHeaders } from "./config";
 
 export const searchBySku = async (sku: string) => {
   try {
-    const response = await fetch(`${BASE_URL}/products/searchadmin?sku=${sku.toUpperCase().replace(" ", "%20")}`, {
+    sku.toUpperCase().replace(" ", "%20")
+
+    const response = await fetch(`${BASE_URL}/products/searchadmin?sku=${sku}`, {
       method: 'GET',
       headers: defaultHeaders,
     });
