@@ -10,8 +10,9 @@ import Loading from "./components/loading/loading";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [product, setProduct] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -23,7 +24,6 @@ export default function Home() {
         setProducts(response.data);
       }
 
-      setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
       }, 300);
@@ -36,7 +36,7 @@ export default function Home() {
     <>
       {isLoading && <Loading />}
 
-      <Header setSearchQuery={setSearchQuery} />
+      <Header setSearchQuery={setSearchQuery} setProducts={setProduct} />
       <div style={{
         width: '100%',
         height: 'auto',
@@ -54,7 +54,10 @@ export default function Home() {
               key={product.id}
               image={product.imagePath}
               nome={product.nome}
-              preco={product.valor}
+              preco={product.valor.toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             />
           ))}
       </div>

@@ -24,7 +24,7 @@ export default function Admin() {
       <Header setSearchQuery={setSearchQuery} setProducts={setProducts} />
 
       <ContainerMain>
-        <Button>Cadastrar Produto</Button>
+        <a href="/pages/createProduct"><Button>Cadastrar Produto</Button></a>
 
         <Divisor />
 

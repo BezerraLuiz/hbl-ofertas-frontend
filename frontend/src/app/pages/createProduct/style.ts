@@ -77,7 +77,11 @@ export const Button = styled.button`
   }
 `;
 
-export const ButtonCancel = styled.button`
+export const ButtonCancel = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   width: 330px;
   height: 35px;
   margin-top: 25px;
@@ -100,5 +104,37 @@ export const ButtonCancel = styled.button`
   &:hover {
     transform: scale(1.05);
     background-color: #D47272;
+  }
+`;
+
+export const FileInput = styled.input.attrs({ type: "file" })`
+  display: none;
+`;
+
+export const FileLabel = styled.label`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 330px;
+  height: 35px;
+  border: 1.5px solid ${colors["green-200"]};
+  border-radius: 10px;
+  padding: 0 15px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: #798c76;
+    background-color: #f2f2f2;
+  }
+
+  &:focus-within {
+    border-color: #798c76;
+    background-color: #e7e6e6;
   }
 `;

@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
 import Header from "@/app/components/header/header";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   ContainerMain,
   ContainerInfoProduct,
@@ -9,8 +9,12 @@ import {
   Input,
   Button,
   ButtonCancel,
+  FileInput,
+  FileLabel,
 } from "./style";
 import { createProductApi } from "@/api/productApi";
+import { useRouter } from "next/navigation";
+import ErrorComponent from "@/app/components/error/error";
 
 export default function createProduct() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -19,7 +23,51 @@ export default function createProduct() {
   const [nome, setNome] = useState("");
   const [preco, setPreco] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [imagem, setImagem] = useState<File | null>(null); // Estado para a imagem
+  const [imagem, setImagem] = useState<File | null>(null);
+  const [fileName, setFileName] = useState("Selecionar Arquivo");
+  const [isError, setIsError] = useState(false);
+  const [message, setMessage] = useState("");
+  const [response, setResponse] = useState("");
+  const router = useRouter();
+
+  async function submitFormulario(e: React.FormEvent) {
+    e.preventDefault();
+    const valor = convertToNumber(preco);
+
+    console.log("!")
+
+    if (sku == "" || nome == "" || preco == "" || descricao == "" || imagem == null) {
+      const res = await createProductApi(sku, nome, valor, descricao, imagem);
+      setResponse(res.message);
+      console.log(res.message);
+
+      if (res.error === false) {
+        router.push("/pages/admin");
+      } else {
+        setIsError(true);
+        setTimeout(() => {
+          setIsError(false);
+        }, 3500);
+      }
+    } else {
+      setMessage("Preencha todos os dados do produto");
+      setIsError(true);
+      setTimeout(() => {
+        setIsError(false);
+      }, 3500);
+    } 
+  }
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFileName(file.name);
+    }
+
+    if (e.target.files) {
+      setImagem(e.target.files[0]);
+    }
+  };
 
   function handleFormatarMoeda(e, setState) {
     let value = e.target.value;
@@ -31,29 +79,19 @@ export default function createProduct() {
     setState(value);
   }
 
-  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.files) {
-      setImagem(e.target.files[0]);
-    }
-  }
-
-  function submitFormulario(e: React.FormEvent) {
-    e.preventDefault();
-    const valor = convertToNumber(preco);
-
-    console.log("Imagem: " + imagem)
-
-    createProductApi(sku, nome, valor, descricao, imagem);
-  }
-
   function convertToNumber(valor: string) {
     return parseFloat(
       valor.replace("R$", "").replace(/\./g, "").replace(",", ".")
     );
   }
 
+  function cancelarCadastro() {
+    router.push("/pages/admin"); 
+  }
+
   return (
     <>
+      {isError && <ErrorComponent message={message}/>}
       <Header setSearchQuery={setSearchQuery} setProducts={setProducts} />
 
       <ContainerMain>
@@ -67,8 +105,8 @@ export default function createProduct() {
                 marginTop: "32px",
               }}
             >
-              <Label>Imagem</Label>
-              <Input type="file" required onChange={handleImageChange} />
+              <FileInput type="file" id="file-upload" required onChange={handleFileChange} />
+              <FileLabel htmlFor="file-upload">{fileName}</FileLabel>
             </div>
 
             <div
@@ -140,7 +178,7 @@ export default function createProduct() {
             </div>
 
             <Button>CADASTRAR</Button>
-            <ButtonCancel>CANCELAR</ButtonCancel>
+            <ButtonCancel onClick={cancelarCadastro}>CANCELAR</ButtonCancel>
           </form>
         </ContainerInfoProduct>
       </ContainerMain>
