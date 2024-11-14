@@ -1,6 +1,16 @@
 import { colors } from "@/app/styles/colors";
 import styled from "styled-components";
 
+export const ModalBackground = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Escurece o fundo com transparência */
+  z-index: 998; /* Fica abaixo do modal */
+`;
+
 export const ModalOverlay = styled.div`
   position: fixed;
   top: 50%;
@@ -111,5 +121,32 @@ export const BackButton = styled.button`
 
   &:hover {
     background-color: #768874;
+  }
+`;
+
+export const DeleteButton = styled.button`
+  position: absolute;
+  width: 150px;
+  height: 40px;
+  left: 550px;
+  top: 440px;
+
+  background: #D88A8A;
+  border: none;
+  border-radius: 5px;
+
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.02rem;
+
+  color: #f5f5f5;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease-in-out;
+
+  &:hover {
+    background-color: #D47272;
   }
 `;

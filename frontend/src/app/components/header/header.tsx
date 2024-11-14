@@ -24,7 +24,7 @@ export default function Header({ setSearchQuery, setProducts }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (pathname === "/pages/createProduct") {
+    if (pathname === "/pages/create%product") {
       setIsCreateProductPage(true);
     } else {
       setIsCreateProductPage(false);

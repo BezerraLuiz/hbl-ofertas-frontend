@@ -11,9 +11,10 @@ import ProductModal from "./components/product-modal/product-modal";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [product, setProduct] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -35,21 +36,31 @@ export default function Home() {
     fetchProducts();
   }, []);
 
+  function handleProductClick(product) {
+    setSelectedProduct(product);
+  };
+
+  function handleCloseModal() {
+    setSelectedProduct(null);
+  };
+
   return (
     <>
       {isLoading && <Loading />}
 
-      <ProductModal/>
+      {selectedProduct && <ProductModal product={selectedProduct} onClose={handleCloseModal} />}
 
       <Header setSearchQuery={setSearchQuery} setProducts={setProduct} />
-      <div style={{
-        width: '100%',
-        height: 'auto',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        flexWrap: 'wrap',
-      }}>
+      <div
+        style={{
+          width: "100%",
+          height: "auto",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-around",
+          flexWrap: "wrap",
+        }}
+      >
         {products
           .filter((product) =>
             product.nome.toLowerCase().includes(searchQuery.toLowerCase())
@@ -63,6 +74,7 @@ export default function Home() {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}
+              onClick={() => handleProductClick(product)} // Passa o produto para o modal
             />
           ))}
       </div>

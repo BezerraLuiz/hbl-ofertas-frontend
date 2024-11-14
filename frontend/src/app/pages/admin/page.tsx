@@ -6,11 +6,14 @@ import { useRouter } from "next/navigation";
 import { Button, ContainerMain, Divisor, TextWpp } from "./style";
 import ProductCard from "@/app/components/product-card/product-card";
 import WppContact from "@/app/components/wpp-contact/wpp-contatc";
+import ProductModal from "@/app/components/product-modal/product-modal";
 
 export default function Admin() {
   const router = useRouter();
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     const response = sessionStorage.getItem("user");
@@ -23,8 +26,25 @@ export default function Admin() {
     router.push("/pages/create%product");
   };
 
+  function handleProductClick(product) {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  function handleCloseModal() {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
+  };
+
   return (
     <>
+      {isModalOpen && (
+        <ProductModal
+          product={selectedProduct}
+          onClose={handleCloseModal}
+        />
+      )}
+
       <Header setSearchQuery={setSearchQuery} setProducts={setProducts} />
 
       <ContainerMain>
@@ -38,6 +58,7 @@ export default function Admin() {
             image={product.imagePath}
             nome={product.nome}
             preco={product.valor}
+            onClick={() => handleProductClick(product)}
           />
         ))}
       </ContainerMain>
