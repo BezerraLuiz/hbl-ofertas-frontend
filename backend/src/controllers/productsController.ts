@@ -5,7 +5,7 @@ import {
   getAllProducts,
   updateProduct,
 } from "../services/productsService";
-import { paramsSchema, bodySchema } from "../schemas/productsSchema";
+import { bodySchema } from "../schemas/productsSchema";
 import { getProductBySku } from "../services/productsService";
 import { productInterface } from "../interfaces/productInterface";
 
@@ -78,7 +78,8 @@ export async function deleteProductHandler(
         .send({ message: "Não há produtos cadastrados!" });
     }
 
-    const { id } = paramsSchema.parse(request.params);
+    let { id } = request.query;
+    id = parseInt(id)
 
     const deletedProduct = await deleteProduct(id);
     if (!deletedProduct) {
@@ -97,7 +98,8 @@ export async function updateProductHandler(
   reply: FastifyReply
 ) {
   try {
-    const { id } = paramsSchema.parse(request.params);
+    let { id } = request.query;
+    id = parseInt(id)
     const { sku, nome, valor, descricao } = bodySchema.parse(request.body);
 
     const updatedProduct = await updateProduct({

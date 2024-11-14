@@ -8,14 +8,14 @@ import {
   BackButton,
   ModalBackground,
   DeleteButton,
+  UpdateButton,
 } from "./style";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { deleteProduct, updateProduct } from "@/api/productApi";
+import ErrorComponent from "../error/error";
 
 export default function ProductModal({ product, onClose }) {
   const { nome, valor, sku, descricao, imagePath } = product;
-  const [isReadOnly, setIsReadOnly] = useState(false);
-  const isreadonly: boolean = false;
-  const pathname = usePathname();
   const [values, setValues] = useState({
     productName: nome,
     price: valor.toLocaleString("pt-BR", {
@@ -31,6 +31,12 @@ export default function ProductModal({ product, onClose }) {
     sku: null,
     description: null,
   });
+  const [isReadOnly, setIsReadOnly] = useState(false);
+  const [response, setResponse] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [message, setMessage] = useState("");
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     if (pathname == "/") {
@@ -50,12 +56,60 @@ export default function ProductModal({ product, onClose }) {
     }
   }
 
+  function handleFormatarMoeda(e, setState) {
+    let value = e.target.value;
+    value = value.replace(/\D/g, "");
+    const formattedValue = (Number(value) / 100).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).replace("R$", "").trim();
+    setState(formattedValue);
+  }
+  
+  async function deletarProduto(id: number) {
+    const res = await deleteProduct(id);
+    setResponse(res.message);
+
+    if (res.error === false) {
+      window.location.reload(true);
+    } else {
+      setMessage(res.message);
+      setIsError(true);
+      setTimeout(() => {
+        setIsError(false);
+      }, 3500);
+    }
+  }
+
+  async function atualizarProduto(id: number, sku: string, nome: string, valor: number, descricao: string) {
+    const res = await updateProduct(id, sku, nome, valor, descricao);
+    setResponse(res.message);
+
+    if (res.error === false) {
+      window.location.reload(true);
+    } else {
+      setMessage(res.message);
+      setIsError(true);
+      setTimeout(() => {
+        setIsError(false);
+      }, 3500);
+    }
+  }
+
+  // Função para converter o valor formatado de volta para número
+  function formatPriceToNumber(formattedPrice) {
+    const cleanedValue = formattedPrice.replace(/[^\d,]/g, '').replace(',', '.');
+    return parseFloat(cleanedValue);
+  }
+
   return (
     <>
+      {isError && <ErrorComponent message={message} />}
+
       <ModalBackground onClick={onClose} />
       <ModalOverlay>
         <ModalImage src={imagePath} alt="img-product" />
-        <ModalInfo isreadonly={isReadOnly}>
+        <ModalInfo isreadonly={isReadOnly ? true : undefined}>
           <input
             style={{
               fontStyle: "normal",
@@ -81,7 +135,15 @@ export default function ProductModal({ product, onClose }) {
             }}
             ref={(el) => (inputRef.current.price = el)}
             value={`R$ ${values.price}`}
-            onChange={(e) => handleChange(e, "price")}
+            onChange={(e) => {
+              handleChange(e, "price");
+              handleFormatarMoeda(e, (formattedValue) => {
+                setValues((prevValues) => ({
+                  ...prevValues,
+                  price: formattedValue,
+                }));
+              });
+            }}
             readOnly={isReadOnly}
           />
           <input
@@ -114,7 +176,23 @@ export default function ProductModal({ product, onClose }) {
           ></textarea>
         </ModalInfo>
         <BackButton onClick={onClose}>Voltar</BackButton>
-        <DeleteButton onClick={onClose}>Excluir</DeleteButton>
+        <UpdateButton
+          onClick={() => {
+            const priceNumber = formatPriceToNumber(values.price); // Convertendo preço de volta para número
+            atualizarProduto(
+              product.id,
+              values.sku,
+              values.productName,
+              priceNumber,
+              values.description
+            );
+          }}
+        >
+          Atualizar Produto
+        </UpdateButton>
+        <DeleteButton onClick={() => deletarProduto(product.id)}>
+          Excluir
+        </DeleteButton>
       </ModalOverlay>
     </>
   );

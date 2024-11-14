@@ -99,9 +99,9 @@ export const ModalInfo = styled.div`
 
 export const BackButton = styled.button`
   position: absolute;
-  width: 150px;
-  height: 40px;
-  left: 720px;
+  width: 140px;
+  height: 45px;
+  left: 730px;
   top: 440px;
 
   background: #8a9d87;
@@ -124,11 +124,38 @@ export const BackButton = styled.button`
   }
 `;
 
+export const UpdateButton = styled.button`
+  position: absolute;
+  width: 140px;
+  height: 45px;
+  left: 580px;
+  top: 440px;
+
+  background: #3498db;
+  border: none;
+  border-radius: 5px;
+
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.02rem;
+
+  color: #f5f5f5;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease-in-out;
+
+  &:hover {
+    background-color: #428CBE;
+  }
+`;
+
 export const DeleteButton = styled.button`
   position: absolute;
-  width: 150px;
-  height: 40px;
-  left: 550px;
+  width: 140px;
+  height: 45px;
+  left: 430px;
   top: 440px;
 
   background: #D88A8A;

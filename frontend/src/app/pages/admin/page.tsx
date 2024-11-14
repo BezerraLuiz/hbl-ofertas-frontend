@@ -7,6 +7,7 @@ import { Button, ContainerMain, Divisor, TextWpp } from "./style";
 import ProductCard from "@/app/components/product-card/product-card";
 import WppContact from "@/app/components/wpp-contact/wpp-contatc";
 import ProductModal from "@/app/components/product-modal/product-modal";
+import Loading from "@/app/components/loading/loading";
 
 export default function Admin() {
   const router = useRouter();
@@ -14,6 +15,14 @@ export default function Admin() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 300);
+  }, [])
 
   useEffect(() => {
     const response = sessionStorage.getItem("user");
@@ -24,25 +33,24 @@ export default function Admin() {
 
   function rotaCadastroProduto() {
     router.push("/pages/create%product");
-  };
+  }
 
   function handleProductClick(product) {
     setSelectedProduct(product);
     setIsModalOpen(true);
-  };
+  }
 
   function handleCloseModal() {
     setIsModalOpen(false);
     setSelectedProduct(null);
-  };
+  }
 
   return (
     <>
+      {isLoading && <Loading />}
+
       {isModalOpen && (
-        <ProductModal
-          product={selectedProduct}
-          onClose={handleCloseModal}
-        />
+        <ProductModal product={selectedProduct} onClose={handleCloseModal} />
       )}
 
       <Header setSearchQuery={setSearchQuery} setProducts={setProducts} />

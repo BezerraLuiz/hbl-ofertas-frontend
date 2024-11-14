@@ -10,7 +10,7 @@ import {
 export async function productsRoutes(server: FastifyInstance) {
     server.get("/products", getAllProductsHandler);
     server.get("/products/searchadmin", getProductBySkuHandler);
-    server.delete("/products/delete/:id", deleteProductHandler)
-    server.put("/products/update/:id", updateProductHandler)
+    server.delete("/products/delete", deleteProductHandler)
+    server.put("/products/update", updateProductHandler)
     server.post("/products/create", createProductHandler)
 }

@@ -107,8 +107,6 @@ export const createProductApi = async (sku: string, nomeProduto: string, valor: 
   }
 };
 
-
-
 export const uploadImage = async (nomeProduto: string, arquivoImagem: File) => {
   try {
     console.log("Nome do Produto:", nomeProduto);
@@ -147,6 +145,57 @@ export const uploadImage = async (nomeProduto: string, arquivoImagem: File) => {
     return { error: false, data: res };
   } catch (e) {
     console.error("Erro no upload da imagem:", e);
+    return {
+      error: true,
+      data: { message: "Erro na conexão com o servidor." },
+    };
+  }
+};
+
+export const deleteProduct = async (id: number) => {
+  try {
+    const response = await fetch(`${BASE_URL}/products/delete?id=${id}`, {
+      method: "DELETE",
+    });
+
+    const res = await response.json();
+
+    if (!response.ok) {
+      return { error: true, message: "Erro desconhecido" };
+    }
+
+    return { error: false, message: res };
+  } catch (e) {
+    console.log(e);
+    return {
+      error: true,
+      data: { message: "Erro na conexão com o servidor." },
+    };
+  }
+};
+
+export const updateProduct = async (id: number, sku: string, nome: string, valor: number, descricao: string) => {
+  try {
+    const response = await fetch(`${BASE_URL}/products/update?id=${id}`, {
+      method: "PUT",
+      headers: defaultHeaders,
+      body: JSON.stringify({
+        sku,
+        nome,
+        valor,
+        descricao,
+      }),
+    });
+
+    const res = await response.json();
+
+    if (!response.ok) {
+      return { error: true, message: "Erro desconhecido" };
+    }
+
+    return { error: false, message: res };
+  } catch (e) {
+    console.log(e);
     return {
       error: true,
       data: { message: "Erro na conexão com o servidor." },
