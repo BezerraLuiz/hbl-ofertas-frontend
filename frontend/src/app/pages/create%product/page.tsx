@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/app/components/header/header";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   ContainerMain,
   ContainerInfoProduct,
@@ -34,38 +34,25 @@ export default function createProduct() {
     e.preventDefault();
     const valor = convertToNumber(preco);
 
-    console.log("!")
+    const res = await createProductApi(sku, nome, valor, descricao, imagem);
+    setResponse(res.message);
+    console.log(res.message);
 
-    if (sku == "" || nome == "" || preco == "" || descricao == "" || imagem == null) {
-      const res = await createProductApi(sku, nome, valor, descricao, imagem);
-      setResponse(res.message);
-      console.log(res.message);
-
-      if (res.error === false) {
-        router.push("/pages/admin");
-      } else {
-        setIsError(true);
-        setTimeout(() => {
-          setIsError(false);
-        }, 3500);
-      }
+    if (res.error === false) {
+      router.push("/pages/admin");
     } else {
-      setMessage("Preencha todos os dados do produto");
       setIsError(true);
       setTimeout(() => {
         setIsError(false);
       }, 3500);
-    } 
+    }
   }
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFileName(file.name);
-    }
-
-    if (e.target.files) {
       setImagem(e.target.files[0]);
+      setFileName(file.name);
     }
   };
 
@@ -86,12 +73,12 @@ export default function createProduct() {
   }
 
   function cancelarCadastro() {
-    router.push("/pages/admin"); 
+    router.push("/pages/admin");
   }
 
   return (
     <>
-      {isError && <ErrorComponent message={message}/>}
+      {isError && <ErrorComponent message={message} />}
       <Header setSearchQuery={setSearchQuery} setProducts={setProducts} />
 
       <ContainerMain>
@@ -105,7 +92,12 @@ export default function createProduct() {
                 marginTop: "32px",
               }}
             >
-              <FileInput type="file" id="file-upload" required onChange={handleFileChange} />
+              <FileInput
+                type="file"
+                id="file-upload"
+                required
+                onChange={handleFileChange}
+              />
               <FileLabel htmlFor="file-upload">{fileName}</FileLabel>
             </div>
 

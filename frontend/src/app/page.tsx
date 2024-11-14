@@ -76,7 +76,7 @@ export default function Home() {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}
-              onClick={() => handleProductClick(product)} // Passa o produto para o modal
+              onClick={() => handleProductClick(product)}
             />
           ))}
       </div>
