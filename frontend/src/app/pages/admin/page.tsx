@@ -19,12 +19,16 @@ export default function Admin() {
     }
   }, [router]);
 
+  function rotaCadastroProduto() {
+    router.push("/pages/create%product");
+  };
+
   return (
     <>
       <Header setSearchQuery={setSearchQuery} setProducts={setProducts} />
 
       <ContainerMain>
-        <a href="/pages/createProduct"><Button>Cadastrar Produto</Button></a>
+        <Button onClick={rotaCadastroProduto}>Cadastrar Produto</Button>
 
         <Divisor />
 

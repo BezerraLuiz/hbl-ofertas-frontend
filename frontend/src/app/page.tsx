@@ -7,14 +7,17 @@ import { getAllProducts } from "@/api/productApi";
 import WppContact from "@/app/components/wpp-contact/wpp-contatc";
 import Footer from "./components/footer/footer";
 import Loading from "./components/loading/loading";
+import ProductModal from "./components/product-modal/product-modal";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [product, setProduct] = useState("");
 
   useEffect(() => {
+    setIsLoading(true);
+
     const fetchProducts = async () => {
       const response = await getAllProducts();
 
@@ -35,6 +38,8 @@ export default function Home() {
   return (
     <>
       {isLoading && <Loading />}
+
+      <ProductModal/>
 
       <Header setSearchQuery={setSearchQuery} setProducts={setProduct} />
       <div style={{
