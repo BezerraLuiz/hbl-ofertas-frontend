@@ -38,17 +38,19 @@ export default function Home() {
 
   function handleProductClick(product) {
     setSelectedProduct(product);
-  };
+  }
 
   function handleCloseModal() {
     setSelectedProduct(null);
-  };
+  }
 
   return (
     <>
       {isLoading && <Loading />}
 
-      {selectedProduct && <ProductModal product={selectedProduct} onClose={handleCloseModal} />}
+      {selectedProduct && (
+        <ProductModal product={selectedProduct} onClose={handleCloseModal} />
+      )}
 
       <Header setSearchQuery={setSearchQuery} setProducts={setProduct} />
       <div

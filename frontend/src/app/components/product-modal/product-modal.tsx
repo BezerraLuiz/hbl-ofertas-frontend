@@ -96,7 +96,6 @@ export default function ProductModal({ product, onClose }) {
     }
   }
 
-  // Função para converter o valor formatado de volta para número
   function formatPriceToNumber(formattedPrice) {
     const cleanedValue = formattedPrice.replace(/[^\d,]/g, '').replace(',', '.');
     return parseFloat(cleanedValue);
@@ -109,7 +108,7 @@ export default function ProductModal({ product, onClose }) {
       <ModalBackground onClick={onClose} />
       <ModalOverlay>
         <ModalImage src={imagePath} alt="img-product" />
-        <ModalInfo isreadonly={isReadOnly ? true : undefined}>
+        <ModalInfo isreadonly={isReadOnly ? "true" : undefined}>
           <input
             style={{
               fontStyle: "normal",
