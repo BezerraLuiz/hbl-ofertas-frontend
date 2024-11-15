@@ -17,6 +17,10 @@ export const HeaderStyle = styled.header`
     padding: 0 5px 0 5px;
     gap: 7px;
   }
+
+  @media (min-width: 600px) and (max-width: 768px) {
+    
+  }
 `;
 
 export const ContainerLogo = styled.div`
@@ -26,6 +30,10 @@ export const ContainerLogo = styled.div`
 
   @media (max-width: 600px) {
     flex-direction: column;
+    gap: 0px;
+  }
+
+  @media (min-width: 600px) and (max-width: 768px) {
     gap: 0px;
   }
 `;
@@ -40,6 +48,11 @@ export const Logo = styled.h1`
     font-size: 30px;
     letter-spacing: -2.5px;
   }
+
+  @media (min-width: 600px) and (max-width: 768px) {
+    font-size: 40px;
+    letter-spacing: -2.5px;
+  }
 `;
 
 export const ContainerNumText = styled.div`
@@ -51,6 +64,10 @@ export const ContainerNumText = styled.div`
   @media (max-width: 600px) {
     gap: 3.5px;
   }
+
+  @media (min-width: 600px) and (max-width: 768px) {
+    gap: 3.5px; 
+  }
 `;
 
 export const NumLogo = styled.h2`
@@ -60,6 +77,10 @@ export const NumLogo = styled.h2`
   @media (max-width: 600px) {
     font-size: 20px;
   }
+
+  @media (min-width: 600px) and (max-width: 768px) {
+   font-size: 26px; 
+  }
 `;
 
 export const TextLogo = styled.h2`
@@ -67,6 +88,10 @@ export const TextLogo = styled.h2`
 
   @media (max-width: 600px) {
     font-size: 20px;
+  }
+
+  @media (min-width: 600px) and (max-width: 768px) {
+   font-size: 26px; 
   }
 `;
 
@@ -88,6 +113,11 @@ export const ContainerSearchBar = styled.span`
 
   @media (max-width: 600px) {
     gap: 10px;
+  }
+
+  @media (min-width: 600px) and (max-width: 768px) {
+    width: 350px;
+    margin: 0px 10px 0px 10px;
   }
 `;
 
@@ -111,6 +141,10 @@ export const SearchInput = styled.input`
     &::-webkit-input-placeholder {
       font-size: 11px;
     }
+  }
+
+  @media (min-width: 600px) and (max-width: 768px) {
+    width: 135%; 
   }
 `;
 
@@ -140,6 +174,10 @@ export const ShopText = styled.p`
   font-size: 16px;
   font-weight: 600;
   color: ${colors["text-200"]};
+
+  @media (min-width: 600px) and (max-width: 768px) {
+   font-size: 13px;
+  }
 `;
 
 export const ShopImage = styled.img`

@@ -11,11 +11,6 @@ export const ContainerMain = styled.footer`
   margin-bottom: 15px;
 
   @media (max-width: 600px) {
-    position: relative;
-    bottom: 0;
-    transform: translateX(0);
-    width: 100%;
-    padding: 10px;
     margin-bottom: 8px;
   }
 `;

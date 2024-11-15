@@ -18,8 +18,22 @@ export const Card = styled.section`
     transform: translateY(-5px);
   }
 
-  @media (max-width: 600px) {
-    &:hover {}
+  @media (max-width: 320px) {
+    width: 144px;
+
+    &:hover {
+      box-shadow: none;
+      transform: none;
+    }
+  }
+
+  @media (min-width: 321px) and (max-width: 600px) {
+    width: 150px;
+
+    &:hover {
+      box-shadow: none;
+      transform: none;
+    }
   }
 `;
 

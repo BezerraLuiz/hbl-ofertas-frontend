@@ -7,8 +7,8 @@ export const ModalBackground = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Escurece o fundo com transparência */
-  z-index: 998; /* Fica abaixo do modal */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
 `;
 
 export const ModalOverlay = styled.div`
@@ -25,16 +25,32 @@ export const ModalOverlay = styled.div`
   box-shadow: 8px 9px 21.7px rgba(0, 0, 0, 0.61);
   border-radius: 10px;
   z-index: 999;
+
+  @media (max-width: 600px) {
+    width: 280px;
+    height: 500px;
+    flex-direction: column;
+  }
 `;
 
 export const ModalImage = styled.img`
   width: 50%;
   height: 100%;
   border-radius: 10px 0 0 10px;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    height: 50%;
+    border-radius: 10px 10px 0 0;
+  }
 `;
 
 export const ModalInfo = styled.div`
   margin: 2.5%;
+
+  @media (max-width: 600px) {
+    margin: 0px;
+  }
 
   & input {
     width: 100%;
@@ -64,6 +80,10 @@ export const ModalInfo = styled.div`
         pointer-events: none;
         border: none;
     `}
+
+    @media (max-width: 600px) {
+      margin-bottom: 5px;
+    }
   }
 
   & textarea {
@@ -94,6 +114,28 @@ export const ModalInfo = styled.div`
         pointer-events: none;
         border: none;
     `}
+
+    @media (max-width: 600px) {
+      margin-bottom: 0px;
+    }
+  }
+`;
+
+export const StyledInput = styled.input`
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  color: #000000;
+  letter-spacing: 0.02rem;
+  text-transform: capitalize;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  width: 100%;
+  outline: none;
+
+  &:focus {
+    border-color: #000000;
   }
 `;
 
@@ -122,6 +164,19 @@ export const BackButton = styled.button`
   &:hover {
     background-color: #768874;
   }
+
+  @media (max-width: 600px) {
+    width: 70px;
+    height: 30px;
+    left: 205px;
+    top: 465px;
+
+    font-size: 14px;
+
+    &:hover {
+      background-color: none;
+    }
+  }
 `;
 
 export const UpdateButton = styled.button`
@@ -147,7 +202,20 @@ export const UpdateButton = styled.button`
   transition: all 0.25s ease-in-out;
 
   &:hover {
-    background-color: #428CBE;
+    background-color: #428cbe;
+  }
+
+  @media (max-width: 600px) {
+    width: 70px;
+    height: 30px;
+    left: 130px;
+    top: 465px;
+
+    font-size: 12px;
+
+    &:hover {
+      background-color: none;
+    }
   }
 `;
 
@@ -158,7 +226,7 @@ export const DeleteButton = styled.button`
   left: 490px;
   top: 440px;
 
-  background: #D88A8A;
+  background: #d88a8a;
   border: none;
   border-radius: 5px;
 
@@ -174,6 +242,58 @@ export const DeleteButton = styled.button`
   transition: all 0.25s ease-in-out;
 
   &:hover {
-    background-color: #D47272;
+    background-color: #d47272;
+  }
+
+  @media (max-width: 600px) {
+    width: 70px;
+    height: 30px;
+    left: 55px;
+    top: 465px;
+
+    font-size: 14px;
+
+    &:hover {
+      background-color: none;
+    }
+  }
+`;
+
+export const StyledInputPrimary = styled.input`
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  color: #000000;
+  letter-spacing: 0.02rem;
+  text-transform: capitalize;
+
+  @media (max-width: 600px) {
+    font-size: 14px;
+  }
+`;
+
+export const StyledInputSecondary = styled.input`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  color: #000000;
+  letter-spacing: 0.02rem;
+  text-transform: capitalize;
+
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
+`;
+
+export const StyledTextarea = styled.textarea`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  color: #000000;
+  letter-spacing: 0.02rem;
+  text-transform: capitalize;
+
+  @media (max-width: 600px) {
+    font-size: 12px;
   }
 `;
