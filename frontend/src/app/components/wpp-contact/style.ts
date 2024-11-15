@@ -1,16 +1,20 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const WppIcon = styled.img`
-    position: absolute;
-    width: 57px;
-    height: 57px;
-    bottom: 20px;
-    right: 20px;
-    cursor: pointer;
-    transition: all 0.25s ease-in-out;
-    
-    &:hover {
-        width: 67px;
-        height: 67px;
-    }
-`
+  position: fixed;
+  width: 57px;
+  height: 57px;
+  bottom: 20px;
+  left: 1270px;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+
+  &:hover {
+    width: 67px;
+    height: 67px;
+  }
+
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;

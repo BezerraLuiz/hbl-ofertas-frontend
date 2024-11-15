@@ -12,12 +12,62 @@ export const HeaderStyle = styled.header`
  
   border-radius: 0 0 20px 20px;
   background-color: ${colors["green-200"]};
+
+  @media (max-width: 600px) {
+    padding: 0 5px 0 5px;
+    gap: 7px;
+  }
+`;
+
+export const ContainerLogo = styled.div`
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 0px;
+  }
 `;
 
 export const Logo = styled.h1`
   font-size: 80px;
   letter-spacing: -5px;
   color: ${colors.white};
+  margin-right: 10px;
+
+  @media (max-width: 600px) {
+    font-size: 30px;
+    letter-spacing: -2.5px;
+  }
+`;
+
+export const ContainerNumText = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 7px;
+
+  @media (max-width: 600px) {
+    gap: 3.5px;
+  }
+`;
+
+export const NumLogo = styled.h2`
+  color: #fff;
+  font-size: 50px;
+
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
+`;
+
+export const TextLogo = styled.h2`
+  color: #fff;
+
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
 `;
 
 export const ContainerSearchBar = styled.span`
@@ -35,17 +85,33 @@ export const ContainerSearchBar = styled.span`
   &:focus-within {
     border: 1.5px solid black;
   }
+
+  @media (max-width: 600px) {
+    gap: 10px;
+  }
 `;
 
 export const SearchImage = styled.img`
   width: 25px;
   height: auto;
+
+  @media (max-width: 600px) {
+    width: 15px;
+  }
 `;
 
 export const SearchInput = styled.input`
   width: 250%;
   border: none;
   outline: none;
+
+  @media (max-width: 600px) {
+    width: 100%;
+
+    &::-webkit-input-placeholder {
+      font-size: 11px;
+    }
+  }
 `;
 
 export const ContainerButtonShop = styled.a`
@@ -63,6 +129,10 @@ export const ContainerButtonShop = styled.a`
 
   &:hover {
     background-color: #B6CFB4;
+  }
+
+  @media (max-width: 600px) {
+    display: none;
   }
 `;
 

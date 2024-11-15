@@ -9,7 +9,11 @@ import {
   ContainerSearchBar,
   SearchImage,
   SearchInput,
-  DesenvolvidoPor
+  DesenvolvidoPor,
+  ContainerLogo,
+  NumLogo,
+  TextLogo,
+  ContainerNumText,
 } from "./style";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -68,10 +72,13 @@ export default function Header({ setSearchQuery, setProducts }) {
 
   return (
     <HeaderStyle>
-      <div style={{ display: "flex", alignItems: "baseline", gap: "5%" }}>
+      <ContainerLogo>
         <Logo>HBL</Logo>
-        <h2 style={{ color: "#fff" }}>OFERTAS</h2>
-      </div>
+        <ContainerNumText>
+          <NumLogo>50</NumLogo>
+          <TextLogo>OFERTAS</TextLogo>
+        </ContainerNumText>
+      </ContainerLogo>
 
       {!isCreateProductPage && (
         <ContainerSearchBar>

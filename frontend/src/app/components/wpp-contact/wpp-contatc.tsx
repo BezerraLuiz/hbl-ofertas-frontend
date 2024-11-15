@@ -6,7 +6,7 @@ import { WppIcon } from './style';
 export default function WppContact() {
     const pathname = usePathname();
 
-    const href = pathname == "/" ? "https://w.app/hblofertas" : "https://w.app/helpbytezest";
+    const href = pathname == "/" ? "https://wa.link/1ok330" : "https://wa.link/c29dap";
 
     return (
         <a href={href} target="_blank" rel="noopener noreferrer">

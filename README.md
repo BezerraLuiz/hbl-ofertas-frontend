@@ -49,3 +49,10 @@ O admin terá acesso ao cadastro dos produtos, edição e exclusão deles em uma
 - Nome do produto
 - Valor do produto
 - Descrição do produto
+
+### Responsividade
+
+Celular -> Menor ou igual a 600px
+Tablets -> 600px à 768px
+Mini Laptops -> 768px à 992px
+Laptops E Desktops -> Maior ou igual a 992px
