@@ -49,7 +49,7 @@ export const ModalInfo = styled.div`
   margin: 2.5%;
 
   @media (max-width: 600px) {
-    margin: 0px;
+    margin: 2%;
   }
 
   & input {
