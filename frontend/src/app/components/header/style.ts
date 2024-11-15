@@ -43,7 +43,7 @@ export const SearchImage = styled.img`
 `;
 
 export const SearchInput = styled.input`
-  width: 100%;
+  width: 250%;
   border: none;
   outline: none;
 `;

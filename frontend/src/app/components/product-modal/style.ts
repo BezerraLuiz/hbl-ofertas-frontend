@@ -99,9 +99,9 @@ export const ModalInfo = styled.div`
 
 export const BackButton = styled.button`
   position: absolute;
-  width: 140px;
+  width: 120px;
   height: 45px;
-  left: 730px;
+  left: 750px;
   top: 440px;
 
   background: #8a9d87;
@@ -126,9 +126,9 @@ export const BackButton = styled.button`
 
 export const UpdateButton = styled.button`
   position: absolute;
-  width: 140px;
+  width: 120px;
   height: 45px;
-  left: 580px;
+  left: 621px;
   top: 440px;
 
   background: #3498db;
@@ -153,9 +153,9 @@ export const UpdateButton = styled.button`
 
 export const DeleteButton = styled.button`
   position: absolute;
-  width: 140px;
+  width: 120px;
   height: 45px;
-  left: 430px;
+  left: 490px;
   top: 440px;
 
   background: #D88A8A;

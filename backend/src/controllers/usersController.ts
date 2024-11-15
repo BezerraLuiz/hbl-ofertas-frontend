@@ -9,28 +9,26 @@ export async function loginHandler(request: FastifyRequest, reply: FastifyReply)
     senha: z.string(),
   });
 
-  const { email, senha } = bodySchema.parse(request.body);
-
   try {
+    const { email, senha } = bodySchema.parse(request.body);
     const usuario = await findUserByEmail(email);
 
     if (!usuario) {
-      return reply.status(401).send({ error: "Usuário não encontrado" });
+      return reply.status(401).send({ error: true, message: "Usuário não encontrado" });
     }
 
     const senhaCorreta = await verifyPassword(senha, usuario.senha);
 
     if (!senhaCorreta) {
-      return reply.status(401).send({ error: "Senha Incorreta" });
+      return reply.status(401).send({ error: true, message: "Senha incorreta" });
     }
 
-    console.log({ id: usuario.id, email: usuario.email });
-
     const token = generateToken({ id: usuario.id, email: usuario.email });
-
-    return { token };
+    return reply.send({ error: false, token, message: "Login bem-sucedido" });
   } catch (error) {
-    console.log(error);
-    return reply.status(500).send({ error: "Erro interno do servidor" });
+    if (error instanceof z.ZodError) {
+      return reply.status(400).send({ error: true, message: "Dados de entrada inválidos" });
+    }
+    return reply.status(500).send({ error: true, message: "Erro interno do servidor" });
   }
 }

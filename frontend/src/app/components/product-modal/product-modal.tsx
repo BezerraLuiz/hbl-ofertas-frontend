@@ -37,12 +37,15 @@ export default function ProductModal({ product, onClose }) {
   const [message, setMessage] = useState("");
   const pathname = usePathname();
   const router = useRouter();
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     if (pathname == "/") {
       setIsReadOnly(true);
+      setIsVisible(false);
     } else {
       setIsReadOnly(false);
+      setIsVisible(true);
     }
   }, [pathname]);
 
@@ -175,7 +178,7 @@ export default function ProductModal({ product, onClose }) {
           ></textarea>
         </ModalInfo>
         <BackButton onClick={onClose}>Voltar</BackButton>
-        <UpdateButton
+        {isVisible && <UpdateButton
           onClick={() => {
             const priceNumber = formatPriceToNumber(values.price); // Convertendo preço de volta para número
             atualizarProduto(
@@ -188,10 +191,10 @@ export default function ProductModal({ product, onClose }) {
           }}
         >
           Atualizar Produto
-        </UpdateButton>
-        <DeleteButton onClick={() => deletarProduto(product.id)}>
+        </UpdateButton>}
+        {isVisible && <DeleteButton onClick={() => deletarProduto(product.id)}>
           Excluir
-        </DeleteButton>
+        </DeleteButton>}
       </ModalOverlay>
     </>
   );

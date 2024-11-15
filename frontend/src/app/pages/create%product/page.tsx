@@ -17,8 +17,6 @@ import { useRouter } from "next/navigation";
 import ErrorComponent from "@/app/components/error/error";
 
 export default function createProduct() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [product, setProducts] = useState("");
   const [sku, setSku] = useState("");
   const [nome, setNome] = useState("");
   const [preco, setPreco] = useState("");
@@ -54,6 +52,7 @@ export default function createProduct() {
       setImagem(e.target.files[0]);
       setFileName(file.name);
     }
+
   };
 
   function handleFormatarMoeda(e, setState) {
@@ -79,7 +78,7 @@ export default function createProduct() {
   return (
     <>
       {isError && <ErrorComponent message={message} />}
-      <Header setSearchQuery={setSearchQuery} setProducts={setProducts} />
+      <Header setSearchQuery={() => {}} setProducts={() => {}} />
 
       <ContainerMain>
         <ContainerInfoProduct>

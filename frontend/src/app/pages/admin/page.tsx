@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Header from "../../components/header/header";
 import { useRouter } from "next/navigation";
 import { Button, ContainerMain, Divisor, TextWpp } from "./style";
@@ -15,43 +15,35 @@ export default function Admin() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 300);
-  }, [])
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const response = sessionStorage.getItem("user");
     if (response !== "admin") {
       router.push("/pages/auth");
+    } else {
+      setIsLoading(false);
     }
   }, [router]);
 
-  function rotaCadastroProduto() {
+  const rotaCadastroProduto = useCallback(() => {
     router.push("/pages/create%product");
-  }
+  }, [router]);
 
-  function handleProductClick(product) {
+  const handleProductClick = useCallback((product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
-  }
+  }, []);
 
-  function handleCloseModal() {
+  const handleCloseModal = useCallback(() => {
     setIsModalOpen(false);
     setSelectedProduct(null);
-  }
+  }, []);
 
   return (
     <>
       {isLoading && <Loading />}
-
-      {isModalOpen && (
-        <ProductModal product={selectedProduct} onClose={handleCloseModal} />
-      )}
+      {isModalOpen && <ProductModal product={selectedProduct} onClose={handleCloseModal} />}
 
       <Header setSearchQuery={setSearchQuery} setProducts={setProducts} />
 

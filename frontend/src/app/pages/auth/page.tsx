@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
   ContainerMain,
   Header,
@@ -20,41 +20,32 @@ import { useRouter, usePathname } from "next/navigation";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const router = useRouter();
-  const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [response, setResponse] = useState("")
+  const [response, setResponse] = useState("");
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     sessionStorage.clear();
-    
-    if (pathname == "/pages/auth") {
-      document.body.style.backgroundColor = "#fff";
-    } else {
-      document.body.style.backgroundColor = "";
-    }
+    document.body.style.backgroundColor = pathname === "/pages/auth" ? "#fff" : "";
   }, [pathname]);
 
+  const handleEmailChange = useCallback((e) => setEmail(e.target.value), []);
+  const handleSenhaChange = useCallback((e) => setSenha(e.target.value), []);
 
-  async function authenticate(e: React.FormEvent) {
+  async function authenticate(e) {
     e.preventDefault();
-  
     const res = await authUser(email, senha);
     setResponse(res.message);
-    console.log(res.message);
-  
-    if (res.error === false) {
+
+    if (!res.error) {
       setIsLoading(true);
-      sessionStorage.setItem("user", "admin")
-      setTimeout(() => {
-        router.push("/pages/admin");
-      }, 1500);
+      sessionStorage.setItem("user", "admin");
+      setTimeout(() => router.push("/pages/admin"), 1500);
     } else {
       setIsError(true);
-      setTimeout(() => {
-        setIsError(false);
-      }, 3500);
+      setTimeout(() => setIsError(false), 3500);
     }
   }
 
@@ -62,49 +53,30 @@ export default function Login() {
     <>
       {isLoading && <Loading />}
       {isError && <ErrorComponent message={response} />}
-
       <ContainerMain>
         <Header>
           <Logo>HBL</Logo>
           <div>
             <HeaderText>Olá, Hélio! Bem-vindo ao Admin Workspace</HeaderText>
-            <HeaderDivisor></HeaderDivisor>
+            <HeaderDivisor />
             <h2 style={{ color: "#fff" }}>OFERTAS</h2>
           </div>
         </Header>
 
         <form onSubmit={authenticate}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "8px",
-              marginTop: "32px",
-            }}
-          >
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "32px" }}>
             <Label>E-mail</Label>
             <Input
               type="email"
               placeholder="Digite o e-mail da conta..."
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
               required
             />
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "8px",
-              marginTop: "32px",
-            }}
-          >
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "32px" }}>
             <Label>Senha</Label>
-            <Input
-              type="password"
-              onChange={(e) => setSenha(e.target.value)}
-              required
-            />
+            <Input type="password" onChange={handleSenhaChange} required />
           </div>
 
           <Button>ENTRAR</Button>

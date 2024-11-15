@@ -15,11 +15,11 @@ export const searchBySku = async (sku: string) => {
     const res = await response.json();
 
     if (!response.ok) {
-      return { error: true, data: res || { message: "Erro desconhecido" } };
+      return { error: true, message: res };
     }
 
     if (!res || res.length === 0) {
-      return { error: true, data: { message: "Nenhum produto encontrado." } };
+      return { error: true, message: "Nenhum produto encontrado." };
     }
 
     return { error: false, data: res };
@@ -41,84 +41,74 @@ export const getAllProducts = async () => {
 
     const res = await response.json();
 
-    if (!response.ok) {
-      return { error: true, data: res || { message: "Erro desconhecido" } };
+    if (!response.ok || !res || res.length === 0) {
+      return {
+        error: true,
+        message: res?.message || "Nenhum produto encontrado.",
+      };
     }
 
-    if (!res || res.length === 0) {
-      return { error: true, data: { message: "Nenhum produto encontrado." } };
-    }
-
-    return { error: false, data: res };
+    return { error: false, message: res };
   } catch (e) {
     console.log(e);
-    return {
-      error: true,
-      data: { message: "Erro na conexão com o servidor." },
-    };
+    return { error: true, message: "Erro na conexão com o servidor." };
   }
 };
 
-export const createProductApi = async (sku: string, nomeProduto: string, valor: number, descricao: string, arquivoImagem: File) => {
+export const createProductApi = async (
+  sku: string,
+  nomeProduto: string,
+  valor: number,
+  descricao: string,
+  arquivoImagem: File
+) => {
   try {
     const formData = new FormData();
-    
-    formData.append('sku', sku);
-    formData.append('nome', nomeProduto);
-    formData.append('valor', valor.toString());
-    formData.append('descricao', descricao);
-    formData.append('image', arquivoImagem);
-    
+
+    formData.append("sku", sku.toUpperCase());
+    formData.append("nome", nomeProduto);
+    formData.append("valor", valor.toString());
+    formData.append("descricao", descricao);
+    formData.append("image", arquivoImagem);
+
     const imagePathResponse = await uploadImage(nomeProduto, arquivoImagem);
-    console.log('Resultado do upload da imagem:', imagePathResponse);
 
     if (imagePathResponse.error) {
-      return { error: true, message: imagePathResponse.data };
+      return { error: true, message: imagePathResponse.message };
     }
 
-    const imagePath = imagePathResponse.data.imagePath;
-    console.log('Caminho da imagem:', imagePath);
-
-    console.log('Enviando dados para a API de criação do produto...');
-    const response = await fetch(`${BASE_URL}/products/create?imagePath=${imagePath}`, {
-      method: "POST",
-      body: formData,
-    });    
-
-    console.log('Resposta da API de criação do produto:', response.status);
+    const imagePath = imagePathResponse.message;
+    const response = await fetch(
+      `${BASE_URL}/products/create?imagePath=${imagePath}`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
     const res = await response.json();
-    console.log('Dados retornados pela API:', res);
 
     if (!response.ok) {
-      console.error('Erro na criação do produto:', res);
-      return { error: true, data: res };
+      return {
+        error: true,
+        message: res?.message || "Erro na criação do produto.",
+      };
     }
 
-    console.log('Produto criado com sucesso:', res);
-    return { error: false, data: res };
-
+    return { error: false, message: res };
   } catch (e) {
-    console.error('Erro na conexão:', e);
-    return {
-      error: true,
-      data: { message: "Erro na conexão com o servidor." }
-    };
+    console.error("Erro na conexão:", e);
+    return { error: true, message: "Erro na conexão com o servidor." };
   }
 };
 
 export const uploadImage = async (nomeProduto: string, arquivoImagem: File) => {
   try {
-    console.log("Nome do Produto:", nomeProduto);
-    console.log("Arquivo da Imagem:", arquivoImagem);
-
     nomeProduto = nomeProduto
       .toLowerCase()
       .replace(/\s+/g, "_")
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
-
-    console.log("Nome do Produto Formatado:", nomeProduto);
 
     const formData = new FormData();
     formData.append("nome", nomeProduto);
@@ -132,23 +122,22 @@ export const uploadImage = async (nomeProduto: string, arquivoImagem: File) => {
       }
     );
 
-    console.log("Status da Resposta:", response.status);
-
     const res = await response.json();
 
-    console.log("Resposta da API:", res);
-
     if (!response.ok) {
-      return { error: true, data: res };
+      return {
+        error: true,
+        message: res?.message || "Erro no upload da imagem.",
+      };
     }
 
-    return { error: false, data: res };
+    return {
+      error: false,
+      message: res?.imagePath || "Imagem carregada com sucesso.",
+    };
   } catch (e) {
     console.error("Erro no upload da imagem:", e);
-    return {
-      error: true,
-      data: { message: "Erro na conexão com o servidor." },
-    };
+    return { error: true, message: "Erro na conexão com o servidor." };
   }
 };
 
@@ -161,44 +150,48 @@ export const deleteProduct = async (id: number) => {
     const res = await response.json();
 
     if (!response.ok) {
-      return { error: true, message: "Erro desconhecido" };
+      return { error: true, message: res?.message || "Erro desconhecido" };
     }
 
-    return { error: false, message: res };
+    return {
+      error: false,
+      message: res?.message || "Produto deletado com sucesso.",
+    };
   } catch (e) {
     console.log(e);
-    return {
-      error: true,
-      data: { message: "Erro na conexão com o servidor." },
-    };
+    return { error: true, message: "Erro na conexão com o servidor." };
   }
 };
 
-export const updateProduct = async (id: number, sku: string, nome: string, valor: number, descricao: string) => {
+export const updateProduct = async (
+  id: number,
+  sku: string,
+  nome: string,
+  valor: number,
+  descricao: string
+) => {
   try {
     const response = await fetch(`${BASE_URL}/products/update?id=${id}`, {
       method: "PUT",
       headers: defaultHeaders,
-      body: JSON.stringify({
-        sku,
-        nome,
-        valor,
-        descricao,
-      }),
+      body: JSON.stringify({ sku, nome, valor, descricao }),
     });
 
     const res = await response.json();
 
     if (!response.ok) {
-      return { error: true, message: "Erro desconhecido" };
+      return {
+        error: true,
+        message: res?.message || "Erro na atualização do produto.",
+      };
     }
 
-    return { error: false, message: res };
+    return {
+      error: false,
+      message: res?.message || "Produto atualizado com sucesso.",
+    };
   } catch (e) {
     console.log(e);
-    return {
-      error: true,
-      data: { message: "Erro na conexão com o servidor." },
-    };
+    return { error: true, message: "Erro na conexão com o servidor." };
   }
 };

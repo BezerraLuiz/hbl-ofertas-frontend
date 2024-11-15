@@ -2,28 +2,21 @@ import { authHeaders, BASE_URL, defaultHeaders } from "./config";
 
 export const generateAuthToken = async (email: string, senha: string) => {
   try {
-    const data = { email, senha };
-
-    const responseGenerate = await fetch(`${BASE_URL}/usuarios`, {
+    const response = await fetch(`${BASE_URL}/usuarios`, {
       method: "POST",
       headers: defaultHeaders,
-      body: JSON.stringify(data),
+      body: JSON.stringify({ email, senha }),
     });
 
-    if (!responseGenerate.ok) {
-      const resG = await responseGenerate.json();
-      console.log("Erro ao gerar token:", resG);
-      return { error: true, message: resG.message };
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      return { error: true, message: responseData.message || "Erro ao gerar token" };
     }
 
-    const resG = await responseGenerate.json();
-    return { error: false, token: resG.token };
-  } catch (e) {
-    console.log("Erro na conexão:", e);
-    return {
-      error: true,
-      message: "Erro na conexão com o servidor.",
-    };
+    return { error: false, token: responseData.token, message: "Token gerado com sucesso" };
+  } catch {
+    return { error: true, message: "Erro na conexão com o servidor." };
   }
 };
 
@@ -40,20 +33,14 @@ export const authUser = async (email: string, senha: string) => {
       headers: authHeaders(tokenResponse.token),
     });
 
+    const resA = await responseAuthenticate.json();
+
     if (!responseAuthenticate.ok) {
-      const resA = await responseAuthenticate.json();
-      console.log("Erro na rota protegida:", resA); 
-      return { error: true, message: resA.message || "Erro desconhecido" };
+      return { error: true, message: resA.message || "Erro de autenticação" };
     }
 
-    const resA = await responseAuthenticate.json();
-    console.log("Resposta da rota protegida:", resA);
-    return { error: false, data: resA };
-  } catch (e) {
-    console.log("Erro na conexão:", e);
-    return {
-      error: true,
-      message: "Erro na conexão com o servidor.",
-    };
+    return { error: false, message: "Autenticação bem-sucedida" };
+  } catch {
+    return { error: true, message: "Erro na conexão com o servidor." };
   }
 };
