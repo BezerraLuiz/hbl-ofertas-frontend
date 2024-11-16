@@ -11,10 +11,11 @@ import Loading from "@/app/components/loading/loading";
 
 export default function Admin() {
   const router = useRouter();
-  const [products, setProducts] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  
+  const [products, setProducts] = useState<{ id: string; imagePath: string; nome: string; valor: number; sku: string; descricaots: string }[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedProduct, setSelectedProduct] = useState<{ id: string; imagePath: string; nome: string; valor: number; sku: string; descricaots: string } | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const response = sessionStorage.getItem("user");
@@ -29,7 +30,7 @@ export default function Admin() {
     router.push("/pages/create%product");
   }, [router]);
 
-  const handleProductClick = useCallback((product) => {
+  const handleProductClick = useCallback((product: { id: string; imagePath: string; nome: string; valor: number; sku: string; descricaots: string }) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
   }, []);
@@ -42,9 +43,11 @@ export default function Admin() {
   return (
     <>
       {isLoading && <Loading />}
-      {isModalOpen && <ProductModal product={selectedProduct} onClose={handleCloseModal} />}
+      {isModalOpen && (
+        <ProductModal product={selectedProduct as { id: string; imagePath: string; nome: string; valor: number; sku: string; descricaots: string }} onClose={handleCloseModal} />
+      )}
 
-      <Header setSearchQuery={() => {}} setProducts={setProducts} />
+      <Header setSearchQuery={() => {}} setProducts={(products: { id: string; imagePath: string; nome: string; valor: number; sku: string; descricaots: string }[]) => setProducts(products)} />
 
       <ContainerMain>
         <Button onClick={rotaCadastroProduto}>Cadastrar Produto</Button>

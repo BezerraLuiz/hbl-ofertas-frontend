@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, FormEvent } from "react";
 import {
   ContainerMain,
   Header,
@@ -18,11 +18,11 @@ import ErrorComponent from "@/app/components/error/error";
 import { useRouter, usePathname } from "next/navigation";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [response, setResponse] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [senha, setSenha] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [response, setResponse] = useState<string>("");
   const router = useRouter();
   const pathname = usePathname();
 
@@ -31,10 +31,15 @@ export default function Login() {
     document.body.style.backgroundColor = pathname === "/pages/auth" ? "#fff" : "";
   }, [pathname]);
 
-  const handleEmailChange = useCallback((e) => setEmail(e.target.value), []);
-  const handleSenhaChange = useCallback((e) => setSenha(e.target.value), []);
+  const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  }, []);
 
-  async function authenticate(e) {
+  const handleSenhaChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSenha(e.target.value);
+  }, []);
+
+  async function authenticate(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const res = await authUser(email, senha);
     setResponse(res.message);

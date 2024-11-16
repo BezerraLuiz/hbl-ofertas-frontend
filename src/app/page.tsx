@@ -12,10 +12,10 @@ const WppContact = dynamic(() => import("@/app/components/wpp-contact/wpp-contat
 const ProductModal = dynamic(() => import("./components/product-modal/product-modal"));
 
 export default function Home() {
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [products, setProducts] = useState<{ id: number; nome: string; imagePath: string; valor: number; sku: string; descricaots: string }[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [selectedProduct, setSelectedProduct] = useState<{ id: number; nome: string; imagePath: string; valor: number; sku: string; descricaots: string } | null>(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -31,11 +31,11 @@ export default function Home() {
     fetchProducts();
   }, []);
 
-  const handleSearch = useCallback((query) => {
+  const handleSearch = useCallback((query: string) => {
     setSearchQuery(query);
   }, []);
 
-  function handleProductClick(product) {
+  function handleProductClick(product: { id: number; nome: string; imagePath: string; valor: number; sku: string; descricaots: string }) {
     setSelectedProduct(product);
   }
 

@@ -31,6 +31,11 @@ export default function CreateProduct() {
     e.preventDefault();
     const valor = convertToNumber(preco);
 
+    if (!imagem) {
+      setResponse("Imagem não encontrada!");
+      return;
+    }
+
     const res = await createProductApi(sku, nome, valor, descricao, imagem);
     setResponse(res.message);
 
@@ -44,16 +49,18 @@ export default function CreateProduct() {
     }
   }
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const file = e.target.files?.[0];
     if (file) {
-      setImagem(e.target.files[0]);
+      setImagem(file);
       setFileName(file.name);
     }
-
   };
 
-  function handleFormatarMoeda(e, setState) {
+  function handleFormatarMoeda(
+    e: React.ChangeEvent<HTMLInputElement>,
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ): void {
     let value = e.target.value;
     value = value.replace(/\D/g, "");
     value = (Number(value) / 100).toLocaleString("pt-BR", {

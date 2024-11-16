@@ -1,6 +1,6 @@
 import { ErrorBox, ErrorContainer, ErrorMessage, ErrorTitle } from "./style";
 
-export default function ErrorComponent({ message }) {
+export default function ErrorComponent({ message }: { message: string }) {
   return (
     <ErrorContainer>
       <ErrorBox>

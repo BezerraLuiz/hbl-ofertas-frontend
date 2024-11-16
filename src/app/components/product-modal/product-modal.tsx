@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, ChangeEvent } from "react";
 import {
   ModalOverlay,
   ModalImage,
@@ -17,9 +17,31 @@ import { usePathname } from "next/navigation";
 import { deleteProduct, updateProduct } from "@/api/productApi";
 import ErrorComponent from "../error/error";
 
-export default function ProductModal({ product, onClose }) {
+// Tipos para o produto
+interface Product {
+  id: number;
+  nome: string;
+  valor: number;
+  sku: string;
+  descricao: string;
+  imagePath: string;
+}
+
+interface ProductModalProps {
+  product: Product;
+  onClose: () => void;
+}
+
+export default function ProductModal({ product, onClose }: ProductModalProps) {
   const { nome, valor, sku, descricao, imagePath } = product;
-  const [values, setValues] = useState({
+  
+  // Tipagem para o estado dos valores
+  const [values, setValues] = useState<{
+    productName: string;
+    price: string;
+    sku: string;
+    description: string;
+  }>({
     productName: nome,
     price: valor.toLocaleString("pt-BR", {
       minimumFractionDigits: 2,
@@ -28,17 +50,26 @@ export default function ProductModal({ product, onClose }) {
     sku: sku,
     description: descricao,
   });
-  const inputRef = useRef({
+
+  // Referências para os inputs
+  const inputRef = useRef<{
+    productName: HTMLInputElement | null;
+    price: HTMLInputElement | null;
+    sku: HTMLInputElement | null;
+    description: HTMLTextAreaElement | null;
+  }>({
     productName: null,
     price: null,
     sku: null,
     description: null,
   });
-  const [isReadOnly, setIsReadOnly] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [message, setMessage] = useState("");
+
+  // Tipagem dos estados
+  const [isReadOnly, setIsReadOnly] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
   const pathname = usePathname();
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
     if (pathname == "/") {
@@ -50,17 +81,15 @@ export default function ProductModal({ product, onClose }) {
     }
   }, [pathname]);
 
-  function handleChange(e, field) {
+  function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: keyof typeof values) {
     setValues({ ...values, [field]: e.target.value });
     if (inputRef.current[field]) {
       inputRef.current[field].style.height = "auto";
-      inputRef.current[
-        field
-      ].style.height = `${inputRef.current[field].scrollHeight}px`;
+      inputRef.current[field].style.height = `${inputRef.current[field].scrollHeight}px`;
     }
   }
 
-  function handleFormatarMoeda(e, setState) {
+  function handleFormatarMoeda(e: ChangeEvent<HTMLInputElement>, setState: React.Dispatch<React.SetStateAction<string>>) {
     let value = e.target.value;
     value = value.replace(/\D/g, "");
     const formattedValue = (Number(value) / 100)
@@ -73,11 +102,11 @@ export default function ProductModal({ product, onClose }) {
     setState(formattedValue);
   }
 
-  async function deletarProduto(id) {
+  async function deletarProduto(id: number) {
     const res = await deleteProduct(id);
 
     if (res.error === false) {
-      window.location.reload(true);
+      window.location.reload();
     } else {
       setMessage(res.message);
       setIsError(true);
@@ -87,11 +116,11 @@ export default function ProductModal({ product, onClose }) {
     }
   }
 
-  async function atualizarProduto(id, sku, nome, valor, descricao) {
+  async function atualizarProduto(id: number, sku: string, nome: string, valor: number, descricao: string) {
     const res = await updateProduct(id, sku, nome, valor, descricao);
 
     if (res.error === false) {
-      window.location.reload(true);
+      window.location.reload();
     } else {
       setMessage(res.message);
       setIsError(true);
@@ -101,7 +130,7 @@ export default function ProductModal({ product, onClose }) {
     }
   }
 
-  function formatPriceToNumber(formattedPrice) {
+  function formatPriceToNumber(formattedPrice: string): number {
     const cleanedValue = formattedPrice
       .replace(/[^\d,]/g, "")
       .replace(",", ".");

@@ -17,14 +17,20 @@ import {
 } from "./style";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { searchBySku } from "@/api/productApi"; // Certifique-se de ter esta função
+import { searchBySku } from "@/api/productApi";
 
-export default function Header({ setSearchQuery, setProducts }) {
-  const [label, setLabel] = useState("VISITE NOSSA LOJA");
-  const [isHome, setIsHome] = useState(true);
-  const [placeholder, setPlaceholder] = useState("Insira o nome do produto...");
-  const [pesquisa, setPesquisa] = useState("");
-  const [isCreateProductPage, setIsCreateProductPage] = useState(false);
+export default function Header({
+  setSearchQuery,
+  setProducts,
+}: {
+  setSearchQuery: (query: string) => void;
+  setProducts: (products: unknown[]) => void;
+}) {
+  const [label, setLabel] = useState<string>("VISITE NOSSA LOJA");
+  const [isHome, setIsHome] = useState<boolean>(true);
+  const [placeholder, setPlaceholder] = useState<string>("Insira o nome do produto...");
+  const [pesquisa, setPesquisa] = useState<string>("");
+  const [isCreateProductPage, setIsCreateProductPage] = useState<boolean>(false);
   const pathname = usePathname();
 
   useEffect(() => {

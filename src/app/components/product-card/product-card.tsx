@@ -1,6 +1,16 @@
 import { Card, ProductImage, CardText } from "./style";
 
-export default function ProductCard({ image, nome, preco, onClick }) {
+export default function ProductCard({
+  image,
+  nome,
+  preco,
+  onClick,
+}: {
+  image: string;
+  nome: string;
+  preco: number | string;
+  onClick: () => void;
+}) {
   return (
     <Card onClick={onClick} style={{ cursor: "pointer" }}>
       <ProductImage src={image} alt={nome} />
