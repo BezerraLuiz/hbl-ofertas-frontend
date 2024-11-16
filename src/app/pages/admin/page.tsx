@@ -9,12 +9,21 @@ import WppContact from "@/app/components/wpp-contact/wpp-contatc";
 import ProductModal from "@/app/components/product-modal/product-modal";
 import Loading from "@/app/components/loading/loading";
 
+type Product = {
+  id: number;
+  imagePath: string;
+  nome: string;
+  valor: number;
+  sku: string;
+  descricao: string;
+};
+
 export default function Admin() {
   const router = useRouter();
-  
-  const [products, setProducts] = useState<{ id: string; imagePath: string; nome: string; valor: number; sku: string; descricaots: string }[]>([]);
+
+  const [products, setProducts] = useState<Product[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [selectedProduct, setSelectedProduct] = useState<{ id: string; imagePath: string; nome: string; valor: number; sku: string; descricaots: string } | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -30,7 +39,7 @@ export default function Admin() {
     router.push("/pages/create%product");
   }, [router]);
 
-  const handleProductClick = useCallback((product: { id: string; imagePath: string; nome: string; valor: number; sku: string; descricaots: string }) => {
+  const handleProductClick = useCallback((product: Product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
   }, []);
@@ -44,10 +53,10 @@ export default function Admin() {
     <>
       {isLoading && <Loading />}
       {isModalOpen && (
-        <ProductModal product={selectedProduct as { id: string; imagePath: string; nome: string; valor: number; sku: string; descricaots: string }} onClose={handleCloseModal} />
+        <ProductModal product={selectedProduct as Product} onClose={handleCloseModal} />
       )}
 
-      <Header setSearchQuery={() => {}} setProducts={(products: { id: string; imagePath: string; nome: string; valor: number; sku: string; descricaots: string }[]) => setProducts(products)} />
+      <Header setSearchQuery={() => {}} setProducts={setProducts} />
 
       <ContainerMain>
         <Button onClick={rotaCadastroProduto}>Cadastrar Produto</Button>
