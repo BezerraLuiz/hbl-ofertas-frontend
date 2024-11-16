@@ -19,12 +19,21 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { searchBySku } from "@/api/productApi";
 
+type Product = {
+  id: number;
+  nome: string;
+  imagePath: string;
+  valor: number;
+  sku: string;
+  descricao: string;
+};
+
 export default function Header({
   setSearchQuery,
   setProducts,
 }: {
   setSearchQuery: (query: string) => void;
-  setProducts: (products: unknown[]) => void;
+  setProducts: (products: Product[]) => void;
 }) {
   const [label, setLabel] = useState<string>("VISITE NOSSA LOJA");
   const [isHome, setIsHome] = useState<boolean>(true);
@@ -54,7 +63,7 @@ export default function Header({
       searchBySku(pesquisaFormatada)
         .then((result) => {
           if (result && Array.isArray(result.data)) {
-            setProducts(result.data);
+            setProducts(result.data as Product[]);
           } else {
             console.error(
               "Esperado um array de produtos, mas recebido:",
