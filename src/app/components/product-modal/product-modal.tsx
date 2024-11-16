@@ -17,31 +17,10 @@ import { usePathname } from "next/navigation";
 import { deleteProduct, updateProduct } from "@/api/productApi";
 import ErrorComponent from "../error/error";
 
-// Tipos para o produto
-interface Product {
-  id: number;
-  nome: string;
-  valor: number;
-  sku: string;
-  descricao: string;
-  imagePath: string;
-}
-
-interface ProductModalProps {
-  product: Product;
-  onClose: () => void;
-}
-
-export default function ProductModal({ product, onClose }: ProductModalProps) {
+export default function ProductModal({ product, onClose }: { product: { id: number; nome: string; valor: number; sku: string; descricao: string; imagePath: string }; onClose: () => void }) {
   const { nome, valor, sku, descricao, imagePath } = product;
-  
-  // Tipagem para o estado dos valores
-  const [values, setValues] = useState<{
-    productName: string;
-    price: string;
-    sku: string;
-    description: string;
-  }>({
+
+  const [values, setValues] = useState({
     productName: nome,
     price: valor.toLocaleString("pt-BR", {
       minimumFractionDigits: 2,
@@ -51,28 +30,21 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
     description: descricao,
   });
 
-  // Referências para os inputs
-  const inputRef = useRef<{
-    productName: HTMLInputElement | null;
-    price: HTMLInputElement | null;
-    sku: HTMLInputElement | null;
-    description: HTMLTextAreaElement | null;
-  }>({
-    productName: null,
-    price: null,
-    sku: null,
-    description: null,
+  const inputRef = useRef({
+    productName: null as HTMLInputElement | null,
+    price: null as HTMLInputElement | null,
+    sku: null as HTMLInputElement | null,
+    description: null as HTMLTextAreaElement | null,
   });
 
-  // Tipagem dos estados
-  const [isReadOnly, setIsReadOnly] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>("");
+  const [isReadOnly, setIsReadOnly] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [message, setMessage] = useState("");
   const pathname = usePathname();
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (pathname == "/") {
+    if (pathname === "/") {
       setIsReadOnly(true);
       setIsVisible(false);
     } else {
@@ -81,11 +53,11 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
     }
   }, [pathname]);
 
-  function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: keyof typeof values) {
+  function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: string) {
     setValues({ ...values, [field]: e.target.value });
     if (inputRef.current[field]) {
-      inputRef.current[field].style.height = "auto";
-      inputRef.current[field].style.height = `${inputRef.current[field].scrollHeight}px`;
+      inputRef.current[field]!.style.height = "auto";
+      inputRef.current[field]!.style.height = `${inputRef.current[field]!.scrollHeight}px`;
     }
   }
 
@@ -144,7 +116,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
       <ModalBackground onClick={onClose} />
       <ModalOverlay>
         <ModalImage src={imagePath} alt="img-product" />
-        <ModalInfo isreadonly={isReadOnly ? "true" : undefined}>
+        <ModalInfo isreadonly={isReadOnly}>
           <StyledInputPrimary
             ref={(el) => (inputRef.current.productName = el)}
             value={values.productName}

@@ -50,7 +50,7 @@ export const ModalImage = styled.img`
   }
 `;
 
-export const ModalInfo = styled.div`
+export const ModalInfo = styled.div<{ isreadonly?: boolean }>`
   margin: 2.5%;
 
   @media (max-width: 600px) {
