@@ -43,12 +43,10 @@ export default function ProductModal({
     description: descricao,
   });
 
-  const inputRef = useRef({
-    productName: null as HTMLInputElement | null,
-    price: null as HTMLInputElement | null,
-    sku: null as HTMLInputElement | null,
-    description: null as HTMLTextAreaElement | null,
-  });
+  const productNameRef = useRef<HTMLInputElement | null>(null);
+  const priceRef = useRef<HTMLInputElement | null>(null);
+  const skuRef = useRef<HTMLInputElement | null>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [isReadOnly, setIsReadOnly] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -68,12 +66,12 @@ export default function ProductModal({
 
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    field: keyof typeof inputRef.current // Usando 'keyof' para garantir que 'field' seja uma chave válida
+    field: keyof typeof values
   ) {
     setValues({ ...values, [field]: e.target.value });
-    if (inputRef.current[field]) {
-      inputRef.current[field]!.style.height = "auto";
-      inputRef.current[field]!.style.height = `${inputRef.current[field]!.scrollHeight}px`;
+    if (field === "description" && descriptionRef.current) {
+      descriptionRef.current.style.height = "auto";
+      descriptionRef.current.style.height = `${descriptionRef.current.scrollHeight}px`;
     }
   }
 
@@ -143,13 +141,13 @@ export default function ProductModal({
         <ModalImage src={imagePath} alt="img-product" />
         <ModalInfo isreadonly={isReadOnly}>
           <StyledInputPrimary
-            ref={(el) => (inputRef.current.productName = el)}
+            ref={productNameRef}
             value={values.productName}
             onChange={(e) => handleChange(e, "productName")}
             readOnly={isReadOnly}
           />
           <StyledInputSecondary
-            ref={(el) => (inputRef.current.price = el)}
+            ref={priceRef}
             value={`R$ ${values.price}`}
             onChange={(e) => {
               handleChange(e, "price");
@@ -163,13 +161,13 @@ export default function ProductModal({
             readOnly={isReadOnly}
           />
           <StyledInputSecondary
-            ref={(el) => (inputRef.current.sku = el)}
+            ref={skuRef}
             value={values.sku}
             onChange={(e) => handleChange(e, "sku")}
             readOnly={isReadOnly}
           />
           <StyledTextarea
-            ref={(el) => (inputRef.current.description = el)}
+            ref={descriptionRef}
             value={values.description}
             onChange={(e) => handleChange(e, "description")}
             readOnly={isReadOnly}
