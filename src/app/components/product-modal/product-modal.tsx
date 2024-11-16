@@ -13,7 +13,7 @@ import {
   StyledInputSecondary,
   StyledTextarea,
 } from "./style";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { deleteProduct, updateProduct } from "@/api/productApi";
 import ErrorComponent from "../error/error";
 
@@ -35,11 +35,9 @@ export default function ProductModal({ product, onClose }) {
     description: null,
   });
   const [isReadOnly, setIsReadOnly] = useState(false);
-  const [response, setResponse] = useState("");
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
   const pathname = usePathname();
-  const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -77,7 +75,6 @@ export default function ProductModal({ product, onClose }) {
 
   async function deletarProduto(id) {
     const res = await deleteProduct(id);
-    setResponse(res.message);
 
     if (res.error === false) {
       window.location.reload(true);
@@ -92,7 +89,6 @@ export default function ProductModal({ product, onClose }) {
 
   async function atualizarProduto(id, sku, nome, valor, descricao) {
     const res = await updateProduct(id, sku, nome, valor, descricao);
-    setResponse(res.message);
 
     if (res.error === false) {
       window.location.reload(true);

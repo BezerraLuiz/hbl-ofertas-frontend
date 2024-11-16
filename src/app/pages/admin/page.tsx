@@ -12,7 +12,6 @@ import Loading from "@/app/components/loading/loading";
 export default function Admin() {
   const router = useRouter();
   const [products, setProducts] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,7 +44,7 @@ export default function Admin() {
       {isLoading && <Loading />}
       {isModalOpen && <ProductModal product={selectedProduct} onClose={handleCloseModal} />}
 
-      <Header setSearchQuery={setSearchQuery} setProducts={setProducts} />
+      <Header setSearchQuery={() => {}} setProducts={setProducts} />
 
       <ContainerMain>
         <Button onClick={rotaCadastroProduto}>Cadastrar Produto</Button>

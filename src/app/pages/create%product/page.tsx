@@ -16,7 +16,7 @@ import { createProductApi } from "@/api/productApi";
 import { useRouter } from "next/navigation";
 import ErrorComponent from "@/app/components/error/error";
 
-export default function createProduct() {
+export default function CreateProduct() {
   const [sku, setSku] = useState("");
   const [nome, setNome] = useState("");
   const [preco, setPreco] = useState("");
