@@ -76,8 +76,7 @@ export default function ProductModal({
   }
 
   function handleFormatarMoeda(
-    e: ChangeEvent<HTMLInputElement>,
-    setState: React.Dispatch<React.SetStateAction<string>>
+    e: ChangeEvent<HTMLInputElement>
   ) {
     let value = e.target.value;
     value = value.replace(/\D/g, "");
@@ -88,7 +87,10 @@ export default function ProductModal({
       })
       .replace("R$", "")
       .trim();
-    setState(formattedValue);
+    setValues((prevValues) => ({
+      ...prevValues,
+      price: formattedValue,
+    }));
   }
 
   async function deletarProduto(id: number) {
@@ -151,12 +153,7 @@ export default function ProductModal({
             value={`R$ ${values.price}`}
             onChange={(e) => {
               handleChange(e, "price");
-              handleFormatarMoeda(e, (formattedValue) => {
-                setValues((prevValues) => ({
-                  ...prevValues,
-                  price: formattedValue,
-                }));
-              });
+              handleFormatarMoeda(e);
             }}
             readOnly={isReadOnly}
           />
