@@ -31,6 +31,11 @@ export const ModalOverlay = styled.div`
     height: 500px;
     flex-direction: column;
   }
+  
+  @media (min-width: 600px) and (max-width: 992px) {
+    width: 700px;
+    height: 400px;
+  }
 `;
 
 export const ModalImage = styled.img`
@@ -177,6 +182,15 @@ export const BackButton = styled.button`
       background-color: none;
     }
   }
+
+  @media (min-width: 600px) and (max-width: 992px) {
+    width: 100px;
+    height: 40px;
+    left: 590px;
+    top: 350px;
+
+    font-size: 16px;
+  }
 `;
 
 export const UpdateButton = styled.button`
@@ -217,6 +231,15 @@ export const UpdateButton = styled.button`
       background-color: none;
     }
   }
+
+  @media (min-width: 600px) and (max-width: 992px) {
+    width: 100px;
+    height: 40px;
+    left: 480px;
+    top: 350px;
+
+    font-size: 16px;
+  }
 `;
 
 export const DeleteButton = styled.button`
@@ -256,6 +279,15 @@ export const DeleteButton = styled.button`
     &:hover {
       background-color: none;
     }
+  }
+
+  @media (min-width: 600px) and (max-width: 992px) {
+    width: 100px;
+    height: 40px;
+    left: 370px;
+    top: 350px;
+
+    font-size: 16px;
   }
 `;
 
