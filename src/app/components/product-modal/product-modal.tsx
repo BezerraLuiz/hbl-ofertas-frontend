@@ -175,27 +175,27 @@ export default function ProductModal({
             readOnly={isReadOnly}
           />
         </ModalInfo>
-        <BackButton onClick={onClose}>Voltar</BackButton>
+
         {isVisible && (
-          <UpdateButton
-            onClick={() => {
-              const priceNumber = formatPriceToNumber(values.price);
-              atualizarProduto(
-                product.id,
-                values.sku,
-                values.productName,
-                priceNumber,
-                values.description
-              );
-            }}
-          >
-            Atualizar Produto
-          </UpdateButton>
-        )}
-        {isVisible && (
-          <DeleteButton onClick={() => deletarProduto(product.id)}>
-            Excluir
-          </DeleteButton>
+          <>
+            <BackButton onClick={onClose}>Voltar</BackButton>
+            <UpdateButton
+              onClick={() =>
+                atualizarProduto(
+                  product.id,
+                  values.sku,
+                  values.productName,
+                  formatPriceToNumber(values.price),
+                  values.description
+                )
+              }
+            >
+              Atualizar
+            </UpdateButton>
+            <DeleteButton onClick={() => deletarProduto(product.id)}>
+              Deletar
+            </DeleteButton>
+          </>
         )}
       </ModalOverlay>
     </>
