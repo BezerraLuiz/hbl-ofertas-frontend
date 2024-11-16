@@ -17,7 +17,20 @@ import { usePathname } from "next/navigation";
 import { deleteProduct, updateProduct } from "@/api/productApi";
 import ErrorComponent from "../error/error";
 
-export default function ProductModal({ product, onClose }: { product: { id: number; nome: string; valor: number; sku: string; descricao: string; imagePath: string }; onClose: () => void }) {
+export default function ProductModal({
+  product,
+  onClose,
+}: {
+  product: {
+    id: number;
+    nome: string;
+    valor: number;
+    sku: string;
+    descricao: string;
+    imagePath: string;
+  };
+  onClose: () => void;
+}) {
   const { nome, valor, sku, descricao, imagePath } = product;
 
   const [values, setValues] = useState({
@@ -53,7 +66,10 @@ export default function ProductModal({ product, onClose }: { product: { id: numb
     }
   }, [pathname]);
 
-  function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: string) {
+  function handleChange(
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    field: keyof typeof inputRef.current // Usando 'keyof' para garantir que 'field' seja uma chave válida
+  ) {
     setValues({ ...values, [field]: e.target.value });
     if (inputRef.current[field]) {
       inputRef.current[field]!.style.height = "auto";
@@ -61,7 +77,10 @@ export default function ProductModal({ product, onClose }: { product: { id: numb
     }
   }
 
-  function handleFormatarMoeda(e: ChangeEvent<HTMLInputElement>, setState: React.Dispatch<React.SetStateAction<string>>) {
+  function handleFormatarMoeda(
+    e: ChangeEvent<HTMLInputElement>,
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ) {
     let value = e.target.value;
     value = value.replace(/\D/g, "");
     const formattedValue = (Number(value) / 100)
@@ -88,7 +107,13 @@ export default function ProductModal({ product, onClose }: { product: { id: numb
     }
   }
 
-  async function atualizarProduto(id: number, sku: string, nome: string, valor: number, descricao: string) {
+  async function atualizarProduto(
+    id: number,
+    sku: string,
+    nome: string,
+    valor: number,
+    descricao: string
+  ) {
     const res = await updateProduct(id, sku, nome, valor, descricao);
 
     if (res.error === false) {
