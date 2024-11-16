@@ -24,7 +24,6 @@ export default function CreateProduct() {
   const [imagem, setImagem] = useState<File | null>(null);
   const [fileName, setFileName] = useState("Selecionar Arquivo");
   const [isError, setIsError] = useState(false);
-  const [message, setMessage] = useState("");
   const [response, setResponse] = useState("");
   const router = useRouter();
 
@@ -34,7 +33,6 @@ export default function CreateProduct() {
 
     const res = await createProductApi(sku, nome, valor, descricao, imagem);
     setResponse(res.message);
-    console.log(res.message);
 
     if (res.error === false) {
       router.push("/pages/admin");
@@ -77,7 +75,7 @@ export default function CreateProduct() {
 
   return (
     <>
-      {isError && <ErrorComponent message={message} />}
+      {isError && <ErrorComponent message={response} />}
       <Header setSearchQuery={() => {}} setProducts={() => {}} />
 
       <ContainerMain>
