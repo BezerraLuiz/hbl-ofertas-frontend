@@ -1,58 +1,36 @@
-# HBL Ofertas
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Objetivo
+## Getting Started
 
-Mostrar 50 ofertas da loja, onde o cliente pode acessar o site de vendas e ter acesso as redes sociais.
-O admin terá acesso ao cadastro dos produtos, edição e exclusão deles em uma página separada.
+First, run the development server:
 
-## Tecnologias Utilizadas
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-- React.js (Next.js)
-- Node.js (Fastify)
-- PostgreSQL (Neon Console)
-- Typescript
-- Styled-Components
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Dependências para instalar
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-### Pasta Backend
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-- npm i
-- npm i fastify
-- npx prisma generate
-- npm i zod
-- npm i tsx
+## Learn More
 
-## Telas Usuário Cliente
+To learn more about Next.js, take a look at the following resources:
 
-- Tela Principal ➡ 50 produtos, rede social, contato ao WhatsApp, acesso as redes sociais e acesso ao site de vendas
-- Modal de detalhes do produto
-- Busca de produtos por nome
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## Telas Usuário Admin
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-- Tela login
-- Tela Principal ➡ CRUD (Create, Read, Update e Delete)
-- Modal de detalhes do produto
-- Busca de produtos por código do produto
+## Deploy on Vercel
 
-## Banco de dados
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-### User
-
-- email
-- senha
-
-### Produtos
-
-- Código do produto
-- Nome do produto
-- Valor do produto
-- Descrição do produto
-
-### Responsividade
-
-Celular -> Menor ou igual a 600px
-Tablets -> 600px à 768px
-Mini Laptops -> 768px à 992px
-Laptops E Desktops -> Maior ou igual a 992px
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

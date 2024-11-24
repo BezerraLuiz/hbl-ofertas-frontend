@@ -1,4 +1,4 @@
-import { LoadingContainer, LoadingCircle } from './style'
+import { LoadingContainer, LoadingCircle } from './style.js'
 
 export default function Loading() {
   return (
