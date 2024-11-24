@@ -11,19 +11,22 @@ import './styles/globals.css'
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const OpenModal = () => {
-    alert("Olá")
+  const openModal = () => {
     setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
   };
 
   return (
     <>
       <Header />
 
-      <ProductModal isOpen={ isOpen }></ProductModal>
+      <ProductModal isOpen={isOpen} isClose={closeModal}></ProductModal>
 
       <div className="div-products">
-        <ProductCard onClick={OpenModal}></ProductCard>
+        <ProductCard onClick={openModal}></ProductCard>
         <ProductCard></ProductCard>
         <ProductCard></ProductCard>
         <ProductCard></ProductCard>

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { React } from "react";
 import PropTypes from "prop-types";
 import {
   ModalOverlay,
@@ -15,8 +15,8 @@ import {
   StyledTextarea,
 } from "./style";
 
-export default function ProductModal({ isOpen }) {
-  if (!isOpen) return null;
+export default function ProductModal({ isOpen, isClose }) {
+  if (!isOpen) return null
 
   return (
     <>
@@ -30,7 +30,7 @@ export default function ProductModal({ isOpen }) {
         </ModalInfo>
 
         <>
-          <BackButton>Voltar</BackButton>
+          <BackButton onClick={isClose}>Voltar</BackButton>
           <UpdateButton>
             Atualizar
           </UpdateButton>
@@ -44,5 +44,6 @@ export default function ProductModal({ isOpen }) {
 }
 
 ProductModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired
+  isOpen: PropTypes.bool.isRequired,
+  isClose: PropTypes.bool.isRequired
 }
