@@ -41,7 +41,7 @@ export const ContainerLogo = styled.div`
 export const Logo = styled.h1`
   font-size: 80px;
   letter-spacing: -5px;
-  color: ${colors.white};
+  color: ${colors["white-100"]};
   margin-right: 10px;
 
   @media (max-width: 600px) {
@@ -55,36 +55,8 @@ export const Logo = styled.h1`
   }
 `;
 
-export const ContainerNumText = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: baseline;
-  gap: 7px;
-
-  @media (max-width: 600px) {
-    gap: 3.5px;
-  }
-
-  @media (min-width: 600px) and (max-width: 768px) {
-    gap: 3.5px; 
-  }
-`;
-
-export const NumLogo = styled.h2`
-  color: #fff;
-  font-size: 50px;
-
-  @media (max-width: 600px) {
-    font-size: 20px;
-  }
-
-  @media (min-width: 600px) and (max-width: 768px) {
-   font-size: 26px; 
-  }
-`;
-
 export const TextLogo = styled.h2`
-  color: #fff;
+  color: ${colors["white-100"]};
 
   @media (max-width: 600px) {
     font-size: 20px;
@@ -103,7 +75,7 @@ export const ContainerSearchBar = styled.span`
   height: 40px;
   padding: 10px;
 
-  background: ${colors.white};
+  background: ${colors["white-100"]};
   border: 1.5px solid #8A9D87;
   border-radius: 10px;
 
@@ -173,7 +145,7 @@ export const ContainerButtonShop = styled.a`
 export const ShopText = styled.p`
   font-size: 16px;
   font-weight: 600;
-  color: ${colors["text-200"]};
+  color: ${colors["black-200"]};
 
   @media (min-width: 600px) and (max-width: 768px) {
    font-size: 13px;

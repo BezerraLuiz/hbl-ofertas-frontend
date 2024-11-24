@@ -1,3 +1,4 @@
+import { colors } from "@/app/styles/colors";
 import styled from "styled-components";
 
 export const ErrorContainer = styled.div`
@@ -14,7 +15,7 @@ export const ErrorContainer = styled.div`
 `;
 
 export const ErrorBox = styled.div`
-  background-color: #fff;
+  background-color: ${colors["white-100"]};
   padding: 20px;
   border-radius: 10px;
   max-width: 400px;
@@ -24,14 +25,14 @@ export const ErrorBox = styled.div`
 `;
 
 export const ErrorTitle = styled.h2`
-  color: #e74c3c;
+  color: ${colors["red-300"]};
   font-size: 24px;
   margin-bottom: 10px;
   text-transform: capitalize;
 `;
 
 export const ErrorMessage = styled.p`
-  color: #333;
+  color: ${colors["black-300"]};
   font-size: 16px;
   text-transform: capitalize;
   font-weight: 600;

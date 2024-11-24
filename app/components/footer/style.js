@@ -7,6 +7,9 @@ export const ContainerMain = styled.footer`
   align-items: center;
   flex-direction: column;
   gap: 10px;
+
+  position: absolute;
+  bottom: 100px;
   width: 100%;
   margin-bottom: 15px;
 
@@ -18,7 +21,7 @@ export const ContainerMain = styled.footer`
 export const Divisor = styled.div`
   width: 486px;
   height: 0px;
-  border: 2.5px solid #000000;
+  border: 2.5px solid ${colors["black-400"]};
 
   @media (max-width: 600px) {
     width: 80%;
@@ -29,7 +32,7 @@ export const TextFooter = styled.div`
   font-size: 30px;
   font-weight: bold;
   letter-spacing: 3%;
-  color: ${colors["text-200"]};
+  color: ${colors["black-200"]};
 
   @media (max-width: 600px) {
     font-size: 16px;

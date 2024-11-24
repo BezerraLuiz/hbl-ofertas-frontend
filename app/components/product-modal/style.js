@@ -21,7 +21,7 @@ export const ModalOverlay = styled.div`
   width: 881px;
   height: 495px;
 
-  background: #f5f5f5;
+  background: ${colors["white-300"]};
   box-shadow: 8px 9px 21.7px rgba(0, 0, 0, 0.61);
   border-radius: 10px;
   z-index: 999;
@@ -50,7 +50,7 @@ export const ModalImage = styled.img`
   }
 `;
 
-export const ModalInfo = styled.div<{ isreadonly?: boolean }>`
+export const ModalInfo = styled.div`
   margin: 2.5%;
 
   @media (max-width: 600px) {
@@ -67,24 +67,16 @@ export const ModalInfo = styled.div<{ isreadonly?: boolean }>`
     transition: all 0.3s ease;
     resize: none;
     overflow: hidden;
-    background-color: #f5f5f5;
+    background-color: ${colors["white-300"]};
 
     &::-webkit-input-placeholder {
-      color: #cecece;
+      color: ${colors["gray-100"]};
     }
 
     &:focus {
-      border-color: #798c76;
-      background-color: #cecece;
+      border-color: ${colors["green-300"]};
+      background-color: ${colors["gray-100"]};
     }
-
-    ${(props) =>
-      props.isreadonly &&
-      `
-        cursor: not-allowed;
-        pointer-events: none;
-        border: none;
-    `}
 
     @media (max-width: 600px) {
       margin-bottom: 5px;
@@ -101,24 +93,16 @@ export const ModalInfo = styled.div<{ isreadonly?: boolean }>`
     transition: all 0.3s ease;
     resize: none;
     overflow: hidden;
-    background-color: #f5f5f5;
+    background-color: ${colors["white-300"]};
 
     &::-webkit-input-placeholder {
-      color: #cecece;
+      color: ${colors["gray-100"]};
     }
 
     &:focus {
-      border-color: #798c76;
-      background-color: #cecece;
+      border-color: ${colors["green-300"]};
+      background-color: ${colors["gray-100"]};
     }
-
-    ${(props) =>
-      props.isreadonly &&
-      `
-        cursor: not-allowed;
-        pointer-events: none;
-        border: none;
-    `}
 
     @media (max-width: 600px) {
       margin-bottom: 0px;
@@ -130,17 +114,17 @@ export const StyledInput = styled.input`
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
-  color: #000000;
+  color: ${colors["black-400"]};
   letter-spacing: 0.02rem;
   text-transform: capitalize;
-  border: 1px solid #ccc;
+  border: 1px solid ${colors["gray-100"]};
   border-radius: 8px;
   padding: 10px;
   width: 100%;
   outline: none;
 
   &:focus {
-    border-color: #000000;
+    border-color: ${colors["black-400"]};
   }
 `;
 
@@ -151,7 +135,7 @@ export const BackButton = styled.button`
   left: 750px;
   top: 440px;
 
-  background: #8a9d87;
+  background: ${colors["green-200"]};
   border: none;
   border-radius: 5px;
 
@@ -160,14 +144,14 @@ export const BackButton = styled.button`
   font-size: 20px;
   letter-spacing: 0.02rem;
 
-  color: #f5f5f5;
+  color: ${colors["white-300"]};
 
   cursor: pointer;
 
   transition: all 0.25s ease-in-out;
 
   &:hover {
-    background-color: #768874;
+    background-color: ${colors["green-400"]};
   }
 
   @media (max-width: 600px) {
@@ -200,7 +184,7 @@ export const UpdateButton = styled.button`
   left: 621px;
   top: 440px;
 
-  background: #3498db;
+  background: ${colors["blue-100"]};
   border: none;
   border-radius: 5px;
 
@@ -209,7 +193,7 @@ export const UpdateButton = styled.button`
   font-size: 18px;
   letter-spacing: 0.02rem;
 
-  color: #f5f5f5;
+  color: ${colors["white-300"]};
 
   cursor: pointer;
 
@@ -249,7 +233,7 @@ export const DeleteButton = styled.button`
   left: 490px;
   top: 440px;
 
-  background: #d88a8a;
+  background: ${colors["red-100"]};
   border: none;
   border-radius: 5px;
 
@@ -258,14 +242,14 @@ export const DeleteButton = styled.button`
   font-size: 20px;
   letter-spacing: 0.02rem;
 
-  color: #f5f5f5;
+  color: ${colors["white-300"]};
 
   cursor: pointer;
 
   transition: all 0.25s ease-in-out;
 
   &:hover {
-    background-color: #d47272;
+    background-color: ${colors["red-200"]};
   }
 
   @media (max-width: 600px) {
@@ -295,7 +279,7 @@ export const StyledInputPrimary = styled.input`
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
-  color: #000000;
+  color: ${colors["black-400"]};
   letter-spacing: 0.02rem;
   text-transform: capitalize;
 
@@ -308,7 +292,7 @@ export const StyledInputSecondary = styled.input`
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
-  color: #000000;
+  color: ${colors["black-400"]};
   letter-spacing: 0.02rem;
   text-transform: capitalize;
 
@@ -321,7 +305,7 @@ export const StyledTextarea = styled.textarea`
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
-  color: #000000;
+  color: ${colors["black-400"]};
   letter-spacing: 0.02rem;
   text-transform: capitalize;
 

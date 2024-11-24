@@ -5,7 +5,7 @@ export const WppIcon = styled.img`
   width: 57px;
   height: 57px;
   bottom: 20px;
-  left: 1270px;
+  right: 20px;
   cursor: pointer;
   transition: all 0.25s ease-in-out;
 

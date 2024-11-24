@@ -1,19 +1,12 @@
+'use client'
+
+import React from "react";
 import { Card, ProductImage, CardText } from "./style";
 
-export default function ProductCard({
-  image,
-  nome,
-  preco,
-  onClick,
-}: {
-  image: string;
-  nome: string;
-  preco: number | string;
-  onClick: () => void;
-}) {
+export default function ProductCard() {
   return (
-    <Card onClick={onClick} style={{ cursor: "pointer" }}>
-      <ProductImage src={image} alt={nome} />
+    <Card style={{ cursor: "pointer" }}>
+      <ProductImage/>
       <div
         style={{
           display: "flex",
@@ -22,8 +15,8 @@ export default function ProductCard({
           gap: "10px",
         }}
       >
-        <CardText>{nome}</CardText>
-        <CardText>R$ {preco}</CardText>
+        <CardText></CardText>
+        <CardText></CardText>
       </div>
     </Card>
   );

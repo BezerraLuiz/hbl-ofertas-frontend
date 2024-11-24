@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import {
   HeaderStyle,
   Logo,
@@ -11,35 +12,16 @@ import {
   SearchInput,
   DesenvolvidoPor,
   ContainerLogo,
-  NumLogo,
   TextLogo,
-  ContainerNumText,
 } from "./style";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { searchBySku } from "@/api/productApi";
 
-type Product = {
-  id: number;
-  nome: string;
-  imagePath: string;
-  valor: number;
-  sku: string;
-  descricao: string;
-};
-
-export default function Header({
-  setSearchQuery,
-  setProducts,
-}: {
-  setSearchQuery: (query: string) => void;
-  setProducts: (products: Product[]) => void;
-}) {
-  const [label, setLabel] = useState<string>("VISITE NOSSA LOJA");
-  const [isHome, setIsHome] = useState<boolean>(true);
-  const [placeholder, setPlaceholder] = useState<string>("Insira o nome do produto...");
-  const [pesquisa, setPesquisa] = useState<string>("");
-  const [isCreateProductPage, setIsCreateProductPage] = useState<boolean>(false);
+export default function Header() {
+  const [label, setLabel] = useState("VISITE NOSSA LOJA");
+  const [isHome, setIsHome] = useState(true);
+  const [placeholder, setPlaceholder] = useState("Insira o nome do produto...");
+  const [isCreateProductPage, setIsCreateProductPage] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -55,75 +37,38 @@ export default function Header({
     }
   }, [pathname]);
 
-  function verificarPesquisa(e: React.FormEvent) {
-    e.preventDefault();
-    if (pathname !== "/") {
-      const pesquisaFormatada = pesquisa.toUpperCase().replace(" ", "%20");
-
-      searchBySku(pesquisaFormatada)
-        .then((result) => {
-          if (result && Array.isArray(result.data)) {
-            setProducts(result.data as Product[]);
-          } else {
-            console.error(
-              "Esperado um array de produtos, mas recebido:",
-              result
-            );
-            setProducts([]);
-          }
-        })
-        .catch((error) => {
-          console.error("Erro ao buscar produtos:", error);
-          setProducts([]);
-        });
-    } else {
-      setSearchQuery(pesquisa);
-    }
-  }
-
-  function logout() {
-    sessionStorage.clear();
-  }
-
   return (
-    <HeaderStyle>
-      <ContainerLogo>
-        <Logo>HBL</Logo>
-        <ContainerNumText>
-          <NumLogo>50</NumLogo>
+    <>
+      <HeaderStyle>
+        <ContainerLogo>
+          <Logo>HBL</Logo>
           <TextLogo>OFERTAS</TextLogo>
-        </ContainerNumText>
-      </ContainerLogo>
+        </ContainerLogo>
 
-      {!isCreateProductPage && (
-        <ContainerSearchBar>
-          <SearchImage src="/search.svg" alt="search" />
-          <form onSubmit={verificarPesquisa}>
-            <SearchInput
-              type="text"
-              placeholder={placeholder}
-              value={pesquisa}
-              onChange={(e) => {
-                setPesquisa(e.target.value);
-                setSearchQuery(e.target.value);
-              }}
-            />
-          </form>
-        </ContainerSearchBar>
-      )}
+        {!isCreateProductPage && (
+          <ContainerSearchBar>
+            <SearchImage src="/search.svg" alt="search" />
+            <form>
+              <SearchInput
+                type="text"
+                placeholder={placeholder}
+              />
+            </form>
+          </ContainerSearchBar>
+        )}
 
-      {isCreateProductPage ? (
-        <DesenvolvidoPor>Desenvolvido por Bytezeset©</DesenvolvidoPor>
-      ) : (
-        <ContainerButtonShop
-          onClick={logout}
-          href={isHome ? "https://hblvendas.com.br/" : "/pages/auth"}
-          target={isHome ? "_blank" : "_self"}
-        >
-          <ShopText>{label}</ShopText>
-          {isHome && <ShopImage src="/shop.svg" alt="shop" />}
-        </ContainerButtonShop>
-      )}
-    </HeaderStyle>
+        {isCreateProductPage ? (
+          <DesenvolvidoPor>Desenvolvido por Bytezeset©</DesenvolvidoPor>
+        ) : (
+          <ContainerButtonShop
+            href={isHome ? "https://hblvendas.com.br/" : "/pages/auth"}
+            target={isHome ? "_blank" : "_self"}
+          >
+            <ShopText>{label}</ShopText>
+            {isHome && <ShopImage src="/shop.svg" alt="shop" />}
+          </ContainerButtonShop>
+        )}
+      </HeaderStyle>
+    </>
   );
 }

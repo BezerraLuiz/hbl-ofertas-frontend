@@ -1,3 +1,6 @@
+'use-client'
+
+import React from 'react';
 import { Divisor, ContainerMain, TextFooter, ContainerSocial, ImageSocial } from "./style";
 
 export default function Footer() {

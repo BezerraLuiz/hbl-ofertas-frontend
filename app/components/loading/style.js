@@ -1,3 +1,4 @@
+import { colors } from "@/app/styles/colors";
 import styled, { keyframes } from "styled-components";
 
 const spin = keyframes`
@@ -23,8 +24,8 @@ export const LoadingContainer = styled.div`
 `;
 
 export const LoadingCircle = styled.div`
-  border: 8px solid #f3f3f3;
-  border-top: 8px solid #3498db;
+  border: 8px solid ${colors["white-200"]};
+  border-top: 8px solid ${colors["blue-100"]};
   border-radius: 50%;
   width: 50px;
   height: 50px;
