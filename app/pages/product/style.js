@@ -14,7 +14,7 @@ export const ContainerInfoProduct = styled.div`
   width: 450px;
   height: 600px;
 
-  background: #f5f5f5;
+  background: ${colors["white-300"]};
   box-shadow: 10px 13px 8.3px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 `;
@@ -29,7 +29,7 @@ export const Label = styled.label`
   font-size: 15px;
   line-height: 18px;
 
-  color: #4d4d4d;
+  color: ${colors["black-200"]};
 `;
 
 export const Input = styled.input`
@@ -42,12 +42,12 @@ export const Input = styled.input`
   transition: all 0.3s ease;
 
   &::-webkit-input-placeholder {
-    color: #cecece;
+    color: ${colors["gray-100"]};
   }
 
   &:focus {
-    border-color: #798c76;
-    background-color: #E7E6E6;
+    border-color: ${colors["green-300"]};
+    background-color: ${colors["white-400"]};
   }
 `;
 
@@ -57,7 +57,7 @@ export const Button = styled.button`
   margin-top: 50px;
   
   background-color: ${colors["green-200"]};
-  color: ${colors.white};
+  color: ${colors["white-100"]};
   border: none;
   border-radius: 10px;
 
@@ -73,7 +73,7 @@ export const Button = styled.button`
 
   &:hover {
     transform: scale(1.05);
-    background-color: #798C76;
+    background-color: ${colors["green-300"]};
   }
 `;
 
@@ -86,8 +86,8 @@ export const ButtonCancel = styled.section`
   height: 35px;
   margin-top: 25px;
   
-  background-color: #D88A8A;
-  color: ${colors.white};
+  background-color: ${colors["red-100"]};
+  color: ${colors["white-100"]};
   border: none;
   border-radius: 10px;
 
@@ -103,7 +103,7 @@ export const ButtonCancel = styled.section`
 
   &:hover {
     transform: scale(1.05);
-    background-color: #D47272;
+    background-color: ${colors["red-200"]};
   }
 `;
 
@@ -120,8 +120,8 @@ export const FileLabel = styled.label`
   border: 1.5px solid ${colors["green-200"]};
   border-radius: 10px;
   padding: 0 15px;
-  background-color: #fff;
-  color: #333;
+  background-color: ${colors["white-100"]};
+  color: ${colors["black-300"]};
   cursor: pointer;
   overflow: hidden;
   white-space: nowrap;
@@ -129,12 +129,12 @@ export const FileLabel = styled.label`
   transition: all 0.3s ease;
 
   &:hover {
-    border-color: #798c76;
-    background-color: #f2f2f2;
+    border-color: ${colors["green-300"]};
+    background-color: ${colors["white-500"]};
   }
 
   &:focus-within {
-    border-color: #798c76;
-    background-color: #e7e6e6;
+    border-color: ${colors["green-300"]};
+    background-color: ${colors["white-400"]};
   }
 `;

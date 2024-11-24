@@ -14,7 +14,7 @@ export const ContainerMain = styled.div`
   width: 400px;
   min-height: 500px;
 
-  background: #d5e8d4;
+  background: ${colors["green-100"]};
   box-shadow: 10px 13px 8.3px rgba(0, 0, 0, 0.25);
   border-radius: 0px 0px 10px 10px;
   display: flex;
@@ -40,14 +40,14 @@ export const Header = styled.section`
   width: 100%;
   height: 150px;
 
-  background: #8a9d87;
+  background: ${colors["green-200"]};
   border-radius: 0px 0px 20px 20px;
 `;
 
 export const Logo = styled.h1`
   font-size: 80px;
   letter-spacing: -5px;
-  color: ${colors.white};
+  color: ${colors["white-100"]};
 `;
 
 
@@ -60,7 +60,7 @@ export const HeaderText = styled.p`
   font-size: 20px;
   line-height: 24px;
 
-  color: #f5f5f5;
+  color: ${colors["white-300"]};
 `;
 
 export const HeaderDivisor = styled.div`
@@ -68,7 +68,7 @@ export const HeaderDivisor = styled.div`
   height: 0px;
   margin: 7px 0 7px;
 
-  border: 1px solid #f5f5f5;
+  border: 1px solid ${colors["white-300"]};
 `;
 
 export const Footer = styled.footer`
@@ -84,7 +84,7 @@ export const Footer = styled.footer`
   font-size: 15px;
   line-height: 18px;
 
-  color: #4d4d4d;
+  color: ${colors["black-200"]};
 `;
 
 export const Label = styled.label`
@@ -97,7 +97,7 @@ export const Label = styled.label`
   font-size: 15px;
   line-height: 18px;
 
-  color: #4d4d4d;
+  color: ${colors["black-200"]};
 `;
 
 export const Input = styled.input`
@@ -110,12 +110,12 @@ export const Input = styled.input`
   transition: all 0.3s ease;
 
   &::-webkit-input-placeholder {
-    color: #CECECE;
+    color: ${colors["gray-100"]};
   }
 
   &:focus {
-    border-color: #798C76;
-    background-color: #CECECE;
+    border-color: ${colors["green-300"]};
+    background-color: ${colors["gray-100"]};
   }
 `;
 
@@ -126,7 +126,7 @@ export const Button = styled.button`
   margin-top: 53px;
   
   background-color: ${colors["green-200"]};
-  color: ${colors.white};
+  color: ${colors["white-100"]};
   border: none;
   border-radius: 10px;
 
@@ -142,6 +142,6 @@ export const Button = styled.button`
 
   &:hover {
     transform: scale(1.05);
-    background-color: #798C76;
+    background-color: ${colors["green-300"]};
   }
 `;

@@ -25,13 +25,13 @@ export const Button = styled.button`
   font-size: 20px;
   line-height: 23px;
 
-  color: #f5f5f5;
+  color: ${colors["white-300"]};
 
   transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
 
   &:hover {
-    background: #f5f5f5;
-    color: #8a9d87;
+    background: ${colors["white-300"]};
+    color: ${colors["green-200"]};
     transform: scale(1.1);
   }
 `;
@@ -40,7 +40,7 @@ export const Divisor = styled.div`
   width: 600px;
   height: 0px;
 
-  border: 2.5px solid #000000;
+  border: 2.5px solid ${colors["black-400"]};
 `;
 
 export const TextWpp = styled.p`
@@ -53,7 +53,7 @@ export const TextWpp = styled.p`
   font-size: 15px;
   line-height: 18px;
 
-  color: #4D4D4D;
+  color: ${colors["black-200"]};
 
   text-transform: capitalize;
 `;
