@@ -1,17 +1,16 @@
 import { colors } from "@/app/styles/colors";
 import styled from "styled-components";
 
-export const ContainerMain = styled.footer`
+export const ContainerMain = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 10px;
 
-  position: absolute;
-  bottom: 100px;
   width: 100%;
-  margin-bottom: 15px;
+  margin-top: 15px;
+  margin-bottom: 30px;
 
   @media (max-width: 600px) {
     margin-bottom: 8px;

@@ -4,9 +4,9 @@ import styled from "styled-components";
 export const Card = styled.section`
   display: flex;
   flex-direction: column;
-  width: 200px;
-  height: 300px;
-  background: #F5F5F5;
+  width: 250px;
+  height: 400px;
+  background: ${colors["white-300"]};
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   margin: 2.5%;
   border-radius: 8px;

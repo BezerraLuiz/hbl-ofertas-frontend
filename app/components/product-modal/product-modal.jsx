@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import PropTypes from "prop-types";
 import {
   ModalOverlay,
   ModalImage,
@@ -14,29 +15,34 @@ import {
   StyledTextarea,
 } from "./style";
 
-export default function ProductModal() {
+export default function ProductModal({ isOpen }) {
+  if (!isOpen) return null;
+
   return (
     <>
-      <ModalBackground />
-      <ModalOverlay>
+      <ModalBackground /><ModalOverlay>
         <ModalImage src='' alt="img-product" />
         <ModalInfo>
-          <StyledInputPrimary/>
-          <StyledInputSecondary/>
-          <StyledInputSecondary/>
-          <StyledTextarea/>
+          <StyledInputPrimary />
+          <StyledInputSecondary />
+          <StyledInputSecondary />
+          <StyledTextarea />
         </ModalInfo>
 
-          <>
-            <BackButton>Voltar</BackButton>
-            <UpdateButton>
-              Atualizar
-            </UpdateButton>
-            <DeleteButton>
-              Deletar
-            </DeleteButton>
-          </>
+        <>
+          <BackButton>Voltar</BackButton>
+          <UpdateButton>
+            Atualizar
+          </UpdateButton>
+          <DeleteButton>
+            Deletar
+          </DeleteButton>
+        </>
       </ModalOverlay>
     </>
   );
+}
+
+ProductModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired
 }
