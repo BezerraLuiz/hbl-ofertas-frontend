@@ -1,7 +1,8 @@
 "use client";
 
-import { React } from "react";
+import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { usePathname } from "next/navigation";
 import {
   ModalOverlay,
   ModalImage,
@@ -15,18 +16,36 @@ import {
   StyledTextarea,
 } from "./style";
 
-export default function ProductModal({ isOpen, isClose }) {
-  if (!isOpen) return null
+export default function ProductModal({ isOpen, isClose, productDetails }) {
+  const [readOnly, setReadOnly] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (isClient) {
+      if (pathname === "/") {
+        setReadOnly(true);
+      } else {
+        setReadOnly(false);
+      }
+    }
+  }, [pathname, isClient]);
+
+  if (!isOpen) return null;
 
   return (
     <>
       <ModalBackground /><ModalOverlay>
-        <ModalImage src='' alt="img-product" />
+        <ModalImage src={`https://images.weserv.nl/?url=drive.google.com/uc?id=${productDetails.imageId}`} alt="img-product" />
         <ModalInfo>
-          <StyledInputPrimary />
-          <StyledInputSecondary />
-          <StyledInputSecondary />
-          <StyledTextarea />
+          <StyledInputPrimary defaultValue={productDetails.sku} readOnly={readOnly} />
+          <StyledInputSecondary defaultValue={productDetails.name} readOnly={readOnly} />
+          <StyledInputSecondary defaultValue={productDetails.price} readOnly={readOnly} />
+          <StyledTextarea defaultValue={productDetails.description} readOnly={readOnly} />
         </ModalInfo>
 
         <>
@@ -45,5 +64,12 @@ export default function ProductModal({ isOpen, isClose }) {
 
 ProductModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  isClose: PropTypes.bool.isRequired
-}
+  isClose: PropTypes.func.isRequired,
+  productDetails: PropTypes.shape({
+    sku: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    imageId: PropTypes.string.isRequired,
+  }).isRequired,
+};

@@ -7,13 +7,9 @@ export const getAllProducts = async () => {
     const res = await response.json();
 
     if (!response.ok) {
-      return { error: true, message: 'Unknow Error. Error: ' + res };
+      return { error: true, message: res.message };
     }
-
-    if (!res || res.length === 0) {
-      return { error: true, message: 'No products found!' };
-    }
-
+    
     return { error: false, message: res };
   } catch (e) {
     console.log(e);

@@ -13,5 +13,4 @@ O admin terá acesso ao cadastro dos produtos, edição e exclusão deles em uma
 
 ## Dependências Para Instalar
   - npm init
-  - npm install intl
   

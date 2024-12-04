@@ -6,12 +6,17 @@ import Footer from "./components/footer/footer";
 import WppContact from "./components/wpp-contact/wpp-contatc";
 import ProductCard from "./components/product-card/product-card";
 import ProductModal from "./components/product-modal/product-modal";
+import ErrorComponent from "./components/error/error";
 import './styles/globals.css'
 import { getAllProducts } from "@/api/Products/ProductsApi";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
-  
+  const [products, setProducts] = useState([]);
+  const [productDetails, setProductDetails] = useState({ imageId: '', sku: '', name: '', price: '', description: '' });
+  const [isError, setIsError] = useState(false);
+  const [messageError, setMessageError] = useState("");
+
   const openModal = () => {
     setIsOpen(true);
   };
@@ -20,18 +25,15 @@ export default function Home() {
     setIsOpen(false);
   };
 
-  const [products, setProducts] = useState([]);
-
   useEffect(() => {
     const fetchProducts = async () => {
       const res = await getAllProducts();
       
       if (res.error == true) {
-        alert("No products registered!");
+        setIsError(true);
+        setMessageError(res.message);
       } else {
         setProducts(res.message);
-        console.log(JSON.stringify(res, null, 2));
-        console.log(products);
       }
     };
 
@@ -40,17 +42,27 @@ export default function Home() {
 
   return (
     <>
+      {isError && <ErrorComponent message={messageError} />}
       <Header />
 
-      <ProductModal isOpen={isOpen} isClose={closeModal}></ProductModal>
+      <ProductModal isOpen={isOpen} isClose={closeModal} productDetails={productDetails}></ProductModal>
 
       <div className="div-products">
         {products.map((product) => (
           <ProductCard onClick={ openModal }
             key={product.id}
             imageId={product.imageId}
+            sku={product.sku}
             name={product.name}
             price={product.price}
+            description={product.description}
+            setProductDetails={() => setProductDetails({
+              imageId: product.imageId,
+              sku: product.sku,
+              name: product.name,
+              price: product.price,
+              description: product.description
+            })}
           />
         ))}
       </div>
