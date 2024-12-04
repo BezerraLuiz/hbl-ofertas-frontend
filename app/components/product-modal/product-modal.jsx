@@ -1,8 +1,11 @@
 "use client";
 
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { usePathname } from "next/navigation";
+import { deleteProduct, updateProduct } from "@/api/Products/ProductsApi";
+import { deleteImage } from "@/api/Images/ImagesApi";
+import ErrorComponent from "../error/error";
 import {
   ModalOverlay,
   ModalImage,
@@ -22,24 +25,33 @@ export default function ProductModal({ isOpen, isClose, productDetails }) {
   const [buttonVisible, setButtonVisible] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [priceProduct, setPriceProduct] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [messageError, setMessageError] = useState("");
+
+  const skuRef = useRef(null);
+  const nameRef = useRef(null);
+  const priceRef = useRef(null);
+  const descriptionRef = useRef(null);
 
   useEffect(() => {
     setIsClient(true);
-    
+  }, [])
+
+  useEffect(() => {
     if (productDetails?.price) {
       // eslint-disable-next-line no-undef
       const valueMonetary = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
       }).format(productDetails.price);
-  
+
       setPriceProduct(valueMonetary);
-    };
-  }, [productDetails]);
+    }
+  }, [productDetails.price]);
 
   useEffect(() => {
     if (isClient) {
-      if (pathname == "/") {
+      if (pathname === "/") {
         setReadOnly(true);
         setButtonVisible(false);
       } else {
@@ -49,27 +61,92 @@ export default function ProductModal({ isOpen, isClose, productDetails }) {
     }
   }, [pathname, isClient]);
 
+  const handlerDeleteProduct = async () => {
+    const resDeleteProduct = await deleteProduct(productDetails.sku);
+    
+    const resDeleteImage = await deleteImage(productDetails.imageId);
+
+    if (resDeleteProduct.error == true || resDeleteImage.error == true) {
+      setIsError(true);
+        setTimeout(() => {
+          setIsError(false);
+        }, 3000)
+      setMessageError(resDeleteProduct.message + ' ' + resDeleteImage.error);
+    } else {
+      setIsError(false);
+      setMessageError("");
+      window.location.reload(true);
+    }
+    
+  };
+
+  const handlerUpdateProduct = async () => {
+    const formattedPrice = parseFloat(priceRef.current.value.replace('R$', '').replace('.', '').replace(',', '.').trim());
+
+    const res = await updateProduct(
+      productDetails.id,
+      skuRef.current.value,
+      nameRef.current.value,
+      formattedPrice,
+      descriptionRef.current.value
+    );
+
+    if (res.error) {
+      setIsError(true);
+        setTimeout(() => {
+          setIsError(false);
+        }, 1500)
+      setMessageError(res.message);
+    } else {
+      setIsError(false);
+      setMessageError("");
+      window.location.reload(true);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
     <>
-      <ModalBackground /><ModalOverlay>
-        <ModalImage src={`https://images.weserv.nl/?url=drive.google.com/uc?id=${productDetails.imageId}`} alt="img-product" />
+      {isError && <ErrorComponent message={messageError} />}
+
+      <ModalBackground />
+      <ModalOverlay>
+        <ModalImage
+          src={`https://images.weserv.nl/?url=drive.google.com/uc?id=${productDetails.imageId}`}
+          alt="img-product"
+        />
         <ModalInfo>
-          <StyledInputPrimary defaultValue={productDetails.sku} readOnly={readOnly} />
-          <StyledInputSecondary defaultValue={productDetails.name} readOnly={readOnly} />
-          <StyledInputSecondary defaultValue={priceProduct} readOnly={readOnly} />
-          <StyledTextarea defaultValue={productDetails.description} readOnly={readOnly} />
+          <StyledInputPrimary
+            defaultValue={productDetails.sku}
+            readOnly={readOnly}
+            ref={skuRef}
+          />
+          <StyledInputSecondary
+            defaultValue={productDetails.name}
+            readOnly={readOnly}
+            ref={nameRef}
+          />
+          <StyledInputSecondary
+            defaultValue={priceProduct}
+            readOnly={readOnly}
+            ref={priceRef}
+          />
+          <StyledTextarea
+            defaultValue={productDetails.description}
+            readOnly={readOnly}
+            ref={descriptionRef}
+          />
         </ModalInfo>
 
         <>
           <BackButton onClick={isClose}>Voltar</BackButton>
-          {buttonVisible && <UpdateButton>
-            Atualizar
-          </UpdateButton>}
-          {buttonVisible && <DeleteButton>
-            Deletar
-          </DeleteButton>}
+          {buttonVisible && (
+            <UpdateButton onClick={handlerUpdateProduct}>Atualizar</UpdateButton>
+          )}
+          {buttonVisible && (
+            <DeleteButton onClick={handlerDeleteProduct}>Deletar</DeleteButton>
+          )}
         </>
       </ModalOverlay>
     </>
@@ -80,6 +157,7 @@ ProductModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   isClose: PropTypes.func.isRequired,
   productDetails: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     sku: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,

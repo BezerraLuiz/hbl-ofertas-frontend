@@ -13,7 +13,7 @@ import { getAllProducts } from "@/api/Products/ProductsApi";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [products, setProducts] = useState([]);
-  const [productDetails, setProductDetails] = useState({ imageId: '', sku: '', name: '', price: '', description: '' });
+  const [productDetails, setProductDetails] = useState({ id: '', imageId: '', sku: '', name: '', price: '', description: '' });
   const [isError, setIsError] = useState(false);
   const [messageError, setMessageError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -32,6 +32,9 @@ export default function Home() {
 
       if (res.error == true) {
         setIsError(true);
+        setTimeout(() => {
+          setIsError(false);
+        }, 1500)
         setMessageError(res.message);
       } else {
         setProducts(res.message);
@@ -62,6 +65,7 @@ export default function Home() {
               price={product.price}
               description={product.description}
               setProductDetails={() => setProductDetails({
+                id: product.id,
                 imageId: product.imageId,
                 sku: product.sku,
                 name: product.name,

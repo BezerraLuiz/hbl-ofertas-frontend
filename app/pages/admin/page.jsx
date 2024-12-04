@@ -15,7 +15,7 @@ export default function Admin() {
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState([]);
   const [productVisible, setProductVisible] = useState(false);
-  const [productDetails, setProductDetails] = useState({ imageId: '', sku: '', name: '', price: '', description: '' });
+  const [productDetails, setProductDetails] = useState({ id: '', imageId: '', sku: '', name: '', price: '', description: '' });
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -60,6 +60,7 @@ export default function Admin() {
           price={product.price}
           description={product.description}
           setProductDetails={() => setProductDetails({
+            id: product.id,
             imageId: product.imageId,
             sku: product.sku,
             name: product.name,
