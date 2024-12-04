@@ -17,6 +17,7 @@ export default function Home() {
   const [isError, setIsError] = useState(false);
   const [messageError, setMessageError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [domLoaded, setDomLoaded] = useState(false);
 
   const openModal = () => {
     setIsOpen(true);
@@ -26,6 +27,10 @@ export default function Home() {
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    setDomLoaded(true);
+  }, []);
+  
   useEffect(() => {
     const fetchProducts = async () => {
       const res = await getAllProducts();
@@ -43,6 +48,8 @@ export default function Home() {
 
     fetchProducts();
   }, [setProducts]);
+
+  if (!domLoaded) return null;
 
   return (
     <>
