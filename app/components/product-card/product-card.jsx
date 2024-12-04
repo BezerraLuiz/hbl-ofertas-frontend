@@ -8,14 +8,16 @@ export default function ProductCard({ onClick, imageId, sku, name, price, descri
   const [priceProduct, setPriceProduct] = useState("");
 
   useEffect(() => {
-    // eslint-disable-next-line no-undef
-    const valueMonetary = new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(price);
+    if (price) {
+      // eslint-disable-next-line no-undef
+      const valueMonetary = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      }).format(price);
 
-    setPriceProduct(valueMonetary);
-  }, [])
+      setPriceProduct(valueMonetary);
+    };
+  }, [price])
 
   const handleClick = () => {
     setProductDetails({ imageId, sku, name, price: priceProduct, description });

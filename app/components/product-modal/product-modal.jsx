@@ -17,20 +17,34 @@ import {
 } from "./style";
 
 export default function ProductModal({ isOpen, isClose, productDetails }) {
-  const [readOnly, setReadOnly] = useState(false);
-  const [isClient, setIsClient] = useState(false);
   const pathname = usePathname();
+  const [readOnly, setReadOnly] = useState(false);
+  const [buttonVisible, setButtonVisible] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const [priceProduct, setPriceProduct] = useState("");
 
   useEffect(() => {
     setIsClient(true);
-  }, []);
+    
+    if (productDetails?.price) {
+      // eslint-disable-next-line no-undef
+      const valueMonetary = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      }).format(productDetails.price);
+  
+      setPriceProduct(valueMonetary);
+    };
+  }, [productDetails]);
 
   useEffect(() => {
     if (isClient) {
-      if (pathname === "/") {
+      if (pathname == "/") {
         setReadOnly(true);
+        setButtonVisible(false);
       } else {
         setReadOnly(false);
+        setButtonVisible(true);
       }
     }
   }, [pathname, isClient]);
@@ -44,18 +58,18 @@ export default function ProductModal({ isOpen, isClose, productDetails }) {
         <ModalInfo>
           <StyledInputPrimary defaultValue={productDetails.sku} readOnly={readOnly} />
           <StyledInputSecondary defaultValue={productDetails.name} readOnly={readOnly} />
-          <StyledInputSecondary defaultValue={productDetails.price} readOnly={readOnly} />
+          <StyledInputSecondary defaultValue={priceProduct} readOnly={readOnly} />
           <StyledTextarea defaultValue={productDetails.description} readOnly={readOnly} />
         </ModalInfo>
 
         <>
           <BackButton onClick={isClose}>Voltar</BackButton>
-          <UpdateButton>
+          {buttonVisible && <UpdateButton>
             Atualizar
-          </UpdateButton>
-          <DeleteButton>
+          </UpdateButton>}
+          {buttonVisible && <DeleteButton>
             Deletar
-          </DeleteButton>
+          </DeleteButton>}
         </>
       </ModalOverlay>
     </>
