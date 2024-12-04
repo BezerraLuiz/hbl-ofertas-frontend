@@ -62,24 +62,29 @@ export default function ProductModal({ isOpen, isClose, productDetails }) {
   }, [pathname, isClient]);
 
   const handlerDeleteProduct = async () => {
-    const resDeleteProduct = await deleteProduct(productDetails.sku);
-    
-    const resDeleteImage = await deleteImage(productDetails.imageId);
-
-    if (resDeleteProduct.error == true || resDeleteImage.error == true) {
-      setIsError(true);
-        setTimeout(() => {
-          setIsError(false);
-        }, 3000)
-      setMessageError(resDeleteProduct.message + ' ' + resDeleteImage.error);
-    } else {
+    try {
+      const resDeleteProduct = await deleteProduct(productDetails.sku);
+      if (resDeleteProduct.error) {
+        throw new Error(resDeleteProduct.message);
+      };
+  
+      const resDeleteImage = await deleteImage(productDetails.imageId);
+      if (resDeleteImage.error) {
+        throw new Error(resDeleteImage.message);
+      };
+  
       setIsError(false);
       setMessageError("");
       window.location.reload(true);
-    }
-    
+    } catch (error) {
+      setIsError(true);
+      setMessageError(error.message);
+      setTimeout(() => {
+        setIsError(false);
+      }, 3000);
+    };
   };
-
+  
   const handlerUpdateProduct = async () => {
     const formattedPrice = parseFloat(priceRef.current.value.replace('R$', '').replace('.', '').replace(',', '.').trim());
 
@@ -101,7 +106,17 @@ export default function ProductModal({ isOpen, isClose, productDetails }) {
       setIsError(false);
       setMessageError("");
       window.location.reload(true);
-    }
+    };
+  };
+
+  const handleFormatarMoeda = (e, setState) => {
+    let value = e.target.value;
+    value = value.replace(/\D/g, "");
+    value = (Number(value) / 100).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+    setState(value);
   };
 
   if (!isOpen) return null;
@@ -131,6 +146,7 @@ export default function ProductModal({ isOpen, isClose, productDetails }) {
             defaultValue={priceProduct}
             readOnly={readOnly}
             ref={priceRef}
+            onChange={(e) => handleFormatarMoeda(e, setPriceProduct)}
           />
           <StyledTextarea
             defaultValue={productDetails.description}

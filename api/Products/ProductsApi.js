@@ -94,3 +94,35 @@ export async function updateProduct(id, sku, name, price, description) {
     return { error: true, message: "Internal Error!" };
   }
 }
+
+export async function createProduct(sku, name, price, description, imageId) {
+  try {
+    const response = await fetch(
+      `https://hbl-ofertas-backend.onrender.com/products`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sku,
+          name,
+          price,
+          description,
+          imageId
+        }),
+      }
+    );
+
+    const res = await response.json();
+
+    if (!response.ok) {
+      return { error: true, message: res.message };
+    }
+
+    return { error: false, message: res };
+  } catch (e) {
+    console.log(e);
+    return { error: true, message: "Internal Error!" };
+  }
+}
