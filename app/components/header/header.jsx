@@ -1,6 +1,9 @@
 "use client";
 
 import React from "react";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import PropTypes from "prop-types";
 import {
   HeaderStyle,
   Logo,
@@ -14,28 +17,33 @@ import {
   ContainerLogo,
   TextLogo,
 } from "./style";
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 
-export default function Header() {
+export default function Header({ setSearchQuery }) {
   const [label, setLabel] = useState("VISITE NOSSA LOJA");
   const [isHome, setIsHome] = useState(true);
   const [placeholder, setPlaceholder] = useState("Insira o nome do produto...");
   const [isCreateProductPage, setIsCreateProductPage] = useState(false);
   const pathname = usePathname();
+  const [pesquisa, setPesquisa] = useState("");
 
   useEffect(() => {
-    if (pathname === "/pages/create%product") {
+    if (pathname == "/pages/product") {
       setIsCreateProductPage(true);
     } else {
       setIsCreateProductPage(false);
-      if (pathname !== "/") {
+      if (pathname != "/") {
         setIsHome(false);
         setLabel("SAIR DA CONTA");
         setPlaceholder("Insira o SKU do produto...");
       }
     }
   }, [pathname]);
+
+  const handlerSearch = (e) => {
+    e.preventDefault();
+
+    setSearchQuery(pesquisa);
+  };
 
   return (
     <>
@@ -48,10 +56,15 @@ export default function Header() {
         {!isCreateProductPage && (
           <ContainerSearchBar>
             <SearchImage src="/search.svg" alt="search" />
-            <form>
+            <form onSubmit={handlerSearch}>
               <SearchInput
                 type="text"
                 placeholder={placeholder}
+                value={pesquisa}
+                onChange={(e) => {
+                  setPesquisa(e.target.value)
+                  setSearchQuery(e.target.value)
+                }}
               />
             </form>
           </ContainerSearchBar>
@@ -71,4 +84,8 @@ export default function Header() {
       </HeaderStyle>
     </>
   );
+}
+
+Header.propTypes = {
+  setSearchQuery: PropTypes.string.isRequired,
 }

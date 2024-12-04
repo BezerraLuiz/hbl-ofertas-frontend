@@ -16,6 +16,7 @@ export default function Home() {
   const [productDetails, setProductDetails] = useState({ imageId: '', sku: '', name: '', price: '', description: '' });
   const [isError, setIsError] = useState(false);
   const [messageError, setMessageError] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const openModal = () => {
     setIsOpen(true);
@@ -28,7 +29,7 @@ export default function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       const res = await getAllProducts();
-      
+
       if (res.error == true) {
         setIsError(true);
         setMessageError(res.message);
@@ -43,28 +44,32 @@ export default function Home() {
   return (
     <>
       {isError && <ErrorComponent message={messageError} />}
-      <Header />
+      <Header setSearchQuery={setSearchQuery} />
 
       <ProductModal isOpen={isOpen} isClose={closeModal} productDetails={productDetails}></ProductModal>
 
       <div className="div-products">
-        {products.map((product) => (
-          <ProductCard onClick={ openModal }
-            key={product.id}
-            imageId={product.imageId}
-            sku={product.sku}
-            name={product.name}
-            price={product.price}
-            description={product.description}
-            setProductDetails={() => setProductDetails({
-              imageId: product.imageId,
-              sku: product.sku,
-              name: product.name,
-              price: product.price,
-              description: product.description
-            })}
-          />
-        ))}
+        {products
+          .filter((product) =>
+            product.name.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+          .map((product) => (
+            <ProductCard onClick={openModal}
+              key={product.id}
+              imageId={product.imageId}
+              sku={product.sku}
+              name={product.name}
+              price={product.price}
+              description={product.description}
+              setProductDetails={() => setProductDetails({
+                imageId: product.imageId,
+                sku: product.sku,
+                name: product.name,
+                price: product.price,
+                description: product.description
+              })}
+            />
+          ))}
       </div>
 
       <WppContact />
