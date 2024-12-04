@@ -17,16 +17,6 @@ export const ContainerMain = styled.section`
   }
 `;
 
-export const Divisor = styled.div`
-  width: 486px;
-  height: 0px;
-  border: 2.5px solid ${colors["black-400"]};
-
-  @media (max-width: 600px) {
-    width: 80%;
-  }
-`;
-
 export const TextFooter = styled.div`
   font-size: 30px;
   font-weight: bold;
@@ -36,6 +26,19 @@ export const TextFooter = styled.div`
   @media (max-width: 600px) {
     font-size: 16px;
     text-align: center;
+  }
+
+  &:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 0px;
+    border: 2.5px solid ${colors["black-400"]};
+    margin-bottom: 1.5%;
+
+    @media (max-width: 600px) {
+      width: 80%;
+    }
   }
 `;
 

@@ -1,7 +1,7 @@
 'use-client'
 
 import React from 'react';
-import { Divisor, ContainerMain, TextFooter, ContainerSocial, ImageSocial } from "./style";
+import { ContainerMain, TextFooter, ContainerSocial, ImageSocial } from "./style";
 
 export default function Footer() {
   function rotaSite() {
@@ -23,7 +23,6 @@ export default function Footer() {
   return (
     <>
       <ContainerMain>
-        <Divisor />
         <TextFooter>NOS SIGA NAS NOSSAS REDES!</TextFooter>
         <ContainerSocial>
           <ImageSocial
