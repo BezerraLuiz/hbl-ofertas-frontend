@@ -71,7 +71,7 @@ export default function Header({ setSearchQuery }) {
         )}
 
         {isCreateProductPage ? (
-          <DesenvolvidoPor>Desenvolvido por Bytezeset©</DesenvolvidoPor>
+          <DesenvolvidoPor>Desenvolvido por Bytezeset</DesenvolvidoPor>
         ) : (
           <ContainerButtonShop
             href={isHome ? "https://hblvendas.com.br/" : "/pages/auth"}

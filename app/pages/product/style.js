@@ -23,7 +23,7 @@ export const Label = styled.label`
   width: 220px;
   height: 15px;
 
-  font-family: "Roboto";
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 15px;
@@ -61,7 +61,7 @@ export const Button = styled.button`
   border: none;
   border-radius: 10px;
 
-  font-family: 'Roboto';
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -91,7 +91,7 @@ export const ButtonCancel = styled.section`
   border: none;
   border-radius: 10px;
 
-  font-family: 'Roboto';
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 20px;

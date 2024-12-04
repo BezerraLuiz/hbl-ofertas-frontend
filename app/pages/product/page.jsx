@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { useState } from "react";
+import { React, useState } from "react";
+import { useRouter } from "next/navigation";
 import Header from "@/app/components/header/header";
 import ErrorComponent from "@/app/components/error/error";
 import {
@@ -16,8 +16,22 @@ import {
 } from "./style";
 
 export default function CreateProduct() {
+  const router = useRouter();
   const [fileName, setFileName] = useState("Selecionar Arquivo");
   const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    const response = sessionStorage.getItem("user");
+    if (response !== "admin") {
+      router.push("/pages/auth");
+    } else {
+      setIsLoading(false);
+    }
+  }, [router]);
+
+  const handlerCancelCreation = () => {
+    router.push("admin");
+  };
 
   return (
     <>
@@ -104,7 +118,7 @@ export default function CreateProduct() {
             </div>
 
             <Button>CADASTRAR</Button>
-            <ButtonCancel>CANCELAR</ButtonCancel>
+            <ButtonCancel onClick={handlerCancelCreation}>CANCELAR</ButtonCancel>
           </form>
         </ContainerInfoProduct>
       </ContainerMain>

@@ -158,10 +158,10 @@ export const ShopImage = styled.img`
 `;
 
 export const DesenvolvidoPor = styled.div`
-  font-family: 'Roboto';
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 28px;
   letter-spacing: 0.02rem;
   text-transform: capitalize;

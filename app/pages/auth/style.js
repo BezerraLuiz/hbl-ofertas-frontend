@@ -32,7 +32,6 @@ export const ContainerMain = styled.div`
   }
 `;
 
-
 export const Header = styled.section`
   display: flex;
   justify-content: space-around;
@@ -78,7 +77,7 @@ export const Footer = styled.footer`
   margin-bottom: 10px;
 
   width: 100%;
-  font-family: "Roboto";
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 15px;
@@ -91,7 +90,7 @@ export const Label = styled.label`
   width: 220px;
   height: 15px;
 
-  font-family: "Roboto";
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 15px;
@@ -130,7 +129,7 @@ export const Button = styled.button`
   border: none;
   border-radius: 10px;
 
-  font-family: 'Roboto';
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
