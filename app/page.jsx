@@ -27,10 +27,11 @@ export default function Home() {
       const res = await getAllProducts();
       
       if (res.error == true) {
-        alert(JSON.stringify(res, null, 2));
+        alert("No products registered!");
       } else {
         setProducts(res.message);
         console.log(JSON.stringify(res, null, 2));
+        console.log(products);
       }
     };
 
@@ -44,13 +45,12 @@ export default function Home() {
       <ProductModal isOpen={isOpen} isClose={closeModal}></ProductModal>
 
       <div className="div-products">
-      <ProductCard onClick={ openModal } />
         {products.map((product) => (
-          <ProductCard
+          <ProductCard onClick={ openModal }
             key={product.id}
-            image={product.imagePath}
-            nome={product.nome}
-            preco={product.valor}
+            imageId={product.imageId}
+            name={product.name}
+            price={product.price}
           />
         ))}
       </div>

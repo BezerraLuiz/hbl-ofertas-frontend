@@ -1,6 +1,6 @@
 export const getAllProducts = async () => {
   try {
-    const response = await fetch('https://hbl-ofertas-backend.onrender.com/products', {
+    const response = await fetch('https://hbl-ofertas-backend.onrender.com/products/all', {
       method: 'GET',
     });
 

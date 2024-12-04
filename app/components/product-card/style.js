@@ -40,7 +40,7 @@ export const Card = styled.section`
 export const ProductImage = styled.img`
   width: 100%;
   border-radius: 8px;
-  height: 198px;
+  height: auto;
 `;
 
 export const CardText = styled.p`
