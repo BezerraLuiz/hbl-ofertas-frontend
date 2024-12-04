@@ -14,7 +14,9 @@ export default function Admin() {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState([]);
+  const [productVisible, setProductVisible] = useState(false);
+  const [productDetails, setProductDetails] = useState({ imageId: '', sku: '', name: '', price: '', description: '' });
 
   useEffect(() => {
     const response = sessionStorage.getItem("user");
@@ -36,21 +38,28 @@ export default function Admin() {
         <ProductModal />
       }
 
-      <Header />
+      <Header setSearchQuery={() => { }} setProducts={setProduct} visibleProduct={(isVisible) => setProductVisible(isVisible)} />
 
       <ContainerMain>
         <Button onClick={handlerRouteCreateProduct}>Cadastrar Produto</Button>
 
         <Divisor />
 
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            image={product.imagePath}
-            nome={product.nome}
-            preco={product.valor}
-          />
-        ))}
+        {productVisible && <ProductCard
+          key={product.id}
+          imageId={product.imageId}
+          sku={product.sku}
+          name={product.name}
+          price={product.price}
+          description={product.description}
+          setProductDetails={() => setProductDetails({
+            imageId: product.imageId,
+            sku: product.sku,
+            name: product.name,
+            price: product.price,
+            description: product.description
+          })}
+        />}
 
       </ContainerMain>
 

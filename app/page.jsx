@@ -44,7 +44,7 @@ export default function Home() {
   return (
     <>
       {isError && <ErrorComponent message={messageError} />}
-      <Header setSearchQuery={setSearchQuery} />
+      <Header setSearchQuery={setSearchQuery} setProducts={setProducts}/>
 
       <ProductModal isOpen={isOpen} isClose={closeModal} productDetails={productDetails}></ProductModal>
 

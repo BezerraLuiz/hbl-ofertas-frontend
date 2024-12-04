@@ -4,6 +4,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import PropTypes from "prop-types";
+import { getProductBySku } from "@/api/Products/ProductsApi";
+import ErrorComponent from "@/app/components/error/error";
 import {
   HeaderStyle,
   Logo,
@@ -18,13 +20,14 @@ import {
   TextLogo,
 } from "./style";
 
-export default function Header({ setSearchQuery }) {
+export default function Header({ setSearchQuery, setProducts, visibleProduct }) {
+  const pathname = usePathname();
   const [label, setLabel] = useState("VISITE NOSSA LOJA");
   const [isHome, setIsHome] = useState(true);
   const [placeholder, setPlaceholder] = useState("Insira o nome do produto...");
   const [isCreateProductPage, setIsCreateProductPage] = useState(false);
-  const pathname = usePathname();
   const [pesquisa, setPesquisa] = useState("");
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     if (pathname == "/pages/product") {
@@ -39,14 +42,41 @@ export default function Header({ setSearchQuery }) {
     }
   }, [pathname]);
 
-  const handlerSearch = (e) => {
+  const handlerSearch = async (e) => {
     e.preventDefault();
 
-    setSearchQuery(pesquisa);
+    if (pathname != "/") {
+      if (pesquisa == '') {
+        setIsError(false);
+        visibleProduct(false);
+        setProducts([]);
+
+        return;
+      }
+
+      const pesquisaFormatada = pesquisa.toUpperCase().replace(" ", "%20");
+      
+      const res = await getProductBySku(pesquisaFormatada);
+
+      if (res.error == true) {
+        setIsError(true);
+        visibleProduct(false);
+        setTimeout(() => {
+          setIsError(false);
+        }, 1000);
+        setProducts([]);
+      } else {
+        setProducts(res.message);
+        visibleProduct(true);
+      };
+    } else {
+      setSearchQuery(pesquisa);
+    }
   };
 
   return (
     <>
+      {isError && <ErrorComponent message="Produto não encontrado!" />}
       <HeaderStyle>
         <ContainerLogo>
           <Logo>HBL</Logo>
@@ -62,8 +92,8 @@ export default function Header({ setSearchQuery }) {
                 placeholder={placeholder}
                 value={pesquisa}
                 onChange={(e) => {
-                  setPesquisa(e.target.value)
-                  setSearchQuery(e.target.value)
+                  setPesquisa(e.target.value);
+                  setSearchQuery(e.target.value);
                 }}
               />
             </form>
@@ -87,5 +117,7 @@ export default function Header({ setSearchQuery }) {
 }
 
 Header.propTypes = {
-  setSearchQuery: PropTypes.string.isRequired,
+  setSearchQuery: PropTypes.func.isRequired,
+  setProducts: PropTypes.func.isRequired,
+  visibleProduct: PropTypes.func.isRequired,
 }
