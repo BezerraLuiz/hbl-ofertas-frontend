@@ -28,7 +28,7 @@ export default function Login() {
 
   useEffect(() => {
     sessionStorage.clear();
-    document.body.style.backgroundColor = pathname === "/pages/auth" ? "#fff" : "";
+    document.body.style.backgroundColor = pathname == "/pages/auth" ? "#fff" : "";
   }, [pathname]);
 
   const handleLogin = async (e) => {
