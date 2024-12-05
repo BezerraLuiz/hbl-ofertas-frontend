@@ -34,6 +34,14 @@ export const Button = styled.button`
     color: ${colors["green-200"]};
     transform: scale(1.1);
   }
+
+  @media (max-width: 320px) {
+    width: 250px;
+  }
+  
+  @media (min-width: 321px) and (max-width: 600px) {
+    width: 250px;
+  }
 `;
 
 export const Divisor = styled.div`
@@ -41,6 +49,14 @@ export const Divisor = styled.div`
   height: 0px;
 
   border: 2.5px solid ${colors["black-400"]};
+
+  @media (max-width: 320px) {
+    width: 250px;
+  }
+  
+  @media (min-width: 321px) and (max-width: 600px) {
+    width: 300px;
+  }
 `;
 
 export const TextWpp = styled.p`

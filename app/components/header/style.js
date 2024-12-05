@@ -18,7 +18,7 @@ export const HeaderStyle = styled.header`
     gap: 7px;
   }
 
-  @media (min-width: 600px) and (max-width: 768px) {
+  @media (min-width: 321px) and (max-width: 600px) {
     
   }
 `;
@@ -111,7 +111,8 @@ export const SearchInput = styled.input`
     width: 100%;
 
     &::-webkit-input-placeholder {
-      font-size: 11px;
+      font-weight: bolder;
+      font-size: 7px;
     }
   }
 
@@ -137,8 +138,14 @@ export const ContainerButtonShop = styled.a`
     background-color: #B6CFB4;
   }
 
-  @media (max-width: 600px) {
-    display: none;
+  @media (max-width: 320px) {
+    width: 135px;
+    height: 40px;
+  }
+
+  @media (min-width: 321px) and (max-width: 600px) {
+    width: 135px;
+    height: 40px;
   }
 `;
 
@@ -147,8 +154,16 @@ export const ShopText = styled.p`
   font-weight: 600;
   color: ${colors["black-200"]};
 
-  @media (min-width: 600px) and (max-width: 768px) {
-   font-size: 13px;
+  @media (max-width: 320px) {
+    font-size: 7.6px;
+  }
+
+  @media (min-width: 321px) and (max-width: 600px) {
+   font-size: 8px;
+  }
+
+  @media (min-width: 601px) and (max-width: 768px) {
+   font-size: 14px;
   }
 `;
 

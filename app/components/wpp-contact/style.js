@@ -13,8 +13,4 @@ export const WppIcon = styled.img`
     width: 67px;
     height: 67px;
   }
-
-  @media (max-width: 600px) {
-    display: none;
-  }
 `;

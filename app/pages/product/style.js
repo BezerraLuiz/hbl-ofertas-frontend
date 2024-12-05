@@ -17,6 +17,16 @@ export const ContainerInfoProduct = styled.div`
   background: ${colors["white-300"]};
   box-shadow: 10px 13px 8.3px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
+
+  @media (max-width: 320px) {
+    padding-left: 30px;
+    width: 280px;
+  }
+
+  @media (min-width: 321px) and (max-width: 600px) {
+    padding-left: 30px;
+    width: 340px;
+  }
 `;
 
 export const Label = styled.label`
@@ -49,6 +59,14 @@ export const Input = styled.input`
     border-color: ${colors["green-300"]};
     background-color: ${colors["white-400"]};
   }
+
+  @media (max-width: 320px) {
+    width: 230px;
+  }
+
+  @media (min-width: 321px) and (max-width: 600px) {
+    width: 290px;
+  }
 `;
 
 export const Button = styled.button`
@@ -74,6 +92,14 @@ export const Button = styled.button`
   &:hover {
     transform: scale(1.05);
     background-color: ${colors["green-300"]};
+  }
+
+  @media (max-width: 320px) {
+    width: 230px;
+  }
+
+  @media (min-width: 321px) and (max-width: 600px) {
+    width: 290px;
   }
 `;
 
@@ -104,6 +130,14 @@ export const ButtonCancel = styled.section`
   &:hover {
     transform: scale(1.05);
     background-color: ${colors["red-200"]};
+  }
+
+  @media (max-width: 320px) {
+    width: 230px;
+  }
+
+  @media (min-width: 321px) and (max-width: 600px) {
+    width: 290px;
   }
 `;
 
@@ -136,5 +170,13 @@ export const FileLabel = styled.label`
   &:focus-within {
     border-color: ${colors["green-300"]};
     background-color: ${colors["white-400"]};
+  }
+
+  @media (max-width: 320px) {
+    width: 230px;
+  }
+
+  @media (min-width: 321px) and (max-width: 600px) {
+    width: 290px;
   }
 `;

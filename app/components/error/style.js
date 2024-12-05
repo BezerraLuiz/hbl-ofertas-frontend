@@ -22,6 +22,10 @@ export const ErrorBox = styled.div`
   width: 100%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
+
+  @media (max-width: 320px) {
+    width: 250px;
+  }
 `;
 
 export const ErrorTitle = styled.h2`
