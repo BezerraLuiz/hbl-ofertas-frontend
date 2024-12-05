@@ -37,7 +37,7 @@ export const TextFooter = styled.div`
     margin-bottom: 1.5%;
 
     @media (max-width: 600px) {
-      width: 80%;
+      width: 100%;
     }
   }
 `;
