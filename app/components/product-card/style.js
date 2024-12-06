@@ -5,7 +5,7 @@ export const Card = styled.section`
   display: flex;
   flex-direction: column;
   width: 250px;
-  height: 350px;
+  height: 60%;
   background: ${colors["white-300"]};
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   margin: 2.5%;
@@ -20,7 +20,6 @@ export const Card = styled.section`
 
   @media (max-width: 320px) {
     width: 130px;
-    height: 210px;
 
     &:hover {
       box-shadow: none;
@@ -30,7 +29,6 @@ export const Card = styled.section`
 
   @media (min-width: 321px) and (max-width: 600px) {
     width: 155px;
-    height: 230px;
 
     &:hover {
       box-shadow: none;
