@@ -29,6 +29,11 @@ export default function CreateProduct() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
+  const [domLoaded, setDomLoaded] = useState(false);
+
+  useEffect(() => {
+    setDomLoaded(true);
+  }, []);
 
   useEffect(() => {
     const response = sessionStorage.getItem("user");
@@ -96,6 +101,7 @@ export default function CreateProduct() {
     };
   };
   
+  if (!domLoaded) return null;
 
   return (
     <>

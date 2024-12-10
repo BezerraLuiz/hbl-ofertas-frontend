@@ -17,6 +17,11 @@ export default function Admin() {
   const [productVisible, setProductVisible] = useState(false);
   const [productDetails, setProductDetails] = useState({ id: '', imageId: '', sku: '', name: '', price: '', description: '' });
   const [isOpen, setIsOpen] = useState(false);
+  const [domLoaded, setDomLoaded] = useState(false);
+
+  useEffect(() => {
+    setDomLoaded(true);
+  }, []);
 
   useEffect(() => {
     const response = sessionStorage.getItem("user");
@@ -38,6 +43,8 @@ export default function Admin() {
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  if (!domLoaded) return null;
 
   return (
     <>

@@ -25,6 +25,11 @@ export default function Login() {
   const [messageError, setMessageError] = useState(false);
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
+  const [domLoaded, setDomLoaded] = useState(false);
+
+  useEffect(() => {
+    setDomLoaded(true);
+  }, []);
 
   useEffect(() => {
     sessionStorage.clear();
@@ -50,6 +55,8 @@ export default function Login() {
       }, 500);
     }
   };
+
+  if (!domLoaded) return null;
 
   return (
     <>
